@@ -2,31 +2,25 @@ package fr.eni.enchere.bo;
 
 public class Retrait {
 
-	private Integer noArticle;
+
 	private String rue;
 	private String codePostal;
 	private String ville;
-	private String commit1;
+	
+	private Article article;
 
 	public Retrait() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Retrait(Integer noArticle, String rue, String codePostal, String ville) {
+	public Retrait(String rue, String codePostal, String ville, Article article) {
 		super();
-		this.noArticle = noArticle;
 		this.rue = rue;
 		this.codePostal = codePostal;
 		this.ville = ville;
+		this.article = article;
 	}
 
-	public Integer getNoArticle() {
-		return noArticle;
-	}
-
-	public void setNoArticle(Integer noArticle) {
-		this.noArticle = noArticle;
-	}
 
 	public String getRue() {
 		return rue;
@@ -52,10 +46,20 @@ public class Retrait {
 		this.ville = ville;
 	}
 
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Retrait [noArticle=%s, rue=%s, codePostal=%s, ville=%s]", noArticle, rue, codePostal,
-				ville);
+		return String.format("Retrait rue=%s, codePostal=%s, ville=%s, article=%s]", rue,
+				codePostal, ville, article);
 	}
+
+	
 
 }

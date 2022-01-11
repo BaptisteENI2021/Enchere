@@ -1,5 +1,8 @@
 package fr.eni.enchere.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utilisateur {
 
 	private Integer noUtilisateur;
@@ -15,12 +18,16 @@ public class Utilisateur {
 	private Integer credit;
 	private boolean administrateur;
 
+	private List<Article> listeArticles = new ArrayList<>();
+	private List<Enchere> listeEncheres = new ArrayList<>();
+
 	public Utilisateur() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur,
+			List<Article> listeArticles, List<Enchere> listeEncheres) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -34,13 +41,15 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.listeArticles = listeArticles;
+		this.listeEncheres = listeEncheres;
 	}
 
-	public Integer getnoUtilisateur() {
+	public Integer getNoUtilisateur() {
 		return noUtilisateur;
 	}
 
-	public void setnoUtilisateur(Integer noUtilisateur) {
+	public void setNoUtilisateur(Integer noUtilisateur) {
 		this.noUtilisateur = noUtilisateur;
 	}
 
@@ -132,12 +141,28 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 
+	public List<Article> getListeArticles() {
+		return listeArticles;
+	}
+
+	public void setListeArticles(List<Article> listeArticles) {
+		this.listeArticles = listeArticles;
+	}
+
+	public List<Enchere> getListeEncheres() {
+		return listeEncheres;
+	}
+
+	public void setListeEncheres(List<Enchere> listeEncheres) {
+		this.listeEncheres = listeEncheres;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"Utilisateur [noUtilisateur=%s, pseudo=%s, nom=%s, prenom=%s, email=%s, telephone=%s, rue=%s, codePostal=%s, ville=%s, motDePasse=%s, credit=%s, administrateur=%s]",
+				"Utilisateur [noUtilisateur=%s, pseudo=%s, nom=%s, prenom=%s, email=%s, telephone=%s, rue=%s, codePostal=%s, ville=%s, motDePasse=%s, credit=%s, administrateur=%s, listeArticles=%s, listeEncheres=%s]",
 				noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,
-				administrateur);
+				administrateur, listeArticles, listeEncheres);
 	}
 
 }

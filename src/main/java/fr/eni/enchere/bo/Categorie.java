@@ -1,26 +1,22 @@
 package fr.eni.enchere.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Categorie {
 
-	private Integer noCategorie;
 	private String libelle;
+	
+	private List<Article> listeArticles = new ArrayList<>();
 
 	public Categorie() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Categorie(Integer noCategorie, String libelle) {
+	public Categorie(String libelle, List<Article> listeArticles) {
 		super();
-		this.noCategorie = noCategorie;
 		this.libelle = libelle;
-	}
-
-	public Integer getNo_categorie() {
-		return noCategorie;
-	}
-
-	public void setNo_categorie(Integer noCategorie) {
-		this.noCategorie = noCategorie;
+		this.listeArticles = listeArticles;
 	}
 
 	public String getLibelle() {
@@ -31,9 +27,19 @@ public class Categorie {
 		this.libelle = libelle;
 	}
 
+	public List<Article> getListeArticles() {
+		return listeArticles;
+	}
+
+	public void setListeArticles(List<Article> listeArticles) {
+		this.listeArticles = listeArticles;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Categorie [noCategorie=%s, libelle=%s]", noCategorie, libelle);
+		return String.format("Categorie [libelle=%s, listeArticles=%s]", libelle, listeArticles);
 	}
+
+	
 
 }

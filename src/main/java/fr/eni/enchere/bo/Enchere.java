@@ -7,21 +7,22 @@ public class Enchere {
 	private Integer noEnchere;
 	private LocalDate dateEnchere;
 	private Integer montantEnchere;
-	private Integer noArticle;
-	private Integer noUtilisateur;
+
+	private Utilisateur utilisateur;
+	private Article article;
 
 	public Enchere() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Enchere(Integer noEnchere, LocalDate dateEnchere, Integer montantEnchere, Integer noArticle,
-			Integer noUtilisateur) {
+	public Enchere(Integer noEnchere, LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilisateur,
+			Article article) {
 		super();
 		this.noEnchere = noEnchere;
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
-		this.noArticle = noArticle;
-		this.noUtilisateur = noUtilisateur;
+		this.utilisateur = utilisateur;
+		this.article = article;
 	}
 
 	public Integer getNoEnchere() {
@@ -48,28 +49,27 @@ public class Enchere {
 		this.montantEnchere = montantEnchere;
 	}
 
-	public Integer getNoArticle() {
-		return noArticle;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setNoArticle(Integer noArticle) {
-		this.noArticle = noArticle;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
-	public Integer getNoUtilisateur() {
-		return noUtilisateur;
+	public Article getArticle() {
+		return article;
 	}
 
-	public void setNoUtilisateur(Integer noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Enchere [noEnchere=%s, dateEnchere=%s, montantEnchere=%s, noArticle=%s, noUtilisateur=%s]", noEnchere,
-				dateEnchere, montantEnchere, noArticle, noUtilisateur);
+		return String.format("Enchere [noEnchere=%s, dateEnchere=%s, montantEnchere=%s, utilisateur=%s, article=%s]",
+				noEnchere, dateEnchere, montantEnchere, utilisateur, article);
 	}
 
-	
+		
 }
