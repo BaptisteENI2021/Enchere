@@ -6,6 +6,7 @@ public class Retrait {
 	private String rue;
 	private String codePostal;
 	private String ville;
+	private String commit1;
 
 	public Retrait() {
 		// TODO Auto-generated constructor stub
