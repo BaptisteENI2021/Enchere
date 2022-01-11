@@ -12,7 +12,6 @@ public class Article {
 	private Integer prixInitial;
 	private Integer noUtilisateur;
 	private Integer noCategorie;
-	private String Ghit;
 	
 
 	public Article() {
