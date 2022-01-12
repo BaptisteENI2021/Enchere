@@ -8,8 +8,8 @@ import fr.eni.enchere.dal.mock.UtilisateurDAOImplMock;
 
 public class DAOFactory {
 
-	/**
-	public static UtilistaeurDAO getInstance() {
+	
+	public static UtilisateurDAO getInstance() {
 		return new UtilisateurDAOImplMock();
 
 	}
@@ -34,7 +34,7 @@ public class DAOFactory {
 
 	}
 	
-	**/
+	
 	
 	
 	

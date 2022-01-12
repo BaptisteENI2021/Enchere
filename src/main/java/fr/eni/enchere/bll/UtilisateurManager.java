@@ -4,7 +4,7 @@ import fr.eni.enchere.bo.Utilisateur;
 
 public interface UtilisateurManager {
 	
-	public void inscrireUtilisateur (Utilisateur nouvelUtilisateur) throws BLLException;
+	public void inscrireUtilisateur (Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, Integer credit) throws BLLException;
 	
 	public void modifierUtilisateur (Utilisateur utilisateurAModifier) throws BLLException;
 	
