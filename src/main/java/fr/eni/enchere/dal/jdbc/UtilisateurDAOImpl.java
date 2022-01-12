@@ -16,9 +16,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	
 	private final static String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-	private final static String SELECT_BY_NO_UTILISATEUR = "SELECT * FROM UTILISATEUR WHERE noUtilisateur=?";
-	private final static String DELETE = "DELETE FROM UTILISATEUR WHERE noUtilisateur=?";
-	private final static String UPDATE = "UPDATE UTILISATEUR SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, codePostal=?, ville=?, motDePasse=? WHERE noUtilisateur=?";
+	private final static String SELECT_BY_NO_UTILISATEUR = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
+	private final static String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
+	private final static String UPDATE = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
 	private final static String SELECT_ALL= "SELECT * FROM UTILISATEURS" ; 
 
 	@Override
@@ -130,7 +130,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	private Utilisateur map(ResultSet rs) throws SQLException {
-		int noUtilisateur = rs.getInt("no_Utilisateur");
+		int noUtilisateur = rs.getInt("no_utilisateur");
 		String pseudo = rs.getString("pseudo");
 		String nom = rs.getString("nom");
 		String prenom = rs.getString("prenom");

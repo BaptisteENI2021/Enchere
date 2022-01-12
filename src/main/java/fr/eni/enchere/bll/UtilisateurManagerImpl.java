@@ -66,6 +66,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 
 		BLLException be = new BLLException();
 
+		validationNoUtilisateur(utilisateurAModifier.getNoUtilisateur(), be);
 		validationPseudo(utilisateurAModifier.getPseudo(), be);
 		validationNom(utilisateurAModifier.getNom(), be);
 		validationPrenom(utilisateurAModifier.getPrenom(), be);
@@ -88,12 +89,13 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		}
 	}
 
+
 	@Override
 	public void supprimerUtilisateur(Integer noUtilisateur) throws BLLException {
 		
 		BLLException be = new BLLException();
 		
-		verificationNoUtilisateur(noUtilisateur, be);
+		validationNoUtilisateur(noUtilisateur, be);
 		
 		if(be.hasErreur()) {
 			throw be;
@@ -102,7 +104,6 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		try {
 			dao.delete(noUtilisateur);
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -128,7 +129,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		}
 	}
 
-	private void verificationNoUtilisateur(Integer noUtilisateur, BLLException be) {
+
+	private void validationNoUtilisateur(Integer noUtilisateur, BLLException be) {
 		if (noUtilisateur == null || noUtilisateur < 0) {
 			be.ajouterErreur(new ParameterException("Le numero utilisateur ne peut pas être inférieur à 0"));
 		}
