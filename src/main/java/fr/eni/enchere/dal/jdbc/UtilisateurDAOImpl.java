@@ -21,7 +21,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private final static String SELECT_BY_NO_UTILISATEUR = "SELECT * FROM UTILISATEUR WHERE noUtilisateur=?";
 	private final static String DELETE = "DELETE FROM UTILISATEUR WHERE noUtilisateur=?";
 	private final static String UPDATE = "UPDATE UTILISATEUR SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, codePostal=?, ville=?, motDePasse=? WHERE noUtilisateur=?";
-	private final static String SELECT_ARTICLE_BY_NO_UTILISATEUR= "SELECT * FROM ARTICLES_VENDUS WHERE noUtilisateur=?" ; 
+	private final static String SELECT_ALL= "SELECT * FROM UTILISATEUR" ; 
 
 	@Override
 	public void insert(Utilisateur nouvelUtilisateur) throws DALException {
@@ -89,24 +89,23 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public List<Article> selectAll() throws DALException {
-		List<Article> lstarticles = new ArrayList<Article>();
+	public List<Utilisateur> selectAll() throws DALException {
+		List<Utilisateur> lstUtilisateurs = new ArrayList<Utilisateur>();
 		
 		try(Connection cnx = JdbcTools.getConnection()){
 			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ARTICLE_BY_NO_UTILISATEUR);
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
 			while(rs.next()) {
-				Article article = map(rs);
-				lstarticles.add(article);
+				Utilisateur utilisateur = map(rs);
+				lstUtilisateurs.add(utilisateur);
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException(e.getMessage());
 			
-		}
-		
-		return lstarticles;
+		}	
+		return lstUtilisateurs;
 	}
 
 	@Override
@@ -151,27 +150,4 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 		
-	private Article mapArticle(ResultSet rs) throws SQLException {
-		int noArticle = rs.getInt("noArticle");
-		String nomArticle = rs.getString("nomArticle");
-		String nom = rs.getString("nom");
-		String prenom = rs.getString("prenom");
-		String email = rs.getString("email");
-		String telephone = rs.getString("telephone");
-		String rue = rs.getString("rue");
-		String codePostal = rs.getString("codePostal");
-		String ville = rs.getString("ville");
-		String motDePasse = rs.getString("motDePasse");
-		int credit = rs.getInt("credit");
-
-		Utilisateur utilisateur = null;
-
-		utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
-				motDePasse, credit);
-
-		return article;
-	}
-
-	
-
 }
