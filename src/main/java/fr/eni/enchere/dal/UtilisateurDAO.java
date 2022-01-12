@@ -5,7 +5,7 @@ import java.util.List;
 import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Utilisateur;
 
-public interface UtilistaeurDAO {
+public interface UtilisateurDAO {
 	
 	void insert (Utilisateur nouvelUtilisateur) throws DALException;
 	void update (Utilisateur utilisateurAModifier) throws DALException;
@@ -14,4 +14,5 @@ public interface UtilistaeurDAO {
 	List<Article> selectAll() throws DALException;
 	
 	Utilisateur selectById (Integer noUtilisateur) throws DALException;
+	
 }
