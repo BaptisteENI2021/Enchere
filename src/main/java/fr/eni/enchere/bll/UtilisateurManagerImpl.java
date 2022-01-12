@@ -24,95 +24,123 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	private static UtilisateurDAO dao = DAOFactory.getInstance();
 
 	@Override
-	public void inscrireUtilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email,
-			String telephone, String rue, String codePostal, String ville, String motDePasse, Integer credit)
-			throws BLLException {
+	public Utilisateur inscrireUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse, Integer credit) throws BLLException {
 
-		Utilisateur nouvelUtilisateur = null;
 		BLLException be = new BLLException();
 
-		validationNoUtilisateur(noUtilisateur, be);
 		validationPseudo(pseudo, be);
 		validationNom(nom, be);
 		validationPrenom(prenom, be);
 		validationEmail(email, be);
-		validationTelephone(email, be);
+		validationTelephone(telephone, be);
 		validationRue(rue, be);
 		validationCodePostal(codePostal, be);
 		validationVille(ville, be);
 		validationMotDePasse(motDePasse, be);
 		validationCredit(credit, be);
 
+		if (be.hasErreur()) {
+			throw be;
+		}
+
+		Utilisateur nouvelUtilisateur = null;
+
 		try {
 			dao.insert(nouvelUtilisateur);
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new BLLException(e);
 		}
+		
+		return nouvelUtilisateur;
 	}
 
 	private void validationCredit(Integer credit, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (credit == null || credit < 0) {
+			be.ajouterErreur(new ParameterException("Le credit ne peut pas être inférieur à 0"));
+		}
 	}
 
 	private void validationMotDePasse(String motDePasse, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (motDePasse == null || motDePasse.isBlank() || motDePasse.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le mot de passe doit contenir au maximum 30 caractères"));
+		}
+
 	}
 
 	private void validationVille(String ville, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (ville == null || ville.isBlank() || ville.length() > 50) {
+			be.ajouterErreur(new ParameterException("Le ville de passe doit contenir au maximum 50 caractères"));
+		}
 	}
 
 	private void validationCodePostal(String codePostal, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (codePostal == null || codePostal.isBlank() || codePostal.length() > 10) {
+			be.ajouterErreur(new ParameterException("Le code postal de passe doit contenir au maximum 10 caractères"));
+		}
 	}
 
 	private void validationRue(String rue, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (rue == null || rue.isBlank() || rue.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le rue de passe doit contenir au maximum 30 caractères"));
+		}
 	}
 
-	private void validationTelephone(String email, BLLException be) {
-		// TODO Auto-generated method stub
-		
+	private void validationTelephone(String telephone, BLLException be) {
+		if (telephone == null || telephone.isBlank() || telephone.length() > 15) {
+			be.ajouterErreur(new ParameterException("Le telephone de passe doit contenir au maximum 15 caractères"));
+		}
 	}
 
 	private void validationEmail(String email, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (email == null || email.isBlank() || email.length() > 50) {
+			be.ajouterErreur(new ParameterException("Le email de passe doit contenir au maximum 50 caractères"));
+		}
 	}
 
 	private void validationPrenom(String prenom, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (prenom == null || prenom.isBlank() || prenom.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le prenom de passe doit contenir au maximum 30 caractères"));
+		}
 	}
 
 	private void validationNom(String nom, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (nom == null || nom.isBlank() || nom.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le nom de passe doit contenir au maximum 30 caractères"));
+		}
 	}
 
 	private void validationPseudo(String pseudo, BLLException be) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void validationNoUtilisateur(Integer noUtilisateur, BLLException be) {
-		// TODO Auto-generated method stub
-		
+		if (pseudo == null || pseudo.isBlank() || pseudo.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le prenom de passe doit contenir au maximum 30 caractères"));
+		}
 	}
 
 	@Override
 	public void modifierUtilisateur(Utilisateur utilisateurAModifier) throws BLLException {
+
+		BLLException be = new BLLException();
+
+		validationPseudo(utilisateurAModifier.getPseudo(), be);
+		validationNom(utilisateurAModifier.getNom(), be);
+		validationPrenom(utilisateurAModifier.getPrenom(), be);
+		validationEmail(utilisateurAModifier.getEmail(), be);
+		validationTelephone(utilisateurAModifier.getTelephone(), be);
+		validationRue(utilisateurAModifier.getRue(), be);
+		validationCodePostal(utilisateurAModifier.getCodePostal(), be);
+		validationVille(utilisateurAModifier.getVille(), be);
+		validationMotDePasse(utilisateurAModifier.getMotDePasse(), be);
+
+		if (be.hasErreur()) {
+			throw be;
+		}
+
 		try {
 			dao.update(utilisateurAModifier);
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new BLLException(e);
 		}
 	}
 
