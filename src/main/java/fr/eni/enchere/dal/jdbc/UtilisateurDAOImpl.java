@@ -4,22 +4,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.UtilisateurDAO;
-import fr.eni.papeterie.bo.Ramette;
-import fr.eni.papeterie.bo.Stylo;
+
 
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
+	
 	private final static String INSERT = "INSERT INTO UTILISATEUR (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse) VALUES (?,?,?,?,?,?,?,?,?)";
-	private final static String SELECT_BY_ID = "SELECT * FROM UTILISATEUR WHERE noArticle=?";
+	private final static String SELECT_BY_NO_UTILISATEUR = "SELECT * FROM UTILISATEUR WHERE noUtilisateur=?";
+	private final static String DELETE = "DELETE FROM UTILISATEUR WHERE noUtilisateur=?";
+	private final static String UPDATE = "UPDATE UTILISATEUR SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, codePostal=?, ville=?, motDePasse=? WHERE noUtilisateur=?";
+	private final static String SELECT_ARTICLE_BY_NO_UTILISATEUR= "SELECT * FROM ARTICLES_VENDUS WHERE noUtilisateur=?" ; 
 
 	@Override
-	public void insert(Utilisateur nouvelUtilisateur) throws DALException, SQLException {
+	public void insert(Utilisateur nouvelUtilisateur) throws DALException {
 
 		try (Connection con = JdbcTools.getConnection()) {
 
@@ -49,20 +54,59 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	@Override
 	public void update(Utilisateur utilisateurAModifier) throws DALException {
-		// TODO Auto-generated method stub
-
+			
+		try(Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(UPDATE);
+			
+			stmt.setString(1, utilisateurAModifier.getPseudo());
+			stmt.setString(2, utilisateurAModifier.getNom());
+			stmt.setString(9, utilisateurAModifier.getPrenom());
+			stmt.setString(3, utilisateurAModifier.getEmail());
+			stmt.setString(4, utilisateurAModifier.getTelephone());
+			stmt.setString(5, utilisateurAModifier.getRue());
+			stmt.setString(6, utilisateurAModifier.getCodePostal());
+			stmt.setString(7, utilisateurAModifier.getVille());
+			stmt.setString(8, utilisateurAModifier.getMotDePasse());
+			
+			stmt.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+		throw new DALException(e.getMessage());
+		
+	}
 	}
 
 	@Override
 	public void delete(Integer noUtilisateur) throws DALException {
-		// TODO Auto-generated method stub
-
+		try(Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(DELETE);
+			stmt.setInt(1, noUtilisateur);
+			stmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
 	}
 
 	@Override
 	public List<Article> selectAll() throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Article> lstarticles = new ArrayList<Article>();
+		
+		try(Connection cnx = JdbcTools.getConnection()){
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_ARTICLE_BY_NO_UTILISATEUR);
+			while(rs.next()) {
+				Article article = map(rs);
+				lstarticles.add(article);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+			
+		}
+		
+		return lstarticles;
 	}
 
 	@Override
@@ -70,7 +114,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		Utilisateur utilisateur = null;
 
 		try (Connection cnx = JdbcTools.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_ID);
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_NO_UTILISATEUR);
 			stmt.setInt(1, noUtilisateur);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -106,5 +150,28 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 		return utilisateur;
 	}
+		
+	private Article mapArticle(ResultSet rs) throws SQLException {
+		int noArticle = rs.getInt("noArticle");
+		String nomArticle = rs.getString("nomArticle");
+		String nom = rs.getString("nom");
+		String prenom = rs.getString("prenom");
+		String email = rs.getString("email");
+		String telephone = rs.getString("telephone");
+		String rue = rs.getString("rue");
+		String codePostal = rs.getString("codePostal");
+		String ville = rs.getString("ville");
+		String motDePasse = rs.getString("motDePasse");
+		int credit = rs.getInt("credit");
+
+		Utilisateur utilisateur = null;
+
+		utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+				motDePasse, credit);
+
+		return article;
+	}
+
+	
 
 }
