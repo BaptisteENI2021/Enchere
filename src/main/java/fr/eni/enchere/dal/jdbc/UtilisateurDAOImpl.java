@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -17,11 +15,11 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	
-	private final static String INSERT = "INSERT INTO UTILISATEUR (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse) VALUES (?,?,?,?,?,?,?,?,?)";
+	private final static String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String SELECT_BY_NO_UTILISATEUR = "SELECT * FROM UTILISATEUR WHERE noUtilisateur=?";
 	private final static String DELETE = "DELETE FROM UTILISATEUR WHERE noUtilisateur=?";
 	private final static String UPDATE = "UPDATE UTILISATEUR SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, codePostal=?, ville=?, motDePasse=? WHERE noUtilisateur=?";
-	private final static String SELECT_ALL= "SELECT * FROM UTILISATEUR" ; 
+	private final static String SELECT_ALL= "SELECT * FROM UTILISATEURS" ; 
 
 	@Override
 	public void insert(Utilisateur nouvelUtilisateur) throws DALException {
@@ -38,6 +36,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			stmt.setString(7, nouvelUtilisateur.getCodePostal());
 			stmt.setString(8, nouvelUtilisateur.getVille());
 			stmt.setString(9, nouvelUtilisateur.getMotDePasse());
+			stmt.setInt(10, nouvelUtilisateur.getCredit());
+			stmt.setInt(11, nouvelUtilisateur.getAdministrateur());
 
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -130,16 +130,16 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	private Utilisateur map(ResultSet rs) throws SQLException {
-		int noUtilisateur = rs.getInt("noUtilisateur");
+		int noUtilisateur = rs.getInt("no_Utilisateur");
 		String pseudo = rs.getString("pseudo");
 		String nom = rs.getString("nom");
 		String prenom = rs.getString("prenom");
 		String email = rs.getString("email");
 		String telephone = rs.getString("telephone");
 		String rue = rs.getString("rue");
-		String codePostal = rs.getString("codePostal");
+		String codePostal = rs.getString("code_postal");
 		String ville = rs.getString("ville");
-		String motDePasse = rs.getString("motDePasse");
+		String motDePasse = rs.getString("mot_de_passe");
 		int credit = rs.getInt("credit");
 
 		Utilisateur utilisateur = null;

@@ -1,5 +1,7 @@
 package fr.eni.enchere.bll;
 
+import java.util.List;
+
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
@@ -26,7 +28,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	@Override
 	public Utilisateur inscrireUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, Integer credit) throws BLLException {
-
+		
+		
 		BLLException be = new BLLException();
 
 		validationPseudo(pseudo, be);
@@ -43,9 +46,10 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		if (be.hasErreur()) {
 			throw be;
 		}
-
+		
 		Utilisateur nouvelUtilisateur = null;
-
+		nouvelUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit);
+		
 		try {
 			dao.insert(nouvelUtilisateur);
 		} catch (DALException e) {
@@ -56,66 +60,6 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		return nouvelUtilisateur;
 	}
 
-	private void validationCredit(Integer credit, BLLException be) {
-		if (credit == null || credit < 0) {
-			be.ajouterErreur(new ParameterException("Le credit ne peut pas être inférieur à 0"));
-		}
-	}
-
-	private void validationMotDePasse(String motDePasse, BLLException be) {
-		if (motDePasse == null || motDePasse.isBlank() || motDePasse.length() > 30) {
-			be.ajouterErreur(new ParameterException("Le mot de passe doit contenir au maximum 30 caractères"));
-		}
-
-	}
-
-	private void validationVille(String ville, BLLException be) {
-		if (ville == null || ville.isBlank() || ville.length() > 50) {
-			be.ajouterErreur(new ParameterException("Le ville de passe doit contenir au maximum 50 caractères"));
-		}
-	}
-
-	private void validationCodePostal(String codePostal, BLLException be) {
-		if (codePostal == null || codePostal.isBlank() || codePostal.length() > 10) {
-			be.ajouterErreur(new ParameterException("Le code postal de passe doit contenir au maximum 10 caractères"));
-		}
-	}
-
-	private void validationRue(String rue, BLLException be) {
-		if (rue == null || rue.isBlank() || rue.length() > 30) {
-			be.ajouterErreur(new ParameterException("Le rue de passe doit contenir au maximum 30 caractères"));
-		}
-	}
-
-	private void validationTelephone(String telephone, BLLException be) {
-		if (telephone == null || telephone.isBlank() || telephone.length() > 15) {
-			be.ajouterErreur(new ParameterException("Le telephone de passe doit contenir au maximum 15 caractères"));
-		}
-	}
-
-	private void validationEmail(String email, BLLException be) {
-		if (email == null || email.isBlank() || email.length() > 50) {
-			be.ajouterErreur(new ParameterException("Le email de passe doit contenir au maximum 50 caractères"));
-		}
-	}
-
-	private void validationPrenom(String prenom, BLLException be) {
-		if (prenom == null || prenom.isBlank() || prenom.length() > 30) {
-			be.ajouterErreur(new ParameterException("Le prenom de passe doit contenir au maximum 30 caractères"));
-		}
-	}
-
-	private void validationNom(String nom, BLLException be) {
-		if (nom == null || nom.isBlank() || nom.length() > 30) {
-			be.ajouterErreur(new ParameterException("Le nom de passe doit contenir au maximum 30 caractères"));
-		}
-	}
-
-	private void validationPseudo(String pseudo, BLLException be) {
-		if (pseudo == null || pseudo.isBlank() || pseudo.length() > 30) {
-			be.ajouterErreur(new ParameterException("Le prenom de passe doit contenir au maximum 30 caractères"));
-		}
-	}
 
 	@Override
 	public void modifierUtilisateur(Utilisateur utilisateurAModifier) throws BLLException {
@@ -145,6 +89,26 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
+	public void supprimerUtilisateur(Integer noUtilisateur) throws BLLException {
+		
+		BLLException be = new BLLException();
+		
+		verificationNoUtilisateur(noUtilisateur, be);
+		
+		if(be.hasErreur()) {
+			throw be;
+		}
+		
+		try {
+			dao.delete(noUtilisateur);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+	@Override
 	public Utilisateur afficherUtilisateur(Integer noUtilisateur) throws BLLException {
 		try {
 			return dao.selectById(noUtilisateur);
@@ -153,15 +117,85 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 			throw new BLLException(e);
 		}
 	}
-
+	
 	@Override
-	public void supprimerUtilisateur(Integer noUtilisateur) throws BLLException {
+	public List<Utilisateur> getAllUtilisateurs() throws BLLException {
 		try {
-			dao.delete(noUtilisateur);
+			return dao.selectAll();
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new BLLException(e);
 		}
 	}
+
+	private void verificationNoUtilisateur(Integer noUtilisateur, BLLException be) {
+		if (noUtilisateur == null || noUtilisateur < 0) {
+			be.ajouterErreur(new ParameterException("Le numero utilisateur ne peut pas être inférieur à 0"));
+		}
+	}
+	
+	private void validationCredit(Integer credit, BLLException be) {
+		if (credit == null || credit < 0) {
+			be.ajouterErreur(new ParameterException("Le credit ne peut pas être inférieur à 0"));
+		}
+	}
+
+	private void validationMotDePasse(String motDePasse, BLLException be) {
+		if (motDePasse == null || motDePasse.isBlank() || motDePasse.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le mot de passe doit contenir au maximum 30 caractères"));
+		}
+
+	}
+
+	private void validationVille(String ville, BLLException be) {
+		if (ville == null || ville.isBlank() || ville.length() > 50) {
+			be.ajouterErreur(new ParameterException("La ville doit contenir au maximum 50 caractères"));
+		}
+	}
+
+	private void validationCodePostal(String codePostal, BLLException be) {
+		if (codePostal == null || codePostal.isBlank() || codePostal.length() > 10) {
+			be.ajouterErreur(new ParameterException("Le code postal doit contenir au maximum 10 caractères"));
+		}
+	}
+
+	private void validationRue(String rue, BLLException be) {
+		if (rue == null || rue.isBlank() || rue.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le rue doit contenir au maximum 30 caractères"));
+		}
+	}
+
+	private void validationTelephone(String telephone, BLLException be) {
+		if (telephone == null || telephone.isBlank() || telephone.length() > 15) {
+			be.ajouterErreur(new ParameterException("Le telephone doit contenir au maximum 15 caractères"));
+		}
+	}
+
+	private void validationEmail(String email, BLLException be) {
+		if (email == null || email.isBlank() || email.length() > 50) {
+			be.ajouterErreur(new ParameterException("Le email doit contenir au maximum 50 caractères"));
+		}
+	}
+
+	private void validationPrenom(String prenom, BLLException be) {
+		if (prenom == null || prenom.isBlank() || prenom.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le prenom doit contenir au maximum 30 caractères"));
+		}
+	}
+
+	private void validationNom(String nom, BLLException be) {
+		if (nom == null || nom.isBlank() || nom.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le nom doit contenir au maximum 30 caractères"));
+		}
+	}
+
+	private void validationPseudo(String pseudo, BLLException be) {
+		if (pseudo == null || pseudo.isBlank() || pseudo.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le prenom doit contenir au maximum 30 caractères"));
+		}
+	}
+
+
+
 
 }

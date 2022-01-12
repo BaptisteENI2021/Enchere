@@ -1,5 +1,7 @@
 package fr.eni.enchere.bll;
 
+import java.util.List;
+
 import fr.eni.enchere.bo.Utilisateur;
 
 public interface UtilisateurManager {
@@ -11,5 +13,7 @@ public interface UtilisateurManager {
 	public Utilisateur afficherUtilisateur (Integer noUtilisateur) throws BLLException;
 	
 	public void supprimerUtilisateur (Integer noUtilisateur) throws BLLException;
+	
+	public List<Utilisateur> getAllUtilisateurs()throws BLLException;
 
 }

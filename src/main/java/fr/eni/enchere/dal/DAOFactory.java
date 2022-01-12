@@ -1,19 +1,16 @@
 package fr.eni.enchere.dal;
 
-import fr.eni.enchere.dal.mock.ArticleDAOImplMock;
-import fr.eni.enchere.dal.mock.CategorieDAOImplMock;
-import fr.eni.enchere.dal.mock.EnchereDAOImplMock;
-import fr.eni.enchere.dal.mock.RetraitDAOImplMock;
-import fr.eni.enchere.dal.mock.UtilisateurDAOImplMock;
+import fr.eni.enchere.dal.jdbc.UtilisateurDAOImpl;
+
 
 public class DAOFactory {
 
 	
 	public static UtilisateurDAO getInstance() {
-		return new UtilisateurDAOImplMock();
+		return new UtilisateurDAOImpl();
 
 	}
-	
+	/**
 	public static ArticleDAO getInstance() {
 		return new ArticleDAOImplMock();
 
@@ -33,7 +30,7 @@ public class DAOFactory {
 		return new CategorieDAOImplMock();
 
 	}
-	
+**/
 	
 	
 	

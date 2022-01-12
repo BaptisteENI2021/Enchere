@@ -16,7 +16,7 @@ public class Utilisateur {
 	private String ville;
 	private String motDePasse;
 	private Integer credit = 150;
-	private boolean administrateur;
+	private int administrateur = 1;
 
 	private List<Article> listeArticles = new ArrayList<>();
 	private List<Enchere> listeEncheres = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur,
+			String rue, String codePostal, String ville, String motDePasse, Integer credit, int administrateur,
 			List<Article> listeArticles, List<Enchere> listeEncheres) {
 		super();
 		this.noUtilisateur = noUtilisateur;
@@ -61,6 +61,37 @@ public class Utilisateur {
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 		this.credit = credit;
+	}
+
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, Integer credit) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+	}
+
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, Integer credit, int administrateur) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.administrateur = administrateur;
 	}
 
 	public Integer getNoUtilisateur() {
@@ -151,11 +182,11 @@ public class Utilisateur {
 		this.credit = credit;
 	}
 
-	public boolean isAdministrateur() {
+	public int getAdministrateur() {
 		return administrateur;
 	}
 
-	public void setAdministrateur(boolean administrateur) {
+	public void setAdministrateur(int administrateur) {
 		this.administrateur = administrateur;
 	}
 
@@ -178,7 +209,7 @@ public class Utilisateur {
 	@Override
 	public String toString() {
 		return String.format(
-				"Utilisateur [noUtilisateur=%s, pseudo=%s, nom=%s, prenom=%s, email=%s, telephone=%s, rue=%s, codePostal=%s, ville=%s, motDePasse=%s, credit=%s, administrateur=%s, listeArticles=%s, listeEncheres=%s]",
+				"Utilisateur [noUtilisateur=%s, pseudo=%s, nom=%s, prenom=%s, email=%s, telephone=%s, rue=%s, codePostal=%s, ville=%s, motDePasse=%s, credit=%s, administrateur=%s, listeArticles=%s, listeEncheres=%s]%n",
 				noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,
 				administrateur, listeArticles, listeEncheres);
 	}
