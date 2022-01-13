@@ -6,17 +6,26 @@ import java.util.List;
 public class Categorie {
 
 	private String libelle;
-	
+	private Integer noCategorie;
 	private List<Article> listeArticles = new ArrayList<>();
 
 	public Categorie() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Categorie(String libelle, List<Article> listeArticles) {
+	public Categorie(String libelle, List<Article> listeArticles, Integer noCategorie) {
 		super();
 		this.libelle = libelle;
 		this.listeArticles = listeArticles;
+		this.noCategorie = noCategorie;
+	}
+
+	public Integer getNoCategorie() {
+		return noCategorie;
+	}
+
+	public void setNoCategorie(Integer noCategorie) {
+		this.noCategorie = noCategorie;
 	}
 
 	public String getLibelle() {
@@ -37,9 +46,7 @@ public class Categorie {
 
 	@Override
 	public String toString() {
-		return String.format("Categorie [libelle=%s, listeArticles=%s]", libelle, listeArticles);
+		return String.format("Categorie [libelle=%s, listeArticles=%s, noCategorie=%s]", libelle, listeArticles);
 	}
-
-	
 
 }
