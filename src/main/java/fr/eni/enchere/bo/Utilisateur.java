@@ -17,6 +17,7 @@ public class Utilisateur {
 	private String motDePasse;
 	private Integer credit = 150;
 	private int administrateur = 1;
+	private int test = 0;
 
 	private List<Article> listeArticles = new ArrayList<>();
 	private List<Enchere> listeEncheres = new ArrayList<>();
