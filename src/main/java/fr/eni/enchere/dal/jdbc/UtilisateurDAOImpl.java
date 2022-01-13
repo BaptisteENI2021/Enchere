@@ -38,6 +38,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			stmt.setString(9, nouvelUtilisateur.getMotDePasse());
 			stmt.setInt(10, nouvelUtilisateur.getCredit());
 			stmt.setInt(11, nouvelUtilisateur.getAdministrateur());
+			
 
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -60,13 +61,14 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			
 			stmt.setString(1, utilisateurAModifier.getPseudo());
 			stmt.setString(2, utilisateurAModifier.getNom());
-			stmt.setString(9, utilisateurAModifier.getPrenom());
-			stmt.setString(3, utilisateurAModifier.getEmail());
-			stmt.setString(4, utilisateurAModifier.getTelephone());
-			stmt.setString(5, utilisateurAModifier.getRue());
-			stmt.setString(6, utilisateurAModifier.getCodePostal());
-			stmt.setString(7, utilisateurAModifier.getVille());
-			stmt.setString(8, utilisateurAModifier.getMotDePasse());
+			stmt.setString(3, utilisateurAModifier.getPrenom());
+			stmt.setString(4, utilisateurAModifier.getEmail());
+			stmt.setString(5, utilisateurAModifier.getTelephone());
+			stmt.setString(6, utilisateurAModifier.getRue());
+			stmt.setString(7, utilisateurAModifier.getCodePostal());
+			stmt.setString(8, utilisateurAModifier.getVille());
+			stmt.setString(9, utilisateurAModifier.getMotDePasse());
+			stmt.setInt(10, utilisateurAModifier.getNoUtilisateur());
 			
 			stmt.executeUpdate();
 	} catch (SQLException e) {
