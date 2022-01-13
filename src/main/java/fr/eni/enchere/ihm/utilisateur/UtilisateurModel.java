@@ -19,7 +19,9 @@ public class UtilisateurModel {
 	
 	private Utilisateur utilisateur;
 	private List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
-	private String message;
+	private String message="";
+	private String confirmation;
+	private String nouveauMotDePasse;
 	
 	
 	public Utilisateur getUtilisateur() {
@@ -70,6 +72,18 @@ public class UtilisateurModel {
 		builder.append(message);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getConfirmation() {
+		return confirmation;
+	}
+	public void setConfirmation(String confirmation) {
+		this.confirmation = confirmation;
+	}
+	public String getNouveauMotDePasse() {
+		return nouveauMotDePasse;
+	}
+	public void setNouveauMotDePasse(String nouveauMotDePasse) {
+		this.nouveauMotDePasse = nouveauMotDePasse;
 	}
 	
 	

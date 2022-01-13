@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="UtilisateurCreerServlet" method="POST">
+<form action="UtilisateurServlet" method="POST">
 Pseudo: <input type="text" name="pseudo" value="${model.utilisateur.pseudo}"/>
 Nom: <input type="text" name="nom" value="${model.utilisateur.nom}"/> <br>
 Prénom: <input type="text" name="prenom" value="${model.utilisateur.prenom}"/> 
@@ -17,15 +17,18 @@ Téléphone: <input type="text" name="telephone" value="${model.utilisateur.tele
 Rue: <input type="text" name="rue" value="${model.utilisateur.rue}"/> <br>
 Code postal: <input type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
 Ville: <input type="text" name="ville" value="${model.utilisateur.ville}"/> <br>
-Mot de passe: <input type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
-Confirmation: <input type="password" name="confirmation" value="${model.utilisateur.confirmation}"/> <br>
+Mot de passe: <input type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/> <br>
+Nouveau mot de passe: <input type="password" name="motDePasse" value="${model.utilisateur.nouveauMotDePasse}"/> <br>
+Confirmation: <input type="password" name="confirmation" value="${model.utilisateur.confirmation}"/>
+
 <input type="submit" name="creer" value="Créer"/>
-<input type="submit" name="annuler" value="annuler"/>
+<input type="submit" name="annuler" value="Annuler"/>
 </form>
 
-
+<p> Crédit ${model.utilisateur.credit} </p>
 
 <p>${model.message} </p>
+
 
 </body>
 </html>
