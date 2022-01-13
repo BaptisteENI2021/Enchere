@@ -11,7 +11,7 @@ import fr.eni.enchere.bo.Utilisateur;
 
 public interface ArticleManager {
 	
-	public Article vendreArticle(String nomArticle, String description, LocalDate dateDebutEncheres,LocalDate dateFinEncheres, Integer prixInitial, Integer noCategorie) throws BLLException;
+	public void vendreArticle(Article article) throws BLLException;
 	
 	public void supprimerUnArticle(Integer noArticle) throws BLLException;
 	

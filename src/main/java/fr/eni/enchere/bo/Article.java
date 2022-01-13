@@ -218,6 +218,21 @@ public class Article {
 		
 		
 	}
+	public Article( String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, Integer prixInitial, Integer prixDeVente, Integer noUtilisateur, Integer noCategorie) {
+		super();
+		
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixDeVente = prixDeVente;
+		
+		
+		
+	}
+
 
 	
 	

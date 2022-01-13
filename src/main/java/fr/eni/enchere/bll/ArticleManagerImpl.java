@@ -32,33 +32,26 @@ public class ArticleManagerImpl implements ArticleManager {
 	private static ArticleDAO dao = DAOFactory.getInstanceArticle();
 
 	@Override
-	public Article vendreArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, Integer prixInitial, Categorie categorie) throws BLLException {
+	public void vendreArticle(Article article) throws BLLException {
 
 		BLLException be = new BLLException();
 
-		validationNomArticle(nomArticle, be);
-		validationDescription(description, be);
-		validationDateDebutEnchere(dateDebutEncheres, be);
-		validationPrixInitial(prixInitial, be);
+		validationNomArticle(article.getNomArticle(), be);
+		validationDescription(article.getDescription(), be);
+		validationDateDebutEnchere(article.getDateDebutEncheres(), be);
+		validationPrixInitial(article.getPrixInitial(), be);
 
 		if (be.hasErreur()) {
 
 			throw be;
 		}
 
-		Article nouvelArticle = null;
-		nouvelArticle = new Article(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
-				categorie);
-
 		try {
-			dao.insert(nouvelArticle);
+			dao.insert(article);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e);
 		}
-
-		return nouvelArticle;
 	}
 
 	@Override
@@ -101,7 +94,7 @@ public class ArticleManagerImpl implements ArticleManager {
 
 	@Override
 	public List<Article> getAllArticlesVendeur(Utilisateur utilisateur) throws BLLException {
-		
+
 		try {
 			return dao.selectByUtilisateurVendeur(utilisateur);
 		} catch (DALException e) {
@@ -119,10 +112,10 @@ public class ArticleManagerImpl implements ArticleManager {
 			throw new BLLException(e);
 		}
 	}
-	
+
 	@Override
 	public List<Article> getAllArticlesByCategories(Categorie categorie) throws BLLException {
-		
+
 		try {
 			return dao.selectByCategorie(categorie);
 		} catch (DALException e) {
@@ -130,7 +123,6 @@ public class ArticleManagerImpl implements ArticleManager {
 			throw new BLLException(e);
 		}
 	}
-		
 
 	private void validationNoArticle(Integer noArticle, BLLException be) {
 		if (noArticle == null || noArticle < 0) {
@@ -175,6 +167,5 @@ public class ArticleManagerImpl implements ArticleManager {
 		}
 
 	}
-
 
 }
