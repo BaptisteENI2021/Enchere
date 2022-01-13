@@ -80,6 +80,7 @@ public class UtilisateurCreerServlet extends HttpServlet {
 				e.printStackTrace();
 				model.setMessage(e.getMessage());
 
+				
 			}
 
 		}
