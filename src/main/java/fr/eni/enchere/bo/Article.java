@@ -173,7 +173,52 @@ public class Article {
 				noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,prixDeVente,listeEncheres, utilisateur, categorie, retrait);
 	}
 
-	
 
+
+	/**
+	 * Constructeur.
+	 * @param noArticle
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param prixInitial
+	 * @param prixDeVente
+	 * @param listeEncheres
+	 * @param utilisateur
+	 * @param categorie
+	 */
+	public Article(Integer noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, Integer prixInitial, Integer prixDeVente, 
+			Utilisateur utilisateur, Categorie categorie) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixDeVente = prixDeVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+	}
+
+	
+	public Article(Integer noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, Integer prixInitial, Integer prixDeVente, Integer noUtilisateur, Integer noCategorie) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixDeVente = prixDeVente;
+		
+		
+		
+	}
+
+	
 	
 }

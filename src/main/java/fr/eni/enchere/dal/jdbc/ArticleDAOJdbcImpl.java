@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Article;
@@ -29,6 +32,16 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?)";
 
 	private static final String UPDATE = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
+
+	private final static String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur=?";
+
+	private final static String SELECT_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
+
+	private final static String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
+
+	private final static String SELECT_BY_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur=?";
+
+	private final static String SELECT_BY_CATEGORIE = "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie=?";
 
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
@@ -84,32 +97,120 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public void delete(Integer noArticle) throws DALException {
-		// TODO Auto-generated method stub
+		try (Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(DELETE);
+			stmt.setInt(1, noArticle);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
 
 	}
 
 	@Override
 	public Article selectById(Integer noArticle) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		Article article = null;
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_NO_ARTICLE);
+			stmt.setInt(1, noArticle);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				article = map(rs);
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+
+		return article;
 	}
 
 	@Override
 	public List<Article> selectAll() throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Article> listeArticles = new ArrayList<Article>();
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
+			while (rs.next()) {
+				Article article = map(rs);
+				listeArticles.add(article);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+
+		}
+		return listeArticles;
+
 	}
 
 	@Override
 	public List<Article> selectByUtilisateurVendeur(Utilisateur utilisateur) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Article> listeArticles = new ArrayList<Article>();
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_UTILISATEUR);
+			Integer no_utilisateur = utilisateur.getNoUtilisateur();
+			pStmt.setInt(1, no_utilisateur);
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				Article article = map(rs);
+				listeArticles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+
+		return listeArticles;
+
 	}
 
 	@Override
 	public List<Article> selectByCategorie(Categorie categorie) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Article> listeArticles = new ArrayList<Article>();
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_CATEGORIE);
+			Integer no_categorie = categorie.getNoCategorie();
+			pStmt.setInt(1, no_categorie);
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				Article article = map(rs);
+				listeArticles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+
+		return listeArticles;
+
+	}
+
+	private Article map(ResultSet rs) throws SQLException {
+		Integer noArticle = rs.getInt("no_article");
+		String nomArticle = rs.getString("nom_article");
+		String description = rs.getString("description");
+		LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
+		LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+		Integer prixInitial = rs.getInt("prix_initial");
+		Integer prixDeVente = rs.getInt("prix_vente");
+		Integer noUtilisateur = rs.getInt("no_utilisateur");
+		Integer noCategorie = rs.getInt("no_categorie");
+
+		Article article = null;
+
+		article = new Article(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
+				prixDeVente, noUtilisateur, noCategorie);
+
+		return article;
 	}
 
 }
