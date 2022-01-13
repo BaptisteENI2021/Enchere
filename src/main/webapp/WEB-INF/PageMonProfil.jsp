@@ -25,8 +25,9 @@ Rue : ${model.utilisateur.rue}
 Code postal : ${model.utilisateur.codePostal}
 <br>
 Ville : ${model.utilisateur.ville}
+<br>
 
-<input type="submit" name="Modifier" value="Modifier"/>
+<button type="submit" name="Modifier">Modifier</button>
 
 </body>
 </html>

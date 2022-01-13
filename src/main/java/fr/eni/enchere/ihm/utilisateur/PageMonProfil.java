@@ -46,8 +46,8 @@ public class PageMonProfil extends HttpServlet {
 
 		String confirmation = request.getParameter("confirmation");
 		
-		if (request.getParameter("modifier") != null) {
-			WEBINF = "WEB-INF/PageModifierMonProfil.jsp";
+		if (request.getParameter("Modifier") != null) {
+			WEBINF = "PageModifierMonProfil";
 		}
 
 

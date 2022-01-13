@@ -59,10 +59,6 @@ public class PageModifierMonProfil extends HttpServlet {
 
 					model.setUtilisateur(utilisateur);
 
-					System.out.println("contact créé");
-
-					WEBINF = "/EssaiServlet";
-
 				}
 
 			} catch (BLLException e) {
