@@ -1,5 +1,6 @@
 package fr.eni.enchere.dal;
 
+import fr.eni.enchere.dal.jdbc.ArticleDAOJdbcImpl;
 import fr.eni.enchere.dal.jdbc.UtilisateurDAOImpl;
 
 
@@ -10,12 +11,12 @@ public class DAOFactory {
 		return new UtilisateurDAOImpl();
 
 	}
-	/**
-	public static ArticleDAO getInstance() {
-		return new ArticleDAOImplMock();
+	
+	public static ArticleDAO getInstanceArticle() {
+		return new ArticleDAOJdbcImpl();
 
 	}
-	
+	/**
 	public static RetraitDAO getInstance() {
 		return new RetraitDAOImplMock();
 

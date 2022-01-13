@@ -1,0 +1,180 @@
+package fr.eni.enchere.bll;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import fr.eni.enchere.bo.Article;
+import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.ArticleDAO;
+import fr.eni.enchere.dal.DALException;
+import fr.eni.enchere.dal.DAOFactory;
+import fr.eni.enchere.dal.UtilisateurDAO;
+
+public class ArticleManagerImpl implements ArticleManager {
+
+	/** SINGLETON **/
+	private static class ArticleManagerHolder {
+		private static ArticleManager instance = new ArticleManagerImpl();
+	}
+
+	private ArticleManagerImpl() {
+	}
+
+	public static ArticleManager getInstance() {
+		return ArticleManagerHolder.instance;
+	}
+
+	/** FIN SINGLETON **/
+
+	private static ArticleDAO dao = DAOFactory.getInstanceArticle();
+
+	@Override
+	public Article vendreArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, Integer prixInitial, Categorie categorie) throws BLLException {
+
+		BLLException be = new BLLException();
+
+		validationNomArticle(nomArticle, be);
+		validationDescription(description, be);
+		validationDateDebutEnchere(dateDebutEncheres, be);
+		validationPrixInitial(prixInitial, be);
+
+		if (be.hasErreur()) {
+
+			throw be;
+		}
+
+		Article nouvelArticle = null;
+		nouvelArticle = new Article(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
+				categorie);
+
+		try {
+			dao.insert(nouvelArticle);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+
+		return nouvelArticle;
+	}
+
+	@Override
+	public void supprimerUnArticle(Integer noArticle) throws BLLException {
+
+		BLLException be = new BLLException();
+
+		validationNoArticle(noArticle, be);
+
+		if (be.hasErreur()) {
+			throw be;
+		}
+
+		try {
+			dao.delete(noArticle);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void modifierArticle(Article articleAModifier) throws BLLException {
+
+		BLLException be = new BLLException();
+
+		validationNoArticle(articleAModifier.getNoArticle(), be);
+		validationPrixDeVente(articleAModifier.getPrixDeVente(), be);
+
+		if (be.hasErreur()) {
+			throw be;
+		}
+
+		try {
+			dao.update(articleAModifier);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
+
+	@Override
+	public List<Article> getAllArticlesVendeur(Utilisateur utilisateur) throws BLLException {
+		
+		try {
+			return dao.selectByUtilisateurVendeur(utilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
+
+	@Override
+	public List<Article> getAllArticle() throws BLLException {
+		try {
+			return dao.selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
+	
+	@Override
+	public List<Article> getAllArticlesByCategories(Categorie categorie) throws BLLException {
+		
+		try {
+			return dao.selectByCategorie(categorie);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
+		
+
+	private void validationNoArticle(Integer noArticle, BLLException be) {
+		if (noArticle == null || noArticle < 0) {
+			be.ajouterErreur(new ParameterException("Le numéro Article est inférieur à 0"));
+		}
+	}
+
+	private void validationNomArticle(String nomArticle, BLLException be) {
+		if (nomArticle == null || nomArticle.isBlank() || nomArticle.length() > 30) {
+			be.ajouterErreur(new ParameterException("Le nom Article est supérieur à 30 caractères"));
+		}
+	}
+
+	private void validationDescription(String description, BLLException be) {
+		if (description == null || description.isBlank() || description.length() > 300) {
+			be.ajouterErreur(new ParameterException("Le nom Article est supérieur à 300 caractères"));
+		}
+	}
+
+	private void validationDateDebutEnchere(LocalDate dateDebutEncheres, BLLException be) {
+		if (dateDebutEncheres.isBefore(LocalDate.now()) == true) {
+			be.ajouterErreur(new ParameterException("La date d'enchère n'est pas valide"));
+		}
+	}
+
+	private void validationDateFinEncheres(LocalDate dateFinEncheres, BLLException be) {
+		if (dateFinEncheres.isBefore(LocalDate.now()) == true) {
+			be.ajouterErreur(new ParameterException("La date d'enchère n'est pas valide"));
+		}
+	}
+
+	private void validationPrixDeVente(Integer prixDeVente, BLLException be) {
+		if (prixDeVente == null || prixDeVente < 0) {
+			be.ajouterErreur(new ParameterException("Le Prix de vente Article est inférieur à 0"));
+		}
+
+	}
+
+	private void validationPrixInitial(Integer prixInitial, BLLException be) {
+		if (prixInitial == null || prixInitial < 0) {
+			be.ajouterErreur(new ParameterException("Le Prix initial de l'Article est inférieur à 0"));
+		}
+
+	}
+
+
+}

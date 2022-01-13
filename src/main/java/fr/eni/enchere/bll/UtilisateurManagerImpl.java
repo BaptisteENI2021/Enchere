@@ -28,8 +28,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	@Override
 	public Utilisateur inscrireUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, Integer credit) throws BLLException {
-		
-		
+
 		BLLException be = new BLLException();
 
 		validationPseudo(pseudo, be);
@@ -46,20 +45,20 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		if (be.hasErreur()) {
 			throw be;
 		}
-		
+
 		Utilisateur nouvelUtilisateur = null;
-		nouvelUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit);
-		
+		nouvelUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse,
+				credit);
+
 		try {
 			dao.insert(nouvelUtilisateur);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e);
 		}
-		
+
 		return nouvelUtilisateur;
 	}
-
 
 	@Override
 	public void modifierUtilisateur(Utilisateur utilisateurAModifier) throws BLLException {
@@ -89,25 +88,23 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		}
 	}
 
-
 	@Override
 	public void supprimerUtilisateur(Integer noUtilisateur) throws BLLException {
-		
+
 		BLLException be = new BLLException();
-		
+
 		validationNoUtilisateur(noUtilisateur, be);
-		
-		if(be.hasErreur()) {
+
+		if (be.hasErreur()) {
 			throw be;
 		}
-		
+
 		try {
 			dao.delete(noUtilisateur);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@Override
 	public Utilisateur afficherUtilisateur(Integer noUtilisateur) throws BLLException {
@@ -118,7 +115,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 			throw new BLLException(e);
 		}
 	}
-	
+
 	@Override
 	public List<Utilisateur> getAllUtilisateurs() throws BLLException {
 		try {
@@ -129,13 +126,12 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		}
 	}
 
-
 	private void validationNoUtilisateur(Integer noUtilisateur, BLLException be) {
 		if (noUtilisateur == null || noUtilisateur < 0) {
 			be.ajouterErreur(new ParameterException("Le numero utilisateur ne peut pas être inférieur à 0"));
 		}
 	}
-	
+
 	private void validationCredit(Integer credit, BLLException be) {
 		if (credit == null || credit < 0) {
 			be.ajouterErreur(new ParameterException("Le credit ne peut pas être inférieur à 0"));
@@ -196,8 +192,5 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 			be.ajouterErreur(new ParameterException("Le prenom doit contenir au maximum 30 caractères"));
 		}
 	}
-
-
-
 
 }

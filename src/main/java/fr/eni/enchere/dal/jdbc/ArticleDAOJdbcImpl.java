@@ -41,12 +41,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pStmt.setDate(3, Date.valueOf(nouvelArticle.getDateDebutEncheres()));
 			pStmt.setDate(4, Date.valueOf(nouvelArticle.getDateFinEncheres()));
 			pStmt.setInt(5, nouvelArticle.getPrixInitial());
-			pStmt.setInt(6, nouvelArticle.getPrixInitial());
-			// TODO: modifier et mettre prix de vente
+			pStmt.setInt(6, nouvelArticle.getPrixDeVente());
 			pStmt.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
-			pStmt.setString(8, nouvelArticle.getCategorie().getLibelle());
+			pStmt.setInt(8, nouvelArticle.getCategorie().getNoCategorie());
 			;
-			// TODO: modifier setString en setInt et get.Libelle par getNo
 
 			pStmt.executeUpdate();
 			ResultSet rs = pStmt.getGeneratedKeys();
@@ -71,11 +69,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pStmt.setDate(3, Date.valueOf(articleAModifier.getDateDebutEncheres()));
 			pStmt.setDate(4, Date.valueOf(articleAModifier.getDateFinEncheres()));
 			pStmt.setInt(5, articleAModifier.getPrixInitial());
-			pStmt.setInt(6, articleAModifier.getPrixInitial());
-			// TODO: modifier et mettre prix de vente
+			pStmt.setInt(6, articleAModifier.getPrixDeVente());
 			pStmt.setInt(7, articleAModifier.getUtilisateur().getNoUtilisateur());
-			pStmt.setString(8, articleAModifier.getCategorie().getLibelle());
-			// TODO: modifier setString en setInt et get.Libelle par getNo
+			pStmt.setInt(8, articleAModifier.getCategorie().getNoCategorie());
 			pStmt.setInt(9, articleAModifier.getNoArticle());
 
 			pStmt.executeUpdate();

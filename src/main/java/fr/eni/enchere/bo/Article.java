@@ -12,6 +12,7 @@ public class Article {
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
 	private Integer prixInitial;
+	private Integer prixDeVente;
 	
 	private List<Enchere> listeEncheres = new ArrayList<>();
 	private Utilisateur utilisateur;
@@ -23,9 +24,24 @@ public class Article {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
+	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Integer prixInitial, Categorie categorie) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.categorie = categorie;
+	}
+
+
+
 
 	public Article(Integer noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, Integer prixInitial,List<Enchere> listeEncheres, Utilisateur utilisateur, Categorie categorie, Retrait retrait) {
+			LocalDate dateFinEncheres, Integer prixInitial,Integer prixDeVente,List<Enchere> listeEncheres, Utilisateur utilisateur, Categorie categorie, Retrait retrait) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -33,6 +49,7 @@ public class Article {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
+		this.prixDeVente = prixDeVente;
 
 		this.listeEncheres = listeEncheres;
 		this.utilisateur = utilisateur;
@@ -99,6 +116,14 @@ public class Article {
 	public void setPrixInitial(Integer prixInitial) {
 		this.prixInitial = prixInitial;
 	}
+	
+	public Integer getPrixDeVente() {
+		return prixDeVente;
+	}
+	
+	public void setPrixDeVente(Integer prixDeVente) {
+		this.prixDeVente = prixDeVente;
+	}
 
 	public List<Enchere> getListeEncheres() {
 		return listeEncheres;
@@ -138,13 +163,14 @@ public class Article {
 	public void setRetrait(Retrait retrait) {
 		this.retrait = retrait;
 	}
+	
 
 
 	@Override
 	public String toString() {
 		return String.format(
-				"Article [noArticle=%s, nomArticle=%s, description=%s, dateDebutEncheres=%s, dateFinEncheres=%s, prixInitial=%s,listeEncheres=%s, utilisateur=%s, categorie=%s, retrait=%s]",
-				noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,listeEncheres, utilisateur, categorie, retrait);
+				"Article [noArticle=%s, nomArticle=%s, description=%s, dateDebutEncheres=%s, dateFinEncheres=%s, prixInitial=%s,prixDeVente=%s,listeEncheres=%s, utilisateur=%s, categorie=%s, retrait=%s]",
+				noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,prixDeVente,listeEncheres, utilisateur, categorie, retrait);
 	}
 
 	
