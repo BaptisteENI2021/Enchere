@@ -11,18 +11,17 @@ import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bll.UtilisateurManagerImpl;
 
 /**
- * Servlet implementation class PageAccueilNonConnecte
+ * Servlet implementation class PageMonProfil
  */
-@WebServlet("/PageAccueilNonConnecteServlet")
-public class PageAccueilNonConnecteServlet extends HttpServlet {
+@WebServlet("/PageMonProfil")
+public class PageMonProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager manager = UtilisateurManagerImpl.getInstance();
-
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PageAccueilNonConnecteServlet() {
+    public PageMonProfil() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,14 +30,31 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
+		String WEBINF = "WEB-INF/PageMonProfil.jsp";
 
-		UtilisateurModel model = new UtilisateurModel();
-		String WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
+		
+		String pseudo = request.getParameter("pseudo");
+		String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String codePostal = request.getParameter("codePostal");
+		String ville = request.getParameter("ville");
+		String motDePasse = request.getParameter("motDePasse");
 
-		if (request.getParameter("InscrireConnecte") != null) {}
+		String confirmation = request.getParameter("confirmation");
+		
+		if (request.getParameter("modifier") != null) {
+			WEBINF = "WEB-INF/PageModifierMonProfil.jsp";
+		}
+
+
 		
 		request.setAttribute("model", model);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
+
 	}
 
 	/**

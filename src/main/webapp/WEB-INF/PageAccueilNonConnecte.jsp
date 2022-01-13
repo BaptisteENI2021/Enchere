@@ -10,7 +10,7 @@
 <body>
 
 <h2>ENI-Enchères</h2>
-<a href="/Pageconnexion.jsp" name="InscrireConnecte">S'inscrire - Se connecter</a>
+<a href="http://localhost:8080/Enchere/PageConnexionServlet" id="InscrireConnecte">S'inscrire - Se connecter</a>
 
 <h3>Liste des enchères</h3>
 

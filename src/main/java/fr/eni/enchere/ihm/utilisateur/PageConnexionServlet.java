@@ -32,6 +32,10 @@ public class PageConnexionServlet extends HttpServlet {
 		UtilisateurModel model = new UtilisateurModel();
 		String WEBINF = "WEB-INF/PageConnexion.jsp";
 		
+		if (request.getParameter("CreerUnCompte") != null) {
+			WEBINF = "UtilisateurCreerServlet";
+		}
+		
 		
 		
 		request.setAttribute("model", model);

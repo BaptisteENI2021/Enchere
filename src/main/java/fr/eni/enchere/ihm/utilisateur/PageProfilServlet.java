@@ -7,22 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.enchere.bll.UtilisateurManager;
-import fr.eni.enchere.bll.UtilisateurManagerImpl;
-
 /**
- * Servlet implementation class PageAccueilNonConnecte
+ * Servlet implementation class MonProfilServlet
  */
-@WebServlet("/PageAccueilNonConnecteServlet")
-public class PageAccueilNonConnecteServlet extends HttpServlet {
+@WebServlet("/PageProfilServlet")
+public class PageProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurManager manager = UtilisateurManagerImpl.getInstance();
-
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PageAccueilNonConnecteServlet() {
+    public PageProfilServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,12 +28,11 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		UtilisateurModel model = new UtilisateurModel();
-		String WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
-
-		if (request.getParameter("InscrireConnecte") != null) {}
+	
 		
 		request.setAttribute("model", model);
-		request.getRequestDispatcher(WEBINF).forward(request, response);
+		request.getRequestDispatcher("WEB-INF/PageProfil.jsp").forward(request, response);
+
 	}
 
 	/**
