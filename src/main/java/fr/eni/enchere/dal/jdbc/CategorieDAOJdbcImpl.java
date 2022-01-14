@@ -7,8 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.CategorieDAO;
@@ -26,6 +29,11 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	
 	private final static String SELECT_BY_NO_CATEGORIE = "SELECT * FROM CATEGORIES WHERE no_categorie=?";
 
+	private final static String SELECT_ALL = "SELECT * FROM CATEGORIES";
+	
+	private final static String SELECT_BY_LIBELLE = "SELECT * FROM CATEGORIES WHERE libelle=?";
+	
+	
 	@Override
 	public void insert(Categorie nouvelleCategorie) throws DALException {
 		// TODO Auto-generated method stub
@@ -69,19 +77,49 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	@Override
 	public Categorie selectByLibelle(String libelle) throws DALException {
-		
-		
-		
-		return null;
+		Categorie categorie = null;
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_LIBELLE);
+			stmt.setString(1, libelle);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				categorie = map(rs);
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+
+		return categorie;
 	}
+		
+		
+	
 
 	@Override
 	public List<Categorie> selectAll() throws DALException {
+		List<Categorie> listeCategories = new ArrayList<Categorie>();
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
+			while (rs.next()) {
+				Categorie categorie  = map(rs);
+				listeCategories.add(categorie);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+
+		}
+		return listeCategories;
 		
-		
-		
-		return null;
 	}
+	
 
 	private Categorie map(ResultSet rs) throws SQLException {
 		Integer noCategorie = rs.getInt("no_categorie");

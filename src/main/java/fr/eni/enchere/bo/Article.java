@@ -39,6 +39,7 @@ public class Article {
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.categorie = categorie;
+		noRetrait = noArticle;
 	}
 
 
@@ -59,6 +60,7 @@ public class Article {
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
 		this.retrait = retrait;
+		noRetrait = noArticle;
 	}
 
 
@@ -205,6 +207,7 @@ public class Article {
 		this.prixDeVente = prixDeVente;
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
+		noRetrait = noArticle;
 	}
 
 	
@@ -218,7 +221,7 @@ public class Article {
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.prixDeVente = prixDeVente;
-		
+		noRetrait = noArticle;
 		
 		
 	}
@@ -232,7 +235,7 @@ public class Article {
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.prixDeVente = prixDeVente;
-		
+		noRetrait = noArticle;
 		
 		
 	}
@@ -261,6 +264,7 @@ public class Article {
 		this.prixDeVente = prixDeVente;
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
+		noRetrait = noArticle;
 		
 	}
 

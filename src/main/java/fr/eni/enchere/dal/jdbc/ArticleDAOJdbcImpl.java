@@ -20,6 +20,7 @@ import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 
+
 /**
  * Classe en charge de
  * 
@@ -45,6 +46,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private final static String SELECT_BY_CATEGORIE = "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie=?";
 
+	private final static String SELECT_BY_NOM_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ?";
+	
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
 
@@ -197,9 +200,27 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public List<Article> selectByLibelle(String libelle) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Article> articles = new ArrayList<Article>();
+		
+		try(Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_NOM_ARTICLE);
+			pStmt.setString(1, '%'+libelle+'%');
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				Article article = map(rs);
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+		
+		return articles;
 	}
+		
+		
+	
 
 	private Article map(ResultSet rs) throws SQLException {
 		Integer noArticle = rs.getInt("no_article");
