@@ -12,8 +12,6 @@ public interface RetraitDAO {
 	
 	void delete(Integer noArticle) throws DALException;
 	
-	List<Retrait> selectAll() throws DALException;
-	
-	void retraitByNoArticle (Integer noArticle) throws DALException;
+	Retrait retraitByNoArticle (Integer noArticle) throws DALException;
 	
 }

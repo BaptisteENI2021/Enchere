@@ -20,7 +20,8 @@ public class Retrait {
 		this.ville = ville;
 		this.article = article;
 	}
-
+	
+	
 
 	public String getRue() {
 		return rue;
