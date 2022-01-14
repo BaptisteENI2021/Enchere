@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
@@ -25,6 +26,41 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 
 	private static UtilisateurDAO dao = DAOFactory.getInstance();
 
+	
+	
+	public static void validerLogin(Utilisateur SaisiUtilisateur) {
+		
+		String pseuso = SaisiUtilisateur.getPseudo();
+		String email = SaisiUtilisateur.getEmail();
+		String motDePasse = SaisiUtilisateur.getMotDePasse();
+		
+		
+		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
+		
+		try {
+			listeUtilisateurs = DAOFactory.getInstance().selectAll();
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for (Utilisateur utilisateur: listeUtilisateurs) {
+			if((email.equals(utilisateur.getEmail()) && motDePasse.equals(utilisateur.getMotDePasse()) 
+					)) {
+			
+		
+		
+			}	}
+		
+		
+		
+	}
+		
+		
+	
+	
+	
+	
 	@Override
 	public Utilisateur inscrireUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, Integer credit) throws BLLException {

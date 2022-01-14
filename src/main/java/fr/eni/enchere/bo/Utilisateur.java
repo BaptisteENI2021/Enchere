@@ -215,4 +215,6 @@ public class Utilisateur {
 				administrateur, listeArticles, listeEncheres);
 	}
 
+	
+	
 }

@@ -69,7 +69,7 @@ public class UtilisateurCreerServlet extends HttpServlet {
 
 					System.out.println("contact créé");
 
-					WEBINF = "/EssaiServlet";
+					WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
 
 				}
 
@@ -86,7 +86,7 @@ public class UtilisateurCreerServlet extends HttpServlet {
 		System.out.println(request.getParameter("annuler") != null);
 
 		if (request.getParameter("annuler") != null) {
-			WEBINF = "/EssaiServlet";
+			WEBINF = "\"WEB-INF/PageAccueilNonConnecte.jsp\"";
 			System.out.println("J'ai appuyé sur annuler");
 		}
 
