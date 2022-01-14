@@ -1,17 +1,17 @@
-package fr.eni.enchere.bll;
+package fr.eni.enchere.bll.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
+import fr.eni.enchere.bll.ArticleManager;
+import fr.eni.enchere.bll.BLLException;
+import fr.eni.enchere.bll.ParameterException;
 import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Categorie;
-import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
-import fr.eni.enchere.dal.UtilisateurDAO;
 
 public class ArticleManagerImpl implements ArticleManager {
 

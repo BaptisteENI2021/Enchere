@@ -1,8 +1,11 @@
-package fr.eni.enchere.bll;
+package fr.eni.enchere.bll.test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bll.BLLException;
+import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bll.impl.UtilisateurManagerImpl;
 import fr.eni.enchere.bo.Utilisateur;
 
 public class TestBll {

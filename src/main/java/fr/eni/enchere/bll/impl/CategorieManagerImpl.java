@@ -1,10 +1,13 @@
 /**
  * 
  */
-package fr.eni.enchere.bll;
+package fr.eni.enchere.bll.impl;
 
 import java.util.List;
 
+import fr.eni.enchere.bll.BLLException;
+import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.ParameterException;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.dal.CategorieDAO;
 import fr.eni.enchere.dal.DALException;
