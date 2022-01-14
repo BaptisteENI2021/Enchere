@@ -22,20 +22,20 @@ public class TestBllArticle {
 		
 		try {
 			
-			Utilisateur utilisateur = DAOFactory.getInstance().selectById(45);
-			Categorie categorie =  DAOFactory.getInstanceCategorie().selectById(1);
+			Utilisateur utilisateur = DAOFactory.getInstance().selectById(4);
+			Categorie categorie =  DAOFactory.getInstanceCategorie().selectById(4);
 			
-			Utilisateur utilisateur2 = DAOFactory.getInstance().selectById(42);
-			Categorie categorie2 =  DAOFactory.getInstanceCategorie().selectById(2);
+			Utilisateur utilisateur2 = DAOFactory.getInstance().selectById(5);
+			Categorie categorie2 =  DAOFactory.getInstanceCategorie().selectById(1);
 			
 			
-		manager.vendreArticle(new Article("Velo", "VTT qui va vite", LocalDate.of(2022, 11, 22),
+				manager.vendreArticle(new Article("Velo", "VTT qui va vite", LocalDate.of(2022, 11, 22),
 				LocalDate.of(2022, 11, 22), 500, 500, utilisateur, categorie));
 
-		manager.vendreArticle(new Article("Ballon", "Ballon de foot", LocalDate.of(2022, 01, 23),
-					LocalDate.of(2022, 01, 24), 300, 300, utilisateur2, categorie2));
+		
 
-
+		manager.vendreArticle(new Article("PC", "PC Gamer", LocalDate.of(2022, 01, 23),
+				LocalDate.of(2022, 01, 24), 300, 300, utilisateur2, categorie2));
 		
 		
 		
@@ -48,6 +48,15 @@ public class TestBllArticle {
 			e.printStackTrace();
 		}
 
+		
+		try {
+			System.out.println(manager.getAllArticle());
+		} catch (BLLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		
 	}
 
 }

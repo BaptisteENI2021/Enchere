@@ -19,6 +19,10 @@ public class Article {
 	private Categorie categorie;
 	private Retrait retrait;
 	
+	private String etatVente= "creer";
+	private int noRetrait;
+	
+	
 
 	public Article() {
 		// TODO Auto-generated constructor stub
@@ -258,6 +262,30 @@ public class Article {
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
 		
+	}
+
+
+
+	public String getEtatVente() {
+		return etatVente;
+	}
+
+
+
+	public void setEtatVente(String etatVente) {
+		this.etatVente = etatVente;
+	}
+
+
+
+	public int getNoRetrait() {
+		return noRetrait;
+	}
+
+
+
+	public void setNoRetrait(int noRetrait) {
+		this.noRetrait = noRetrait;
 	}
 
 
