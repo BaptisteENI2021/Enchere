@@ -17,23 +17,24 @@ import fr.eni.enchere.bll.UtilisateurManagerImpl;
 public class PageMonProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager manager = UtilisateurManagerImpl.getInstance();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PageMonProfil() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public PageMonProfil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		String WEBINF = "WEB-INF/PageMonProfil.jsp";
 
-		
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -45,22 +46,22 @@ public class PageMonProfil extends HttpServlet {
 		String motDePasse = request.getParameter("motDePasse");
 
 		String confirmation = request.getParameter("confirmation");
-		
+
 		if (request.getParameter("Modifier") != null) {
 			WEBINF = "PageModifierMonProfil";
 		}
 
-
-		
 		request.setAttribute("model", model);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

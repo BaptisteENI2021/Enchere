@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="UtilisateurServlet" method="POST">
+<form action="PageModifierProfil" method="POST">
 Pseudo: <input type="text" name="pseudo" value="${model.utilisateur.pseudo}"/>
 Nom: <input type="text" name="nom" value="${model.utilisateur.nom}"/> <br>
 Prénom: <input type="text" name="prenom" value="${model.utilisateur.prenom}"/> 

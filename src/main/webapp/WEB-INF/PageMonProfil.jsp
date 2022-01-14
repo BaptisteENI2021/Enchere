@@ -9,7 +9,7 @@
 <body>
 
 <h2>ENI-Encheres</h2>
-
+<form action="PageMonprofil" method="POST">
 Pseudo : ${model.utilisateur.pseudo}
 <br>
 Nom : ${model.utilisateur.nom}
@@ -28,6 +28,6 @@ Ville : ${model.utilisateur.ville}
 <br>
 
 <button type="submit" name="Modifier">Modifier</button>
-
+</form>
 </body>
 </html>

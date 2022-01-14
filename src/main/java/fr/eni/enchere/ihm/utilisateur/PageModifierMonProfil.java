@@ -19,22 +19,29 @@ import fr.eni.enchere.bo.Utilisateur;
 public class PageModifierMonProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager manager = UtilisateurManagerImpl.getInstance();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PageModifierMonProfil() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public PageModifierMonProfil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		String WEBINF = "WEB-INF/PageModifierMonProfil.jsp";
-
+		
+		if (model == null) {
+			model = new UtilisateurModel();
+		}
+		
 		if (request.getParameter("enregistrer") != null) {
 
 			String pseudo = request.getParameter("pseudo");
@@ -62,28 +69,26 @@ public class PageModifierMonProfil extends HttpServlet {
 				}
 
 			} catch (BLLException e) {
-				System.out.println("pas de contact");
 				e.printStackTrace();
 				model.setMessage(e.getMessage());
 
-				
 			}
 
-		}
-		
-		if (request.getParameter("supprimer") != null) {
-			WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
-		}
+			if (request.getParameter("supprimer") != null) {
+				WEBINF = "/PageAccueilNonConnecteServlet";
+			}
 
-		request.setAttribute("model", model);
-		request.getRequestDispatcher(WEBINF).forward(request, response);
-
+			request.setAttribute("model", model);
+			request.getRequestDispatcher("WEB-INF/PageModifierMonProfil.jsp").forward(request, response);
+		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

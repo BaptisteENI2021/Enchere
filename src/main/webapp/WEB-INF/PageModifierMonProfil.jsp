@@ -11,7 +11,7 @@
 <h2>ENI-Encheres</h2>
 <h2>Mon Profil</h2>
 
-<form action="UtilisateurCreerServlet" method="POST">
+<form action="PageModifierMonProfil" method="POST">
 Pseudo: <input type="text" name="pseudo" value="${model.utilisateur.pseudo}"/>
 Nom: <input type="text" name="nom" value="${model.utilisateur.nom}"/> <br>
 Prénom: <input type="text" name="prenom" value="${model.utilisateur.prenom}"/> 
@@ -22,12 +22,8 @@ Code postal: <input type="text" name="codePostal" value="${model.utilisateur.cod
 Ville: <input type="text" name="ville" value="${model.utilisateur.ville}"/> <br>
 Mot de passe: <input type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
 Confirmation: <input type="password" name="confirmation" value="${model.utilisateur.confirmation}"/> <br>
-
-Credit : ${model.utilisateur.credit}
-
 <input type="submit" name="enregistrer" value="enregistrer"/>
-<button type="submit" name="supprimer">Supprimer mon compte</button>
-
+<input type="submit" name="supprimer" value="supprimer mon comptte"/>
 </form>
 </body>
 </html>
