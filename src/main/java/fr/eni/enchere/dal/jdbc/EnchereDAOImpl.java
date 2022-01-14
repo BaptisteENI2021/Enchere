@@ -15,7 +15,7 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 
 public class EnchereDAOImpl implements EnchereDAO {
 	
-	private static final String INSERT = "INSERT INTO Encheres (date_enchere, montant_enchere, no_article, no_utilisateur VALUES(?,?,?,?";
+	private static final String INSERT = "INSERT INTO ENCHERES (date_enchere, montant_enchere, no_article, no_utilisateur, remporte) VALUES(?,?,?,?,?)";
 	private static final String GET_ALL = "SELECT * FROM ENCHERES";
 	private static final String GET_BY_ID = "SELECT * FROM ENCHERES WHERE no_enchere=?";
 	private static final String GET_BY_ENCHERISSEUR = "SELECT * FROM ENCHERES WHERE no_utilisateur=?";

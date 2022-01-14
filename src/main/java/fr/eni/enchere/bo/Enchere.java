@@ -25,6 +25,15 @@ public class Enchere {
 		this.utilisateur = utilisateur;
 		this.article = article;
 	}
+	
+
+	public Enchere(LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilisateur, Article article) {
+		super();
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+		this.utilisateur = utilisateur;
+		this.article = article;
+	}
 
 	public Integer getNoEnchere() {
 		return noEnchere;
