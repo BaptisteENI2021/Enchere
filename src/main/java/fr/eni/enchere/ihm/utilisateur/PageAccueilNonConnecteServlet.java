@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.enchere.bll.UtilisateurManager;
-import fr.eni.enchere.bll.UtilisateurManagerImpl;
+import fr.eni.enchere.bll.impl.UtilisateurManagerImpl;
 
 /**
  * Servlet implementation class PageAccueilNonConnecte

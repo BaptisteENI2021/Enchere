@@ -1,7 +1,10 @@
-package fr.eni.enchere.bll;
+package fr.eni.enchere.bll.impl;
 
 import java.util.List;
 
+import fr.eni.enchere.bll.BLLException;
+import fr.eni.enchere.bll.ParameterException;
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;

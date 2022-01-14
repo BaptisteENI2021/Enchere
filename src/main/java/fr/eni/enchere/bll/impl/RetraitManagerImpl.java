@@ -1,5 +1,8 @@
-package fr.eni.enchere.bll;
+package fr.eni.enchere.bll.impl;
 
+import fr.eni.enchere.bll.BLLException;
+import fr.eni.enchere.bll.ParameterException;
+import fr.eni.enchere.bll.RetraitManager;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
