@@ -69,13 +69,17 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	@Override
 	public Categorie selectByLibelle(String libelle) throws DALException {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return null;
 	}
 
 	@Override
 	public List<Categorie> selectAll() throws DALException {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return null;
 	}
 

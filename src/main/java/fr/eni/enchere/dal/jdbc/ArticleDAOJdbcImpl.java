@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package fr.eni.enchere.dal.jdbc;
 
 import java.sql.Connection;
@@ -17,7 +15,10 @@ import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
+import fr.eni.enchere.dal.CategorieDAO;
 import fr.eni.enchere.dal.DALException;
+import fr.eni.enchere.dal.DAOFactory;
+import fr.eni.enchere.dal.UtilisateurDAO;
 
 /**
  * Classe en charge de
@@ -29,11 +30,11 @@ import fr.eni.enchere.dal.DALException;
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private final static String INSERT = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?)";
+			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) VALUES (?,?,?,?,?,?,?,?,?)";
 
 	private static final String UPDATE = "UPDATE FROM ARTICLES_VENDUS SET nom_article=? description=? date_debut_encheres=?,"
-									+ " date_fin_encheres=?, prix_initial=?, prix_vente=?,  WHERE no_article=?";
-							
+			+ " date_fin_encheres=?, prix_initial=?, prix_vente=?,  WHERE no_article=?";
+
 	private final static String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur=?";
 
 	private final static String SELECT_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
@@ -58,13 +59,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pStmt.setInt(6, nouvelArticle.getPrixDeVente());
 			pStmt.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
 			pStmt.setInt(8, nouvelArticle.getCategorie().getNoCategorie());
+			pStmt.setInt(9, nouvelArticle.getNoRetrait());
 			
-
 			pStmt.executeUpdate();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if (rs.next()) {
 				int id = rs.getInt(1);
 				nouvelArticle.setNoArticle(id);
+				nouvelArticle.setNoRetrait(id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -193,6 +195,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	}
 
+	@Override
+	public List<Article> selectByLibelle(String libelle) throws DALException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private Article map(ResultSet rs) throws SQLException {
 		Integer noArticle = rs.getInt("no_article");
 		String nomArticle = rs.getString("nom_article");
@@ -201,19 +209,48 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
 		Integer prixInitial = rs.getInt("prix_initial");
 		Integer prixDeVente = rs.getInt("prix_vente");
-		Integer noUtilisateur = rs.getInt("no_utilisateur");
-		Integer noCategorie = rs.getInt("no_categorie");
+
+		Utilisateur utilisateur = this.getUtilisateurArticle(rs.getInt("no_utilisateur"));
+		Categorie categorie = this.getCategorieArticle(rs.getInt("no_categorie"));
+
+//		Integer noUtilisateur = rs.getInt("no_utilisateur");
+//		Integer noCategorie = rs.getInt("no_categorie");
 
 		Article article = null;
 
 		article = new Article(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
-				prixDeVente, noUtilisateur, noCategorie);
+				prixDeVente, utilisateur, categorie);
 
 		return article;
 	}
 
-	
-	
+	private Utilisateur getUtilisateurArticle(Integer noUtilisateur) {
+		UtilisateurDAO utilisateurDAO = DAOFactory.getInstance();
+		Utilisateur utilisateur = null;
+		try {
+			utilisateur = utilisateurDAO.selectById(noUtilisateur);
+		} catch (DALException e) {
+
+			e.printStackTrace();
+		}
+
+		return utilisateur;
+
+	}
+
+	private Categorie getCategorieArticle(Integer noCategorie) {
+		CategorieDAO categorieDAO = DAOFactory.getInstanceCategorie();
+		Categorie categorie = null;
+		try {
+			categorie = categorieDAO.selectById(noCategorie);
+		} catch (DALException e) {
+
+			e.printStackTrace();
+		}
+
+		return categorie;
+
+	}
 	
 	
 	
