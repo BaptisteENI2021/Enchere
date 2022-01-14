@@ -17,10 +17,10 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 public class RetraitDAOImpl implements RetraitDAO {
 
 
-	private final static String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville) VALUES (?,?,?)";
+	private final static String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville, no_article) VALUES (?,?,?,?)";
 	private final static String DELETE = "DELETE FROM RETRAITS WHERE no_article=?";
 	private final static String UPDATE = "UPDATE RETRAITS SET rue=?, code_postal=?, ville=? WHERE no_article=?";
-	private final static String SELECT_RETRAITS_BY_NO_ARTICLE = "SELECT * FROM RETRAITS WHERE no_artcile=?";
+	private final static String SELECT_RETRAITS_BY_NO_ARTICLE = "SELECT * FROM RETRAITS WHERE no_article=?";
 
 	@Override
 	public void insert(Retrait nouveauRetrait) throws DALException {
@@ -31,7 +31,7 @@ public class RetraitDAOImpl implements RetraitDAO {
 			stmt.setString(1, nouveauRetrait.getRue());
 			stmt.setString(2, nouveauRetrait.getCodePostal());
 			stmt.setString(3, nouveauRetrait.getVille());
-
+			stmt.setInt(4, nouveauRetrait.getArticle().getNoArticle());
 			stmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -99,7 +99,7 @@ public class RetraitDAOImpl implements RetraitDAO {
 	
 	private Retrait map(ResultSet rs) throws SQLException {
 
-		String rue = rs.getString("pseudo");
+		String rue = rs.getString("rue");
 		String codePostal = rs.getString("code_postal");
 		String ville = rs.getString("ville");
 		
