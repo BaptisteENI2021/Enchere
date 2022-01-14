@@ -31,8 +31,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private final static String INSERT = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres,"
 			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?)";
 
-	private static final String UPDATE = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
-
+	private static final String UPDATE = "UPDATE FROM ARTICLES_VENDUS SET nom_article=? description=? date_debut_encheres=?,"
+									+ " date_fin_encheres=?, prix_initial=?, prix_vente=?,  WHERE no_article=?";
+							
 	private final static String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur=?";
 
 	private final static String SELECT_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
@@ -57,7 +58,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pStmt.setInt(6, nouvelArticle.getPrixDeVente());
 			pStmt.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
 			pStmt.setInt(8, nouvelArticle.getCategorie().getNoCategorie());
-			;
+			
 
 			pStmt.executeUpdate();
 			ResultSet rs = pStmt.getGeneratedKeys();
@@ -83,8 +84,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pStmt.setDate(4, Date.valueOf(articleAModifier.getDateFinEncheres()));
 			pStmt.setInt(5, articleAModifier.getPrixInitial());
 			pStmt.setInt(6, articleAModifier.getPrixDeVente());
-			pStmt.setInt(7, articleAModifier.getUtilisateur().getNoUtilisateur());
-			pStmt.setInt(8, articleAModifier.getCategorie().getNoCategorie());
 			pStmt.setInt(9, articleAModifier.getNoArticle());
 
 			pStmt.executeUpdate();
@@ -213,4 +212,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return article;
 	}
 
+	
+	
+	
+	
+	
 }

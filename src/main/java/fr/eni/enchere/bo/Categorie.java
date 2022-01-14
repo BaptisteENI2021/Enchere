@@ -44,9 +44,41 @@ public class Categorie {
 		this.listeArticles = listeArticles;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("Categorie [libelle=%s, listeArticles=%s, noCategorie=%s]", libelle, listeArticles);
+	
+	
+
+	/**
+	 * Constructeur.
+	 * @param libelle
+	 */
+	public Categorie(String libelle) {
+		super();
+		this.libelle = libelle;
 	}
 
+	/**
+	 * Constructeur.
+	 * @param libelle
+	 * @param noCategorie
+	 */
+	public Categorie(String libelle, Integer noCategorie) {
+		super();
+		this.libelle = libelle;
+		this.noCategorie = noCategorie;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Categorie [libelle=");
+		builder.append(libelle);
+		builder.append(", noCategorie=");
+		builder.append(noCategorie);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	
+	
+	
 }
