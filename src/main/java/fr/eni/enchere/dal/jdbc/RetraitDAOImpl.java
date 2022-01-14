@@ -17,14 +17,19 @@ public class RetraitDAOImpl implements RetraitDAO {
 //		)
 //	
 	
-	
 	private final static String INSERT = "INSERT INTO RETRAITS (no_article, rue, code_postal, ville) VALUES (?,?,?,?,?)";
+	private final static String DELETE = "DELETE FROM RETRAITS WHERE no_article=?";
+	private final static String UPDATE= "UPDATE RETRAITS SET rue=?, code_postal=?, ville=? WHERE no_article=?";
+	private final static String SELECT_RETRAITS_BY_NO_ARTICLE = "SELECT * FROM RETRAITS WHERE no_artcile=?";
+	
+	
 	
 
 	@Override
 	public void insert(Retrait nouveuRetrait) throws DALException {
-		// TODO Auto-generated method stub
-
+		
+		
+		
 	}
 
 	@Override
