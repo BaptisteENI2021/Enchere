@@ -124,6 +124,21 @@ public class ArticleManagerImpl implements ArticleManager {
 		}
 	}
 
+	@Override
+	public List<Article> getAllArticleByNomMotCle(String libelle) throws BLLException {
+		
+		try {
+			return dao.selectByNomArticle(libelle);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+		
+		
+	}
+	
+	
+	
 	private void validationNoArticle(Integer noArticle, BLLException be) {
 		if (noArticle == null || noArticle < 0) {
 			be.ajouterErreur(new ParameterException("Le numéro Article est inférieur à 0"));
@@ -149,7 +164,7 @@ public class ArticleManagerImpl implements ArticleManager {
 	}
 
 	private void validationDateFinEncheres(LocalDate dateFinEncheres, BLLException be) {
-		if (dateFinEncheres.isBefore(LocalDate.now()) == true) {
+		if (dateFinEncheres.isBefore(LocalDate.now()) == true && dateFinEncheres.isAfter(LocalDate.now())) {
 			be.ajouterErreur(new ParameterException("La date d'enchère n'est pas valide"));
 		}
 	}
@@ -167,5 +182,7 @@ public class ArticleManagerImpl implements ArticleManager {
 		}
 
 	}
+
+	
 
 }

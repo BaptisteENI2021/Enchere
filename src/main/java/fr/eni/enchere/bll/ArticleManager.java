@@ -22,4 +22,6 @@ public interface ArticleManager {
 	public List<Article> getAllArticle() throws BLLException;
 	
 	public List<Article> getAllArticlesByCategories (Categorie categorie) throws BLLException;
+	
+	public List<Article> getAllArticleByNomMotCle (String libelle) throws BLLException;
 }

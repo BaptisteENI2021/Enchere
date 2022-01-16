@@ -18,7 +18,7 @@ Rue: <input type="text" name="rue" value="${model.utilisateur.rue}"/> <br>
 Code postal: <input type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
 Ville: <input type="text" name="ville" value="${model.utilisateur.ville}"/> <br>
 Mot de passe: <input type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
-Confirmation: <input type="password" name="confirmation" value="${model.utilisateur.confirmation}"/> <br>
+Confirmation: <input type="password" name="confirmation" value="${model.confirmation}"/> <br>
 <input type="submit" name="creer" value="Créer"/>
 <input type="submit" name="annuler" value="annuler"/>
 </form>

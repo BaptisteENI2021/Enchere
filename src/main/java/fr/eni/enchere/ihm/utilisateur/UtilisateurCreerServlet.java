@@ -35,7 +35,8 @@ public class UtilisateurCreerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		/*recupération du model en session*/
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		String WEBINF = "WEB-INF/PageCreerCompte.jsp";
 
@@ -86,7 +87,7 @@ public class UtilisateurCreerServlet extends HttpServlet {
 		System.out.println(request.getParameter("annuler") != null);
 
 		if (request.getParameter("annuler") != null) {
-			WEBINF = "\"WEB-INF/PageAccueilNonConnecte.jsp\"";
+			WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
 			System.out.println("J'ai appuyé sur annuler");
 		}
 

@@ -18,4 +18,6 @@ public interface EnchereManager {
 	
 	public void modifierEnchere (Enchere EnchereAModifier) throws BLLException;
 	
+	public List<Enchere> selectionnerEnchereByNomMotCle (String libelle) throws BLLException;
+	
 }

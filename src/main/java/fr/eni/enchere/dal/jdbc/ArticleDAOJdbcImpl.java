@@ -48,6 +48,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private final static String SELECT_BY_NOM_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ?";
 	
+	
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
 
@@ -199,7 +200,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Article> selectByLibelle(String libelle) throws DALException {
+	public List<Article> selectByNomArticle(String libelle) throws DALException {
 		
 		List<Article> articles = new ArrayList<Article>();
 		

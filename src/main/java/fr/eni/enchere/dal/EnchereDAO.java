@@ -22,5 +22,6 @@ public interface EnchereDAO {
 	
 	public List<Enchere> getAllByArticle(Integer noArticle) throws DALException;
 	
-
+	public List<Enchere> selectByNomArticle(String libelle) throws DALException;
+	
 }

@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll.test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import fr.eni.enchere.bll.impl.ArticleManagerImpl;
 import fr.eni.enchere.bll.impl.CategorieManagerImpl;
 import fr.eni.enchere.bll.impl.RetraitManagerImpl;
 import fr.eni.enchere.bo.Article;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
 
@@ -25,6 +28,25 @@ public class TestBllArticle {
 
 		CategorieManager managerCategorie = CategorieManagerImpl.getInstance();
 		RetraitManager managerRetrait = RetraitManagerImpl.getInstance();
+		
+		
+		try {
+			Utilisateur utilisateur = DAOFactory.getInstance().selectById(5);
+			Categorie categorie =  DAOFactory.getInstanceCategorie().selectById(4);
+			try {
+				manager.vendreArticle(new Article("Mon Velo", "Velo qui va vite pas vite", LocalDate.of(2022, 11, 22),
+						LocalDate.of(2022, 11, 22), 23, utilisateur, categorie));
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		} catch (DALException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 //		try {
 //			
@@ -73,6 +95,17 @@ public class TestBllArticle {
 //			e.printStackTrace();
 //		}
 //		
+		try {
+			
+			System.out.println(manager.getAllArticleByNomMotCle("ordinateur"));
+			
+			
+		} catch (BLLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
 //		Article article;
 //		
 //		
@@ -91,26 +124,26 @@ public class TestBllArticle {
 	
 		
 	
-			Retrait retrait = new Retrait();
-			
-				try {
-					retrait = DAOFactory.getInstanceRetrait().retraitByNoArticle(2);
-					System.out.println(retrait);
-				} catch (DALException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				retrait.setRue("rue modifiée");
-				retrait.setCodePostal("9999");
-				retrait.setVille("VilleModifiee");
-				try {
-					managerRetrait.modifierRetrait(retrait);
-				} catch (BLLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-		
-		
-	}
+//			Retrait retrait = new Retrait();
+//			
+//				try {
+//					retrait = DAOFactory.getInstanceRetrait().retraitByNoArticle(2);
+//					System.out.println(retrait);
+//				} catch (DALException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				retrait.setRue("rue modifiée");
+//				retrait.setCodePostal("9999");
+//				retrait.setVille("VilleModifiee");
+//				try {
+//					managerRetrait.modifierRetrait(retrait);
+//				} catch (BLLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//		
+//		
+//	}
 	}}
 	
 

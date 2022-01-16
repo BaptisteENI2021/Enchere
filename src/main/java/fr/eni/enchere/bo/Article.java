@@ -39,6 +39,7 @@ public class Article {
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.categorie = categorie;
+		prixDeVente = prixInitial;
 		
 	}
 
@@ -269,6 +270,34 @@ public class Article {
 	}
 
 
+	/**
+	 * Constructeur.
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param prixInitial
+	 * @param prixDeVente
+	 * @param utilisateur
+	 * @param categorie
+	 */
+	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Integer prixInitial, Utilisateur utilisateur, Categorie categorie) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.prixDeVente = prixInitial;
+		
+		
+	}
+	
+	
+	
 
 	public String getEtatVente() {
 		return etatVente;

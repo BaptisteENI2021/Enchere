@@ -89,4 +89,20 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	}
 
+	@Override
+	public List<Enchere> selectionnerEnchereByNomMotCle(String libelle) throws BLLException {
+		try {
+			return enchereDAO.selectByNomArticle(libelle);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+		
+		
+		
+		
+		
+	}
+
 }

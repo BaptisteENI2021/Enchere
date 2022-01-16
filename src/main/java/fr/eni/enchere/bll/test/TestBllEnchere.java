@@ -28,15 +28,18 @@ public class TestBllEnchere {
 		
 		Utilisateur utilisateur = new Utilisateur();
 		
-		try {
-			Article articleDao = DAOFactory.getInstanceArticle().selectById(1);
-			Utilisateur utilisateurDao = DAOFactory.getInstance().selectById(5);
+//		try {
+//			Article articleDao = DAOFactory.getInstanceArticle().selectById(1);
+//			Utilisateur utilisateurDao = DAOFactory.getInstance().selectById(7);
+//
+//			listeEncheres.add(manager.ajoutEnchere(new Enchere(LocalDate.of(2022, 01, 15), 500, utilisateurDao, articleDao)));
+//		} catch (BLLException be) {
+//			be.printStackTrace();
+//		}
 
-			listeEncheres.add(manager.ajoutEnchere(new Enchere(LocalDate.of(2022, 01, 14), 500, utilisateurDao, articleDao)));
-		} catch (BLLException be) {
-			be.printStackTrace();
-		}
-
+		System.out.println(manager.selectionnerEnchereByNomMotCle("ordinateur"));
+		
+		
 	}
 
 }

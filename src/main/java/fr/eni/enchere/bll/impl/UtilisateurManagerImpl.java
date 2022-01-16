@@ -11,6 +11,13 @@ import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 
+/**
+ * Classe en charge de
+ * 
+ * @author jdonal2021
+ * @date 15 janv. 2022 - 11:45:03
+ * @version Enchere - V0.1
+ */
 public class UtilisateurManagerImpl implements UtilisateurManager {
 
 	/** SINGLETON **/
@@ -29,41 +36,48 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 
 	private static UtilisateurDAO dao = DAOFactory.getInstance();
 
-	
-	
-	public static void validerLogin(Utilisateur SaisiUtilisateur) {
+	/**
+	 * 
+	 * Méthode en charge de vérifier le Login et d'u associer un utilisateur
+	 * existant
+	 * 
+	 * @param identifiant
+	 * @param motDePasse
+	 * @return un utilisateur
+	 */
+	public static Utilisateur validerLoginUtilisateur(String identifiant, String motDePasse) throws BLLException {
+
 		
-		String pseuso = SaisiUtilisateur.getPseudo();
-		String email = SaisiUtilisateur.getEmail();
-		String motDePasse = SaisiUtilisateur.getMotDePasse();
-		
-		
+		Utilisateur utilisateurTeste = new Utilisateur();
+
+//		String pseuso = utilisateurTeste.getPseudo();
+//		String email = utilisateurTeste.getEmail();
+//		String motDePasse = utilisateurTeste.getMotDePasse();
+
 		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
-		
+
 		try {
 			listeUtilisateurs = DAOFactory.getInstance().selectAll();
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		
-		for (Utilisateur utilisateur: listeUtilisateurs) {
-			if((email.equals(utilisateur.getEmail()) && motDePasse.equals(utilisateur.getMotDePasse()) 
-					)) {
-			
-		
-		
-			}	}
-		
-		
-		
+
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			if ((identifiant.equals(utilisateur.getEmail()) && motDePasse.equals(utilisateur.getMotDePasse()))
+					|| (identifiant.equals(utilisateur.getPseudo())
+							&& motDePasse.equals(utilisateur.getMotDePasse()))) {
+
+				utilisateurTeste = utilisateur;
+
+				System.out.println("Login a un utilisateurexistant");
+			}
+
+		}
+		return utilisateurTeste;
+
 	}
-		
-		
-	
-	
-	
-	
+
 	@Override
 	public Utilisateur inscrireUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, Integer credit) throws BLLException {

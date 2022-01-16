@@ -23,6 +23,8 @@ public class EnchereDAOImpl implements EnchereDAO {
 	private static final String UPDATE = "UPDATE ENCHERES SET date_enchere=?, montant_enchere=?, no_article=?, no_utilisateur=?, remporte=? WHERE no_enchere=?";
 	private static final String DELETE = "DELETE ENCHERES WHERE no_enchere=?";
 	private static final String GET_ALL_BY_ARTICLE = "SELECT * FROM ENCHERES WHERE no_article=?";
+	private final static String SELECT_BY_NOM_ARTICLE = "SELECT * FROM ENCHERES AS e INNER JOIN ARTICLES_VENDUS AS a "
+												+ "ON a.no_article = e.no_article WHERE nom_article LIKE ?";
 	
 	private static ArticleDAO article = new ArticleDAOJdbcImpl();
 	private static UtilisateurDAO utilisateur = new UtilisateurDAOImpl();
@@ -229,6 +231,36 @@ public class EnchereDAOImpl implements EnchereDAO {
 
 		return encheres;
 
+	}
+
+	@Override
+	public List<Enchere> selectByNomArticle(String libelle) throws DALException {
+		List<Enchere> encheres = new ArrayList<>();
+		
+		try (Connection con = JdbcTools.getConnection()) {
+			 PreparedStatement statement = con.prepareStatement(SELECT_BY_NOM_ARTICLE);
+			 statement.setString(1, '%'+libelle+'%');
+			
+			 ResultSet rs = statement.executeQuery();
+			 
+			while (rs.next()) {
+				Enchere enchere = new Enchere();
+				enchere.setNoEnchere(rs.getInt("no_enchere"));
+				enchere.setDateEnchere(rs.getDate("date_enchere").toLocalDate());
+				enchere.setMontantEnchere(rs.getInt("montant_enchere"));
+				enchere.setArticle(article.selectById(rs.getInt("no_article")));
+				enchere.setUtilisateur(utilisateur.selectById(rs.getInt("no_utilisateur")));
+				enchere.setRemporte(rs.getBoolean("remporte"));
+				
+				encheres.add(enchere);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+
+		return encheres;
 	}
 
 }

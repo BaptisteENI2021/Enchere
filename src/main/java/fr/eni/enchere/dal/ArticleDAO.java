@@ -22,6 +22,6 @@ public interface ArticleDAO {
 
 	List<Article> selectByCategorie(Categorie categorie) throws DALException;
 	
-	List<Article> selectByLibelle(String libelle) throws DALException;
+	List<Article> selectByNomArticle(String libelle) throws DALException;
 
 }
