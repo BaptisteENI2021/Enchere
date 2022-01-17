@@ -29,6 +29,7 @@ public class Article {
 	}
 	
 	
+	
 
 	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Categorie categorie, Retrait retrait) {
@@ -44,9 +45,10 @@ public class Article {
 
 
 
-	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+	public Article(Utilisateur utilisateur, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Categorie categorie) {
 		super();
+		this.utilisateur = utilisateur;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
@@ -56,7 +58,6 @@ public class Article {
 		prixDeVente = prixInitial;
 		
 	}
-
 
 
 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import fr.eni.enchere.bo.Article;
+import fr.eni.enchere.bo.Retrait;
 
 /**
  * Classe en charge de 
@@ -17,9 +18,17 @@ import fr.eni.enchere.bo.Article;
 public class ArticleModel {
 
 	private Article article;
+	private Retrait retrait;
 	private List<Article> listeArticles = new ArrayList<Article>();
 	
+
+	public Retrait getRetrait() {
+		return retrait;
+	}
 	
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
 	public Article getArticle() {
 		return article;
 	}
@@ -32,31 +41,24 @@ public class ArticleModel {
 	public void setListeArticles(List<Article> listeArticles) {
 		this.listeArticles = listeArticles;
 	}
-	/**
-	 * Constructeur.
-	 * @param article
-	 * @param listeArticles
-	 */
-	public ArticleModel(Article article, List<Article> listeArticles) {
+
+	public ArticleModel(Article article, Retrait retrait, List<Article> listeArticles) {
 		super();
 		this.article = article;
+		this.retrait = retrait;
 		this.listeArticles = listeArticles;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ArticleVenteModel [article=");
-		builder.append(article);
-		builder.append(", listeArticles=");
-		builder.append(listeArticles);
-		builder.append("]");
-		return builder.toString();
-	}
-	/**
-	 * Constructeur.
-	 */
+
 	public ArticleModel() {
 		super();
 	}
+
+	public ArticleModel(Retrait retrait, List<Article> listeArticles) {
+		super();
+		this.retrait = retrait;
+		this.listeArticles = listeArticles;
+	}
+	
+	
 	
 }

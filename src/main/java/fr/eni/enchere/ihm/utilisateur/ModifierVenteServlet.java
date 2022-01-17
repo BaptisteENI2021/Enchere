@@ -12,47 +12,42 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.enchere.bll.ArticleManager;
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.CategorieManager;
-import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bll.impl.ArticleManagerImpl;
 import fr.eni.enchere.bll.impl.CategorieManagerImpl;
-import fr.eni.enchere.bll.impl.UtilisateurManagerImpl;
 import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Categorie;
-import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 /**
- * Servlet implementation class NouvelleVenteServlet
+ * Servlet implementation class ModifierVente
  */
-@WebServlet("/NouvelleVenteServlet")
-public class NouvelleVenteServlet extends HttpServlet {
+@WebServlet("/ModifierVenteServlet")
+public class ModifierVenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	private ArticleManager manager = ArticleManagerImpl.getInstance();
 	private CategorieManager managerCat = CategorieManagerImpl.getInstance();
+	
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ModifierVenteServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public NouvelleVenteServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 
 		if (model == null) {
 			model = new UtilisateurModel();
 		}
 
-		String WEBINF = "WEB-INF/NouvelleVente.jsp";
+		String WEBINF = "WEB-INF/ModifierVente.jsp";
 		ArticleModel articleModel = new ArticleModel();
 
 		if (request.getParameter("enregistrer") != null) {
@@ -85,7 +80,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 			articleModel.setArticle(article);
 
 			try {
-				manager.vendreArticle(article);
+				manager.modifierArticle(article);
 				System.out.println("Article enregistré");
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
@@ -95,6 +90,16 @@ public class NouvelleVenteServlet extends HttpServlet {
 			// (String nomArticle, String description, LocalDate dateDebutEncheres,
 			// LocalDate dateFinEncheres,
 			// Integer prixInitial, Categorie categorie, Retrait retrait) {
+			
+			if (request.getParameter("annulerlavente") != null) {
+				
+				try {
+					manager.supprimerUnArticle(article.getNoArticle());
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 
 		}
 		if (request.getParameter("annuler") != null) {
@@ -103,14 +108,14 @@ public class NouvelleVenteServlet extends HttpServlet {
 		}
 		request.setAttribute("articleModel", articleModel);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
+
+		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
