@@ -27,8 +27,22 @@ public class Article {
 	public Article() {
 		// TODO Auto-generated constructor stub
 	}
-
 	
+	
+
+	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Integer prixInitial, Categorie categorie, Retrait retrait) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.categorie = categorie;
+		this.retrait = retrait;
+	}
+
+
 
 	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Categorie categorie) {
