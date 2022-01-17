@@ -222,7 +222,7 @@ public class ArticleManagerImpl implements ArticleManager {
 	}
 
 	private void validationPrixDeVente(Integer prixDeVente, BLLException be) {
-		if (prixDeVente == null || prixDeVente < 0) {
+		if (prixDeVente == null || prixDeVente < 0 ) {
 			be.ajouterErreur(new ParameterException("Le Prix de vente Article est inférieur à 0"));
 		}
 
