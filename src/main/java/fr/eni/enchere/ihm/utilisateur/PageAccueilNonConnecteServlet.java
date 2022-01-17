@@ -54,10 +54,9 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 		try {
 			listeArticles = managerArticle.getAllArticle();
 			for (Article article : listeArticles) {
-				//managerArticle.miseAJourEtatVente(article);
-				article.setEtatVente("essai");
-				managerArticle.modifierArticle(article);
-				modelArticle.setArticle(article);
+				managerArticle.miseAJourEtatVente(article);
+
+				
 			}
 		}
 		catch (BLLException e) {

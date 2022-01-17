@@ -17,6 +17,8 @@ public interface ArticleManager {
 	
 	public void modifierArticle(Article articleAModifier) throws BLLException;
 	
+	public Article afficherArticleById (Integer noArticle) throws BLLException;
+	
 	public List<Article> getAllArticlesVendeur(Utilisateur utilisateur) throws BLLException;
 	
 	public List<Article> getAllArticle() throws BLLException;
