@@ -13,15 +13,15 @@ import fr.eni.enchere.bll.impl.UtilisateurManagerImpl;
 /**
  * Servlet implementation class PageMonProfil
  */
-@WebServlet("/PageMonProfil")
-public class PageMonProfil extends HttpServlet {
+@WebServlet("/PageMonProfilServlet")
+public class PageMonProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurManager manager = UtilisateurManagerImpl.getInstance();
+	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PageMonProfil() {
+	public PageMonProfilServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,26 +32,26 @@ public class PageMonProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		String WEBINF = "WEB-INF/PageMonProfil.jsp";
 
-		String pseudo = request.getParameter("pseudo");
-		String nom = request.getParameter("nom");
-		String prenom = request.getParameter("prenom");
-		String email = request.getParameter("email");
-		String telephone = request.getParameter("telephone");
-		String rue = request.getParameter("rue");
-		String codePostal = request.getParameter("codePostal");
-		String ville = request.getParameter("ville");
-		String motDePasse = request.getParameter("motDePasse");
-
-		String confirmation = request.getParameter("confirmation");
-
+		if (model == null) {
+			model = new UtilisateurModel();
+		}
+		
+		System.out.println("je suis dans la servlet PageMonProfil");
+		
+		
 		if (request.getParameter("Modifier") != null) {
-			WEBINF = "PageModifierMonProfil";
+			//System.out.println("J'ai appuyé sur modifier mon profil");
+			WEBINF ="PageModifierMonProfilServlet";
+			
 		}
 
-		request.setAttribute("model", model);
+		
+		
+		//request.setAttribute("model", model);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
 
 	}

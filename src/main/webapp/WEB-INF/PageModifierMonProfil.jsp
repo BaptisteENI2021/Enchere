@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PageModifierMonProfil</title>
 </head>
 <body>
 
 <h2>ENI-Encheres</h2>
 <h2>Mon Profil</h2>
 
-<form action="PageModifierMonProfil" method="POST">
+<form action="PageModifierMonProfilServlet" method="POST">
 Pseudo: <input type="text" name="pseudo" value="${model.utilisateur.pseudo}"/>
 Nom: <input type="text" name="nom" value="${model.utilisateur.nom}"/> <br>
 Prénom: <input type="text" name="prenom" value="${model.utilisateur.prenom}"/> 
@@ -21,7 +21,7 @@ Rue: <input type="text" name="rue" value="${model.utilisateur.rue}"/> <br>
 Code postal: <input type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
 Ville: <input type="text" name="ville" value="${model.utilisateur.ville}"/> <br>
 Mot de passe: <input type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
-Confirmation: <input type="password" name="confirmation" value="${model.utilisateur.confirmation}"/> <br>
+Confirmation: <input type="password" name="confirmation" value="${model.confirmation}"/> <br>
 <input type="submit" name="enregistrer" value="enregistrer"/>
 <input type="submit" name="supprimer" value="supprimer mon comptte"/>
 </form>

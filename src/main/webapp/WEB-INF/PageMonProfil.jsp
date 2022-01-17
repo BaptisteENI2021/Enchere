@@ -4,12 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PageMonProdil</title>
 </head>
 <body>
 
 <h2>ENI-Encheres</h2>
-<form action="PageMonprofil" method="POST">
+
+<form action="PageMonProfilServlet" method="POST">
 Pseudo : ${model.utilisateur.pseudo}
 <br>
 Nom : ${model.utilisateur.nom}
@@ -26,8 +27,8 @@ Code postal : ${model.utilisateur.codePostal}
 <br>
 Ville : ${model.utilisateur.ville}
 <br>
+<input type="submit" name="Modifier" value="Modifier"/>
 
-<button type="submit" name="Modifier">Modifier</button>
 </form>
 </body>
 </html>

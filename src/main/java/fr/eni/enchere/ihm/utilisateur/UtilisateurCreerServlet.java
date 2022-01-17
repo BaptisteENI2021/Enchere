@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.UtilisateurManager;
@@ -35,14 +36,9 @@ public class UtilisateurCreerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		/*recupération du model en session*/
-		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
-		String WEBINF = "WEB-INF/PageCreerCompte.jsp";
 
-		if (model == null) {
-			model = new UtilisateurModel();
-		}
+		String WEBINF = "WEB-INF/PageCreerCompte.jsp";
+		UtilisateurModel model = new UtilisateurModel();
 
 		if (request.getParameter("creer") != null) {
 
@@ -70,7 +66,13 @@ public class UtilisateurCreerServlet extends HttpServlet {
 
 					System.out.println("contact créé");
 
-					WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
+					WEBINF = "WEB-INF/PageMonProfil.jsp";
+
+					/* Création d'un objet session ou récupération d'une session */
+					HttpSession session = request.getSession();
+
+					/* Mise en session du modelUtilisateur */
+					request.getSession().setAttribute("model", model);
 
 				}
 
@@ -79,7 +81,6 @@ public class UtilisateurCreerServlet extends HttpServlet {
 				e.printStackTrace();
 				model.setMessage(e.getMessage());
 
-				
 			}
 
 		}

@@ -15,15 +15,15 @@ import fr.eni.enchere.bo.Utilisateur;
 /**
  * Servlet implementation class PageModifierMonProfil
  */
-@WebServlet("/PageModifierMonProfil")
-public class PageModifierMonProfil extends HttpServlet {
+@WebServlet("/PageModifierMonProfilServlet")
+public class PageModifierMonProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager manager = UtilisateurManagerImpl.getInstance();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PageModifierMonProfil() {
+	public PageModifierMonProfilServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,11 +37,13 @@ public class PageModifierMonProfil extends HttpServlet {
 
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		String WEBINF = "WEB-INF/PageModifierMonProfil.jsp";
-		
+
 		if (model == null) {
 			model = new UtilisateurModel();
 		}
-		
+
+		System.out.println("Je suis dans la Servlet PageModifierMonProfilServlet");
+
 		if (request.getParameter("enregistrer") != null) {
 
 			String pseudo = request.getParameter("pseudo");
@@ -61,11 +63,26 @@ public class PageModifierMonProfil extends HttpServlet {
 					model.setMessage("La confirmation du mot de passe est différente du mot de passe");
 
 				} else {
-					Utilisateur utilisateur = manager.inscrireUtilisateur(pseudo, nom, prenom, email, telephone, rue,
-							codePostal, ville, motDePasse, 100);
 
-					model.setUtilisateur(utilisateur);
+					
+					//Je récupère l'utilisateur de la session qui est dans le model
+					Utilisateur utilisateurModifie = model.getUtilisateur();
 
+					utilisateurModifie.setPseudo(pseudo);
+					utilisateurModifie.setNom(nom);
+					utilisateurModifie.setPrenom(prenom);
+					utilisateurModifie.setEmail(email);
+					utilisateurModifie.setTelephone(telephone);
+					utilisateurModifie.setRue(rue);
+					utilisateurModifie.setCodePostal(codePostal);
+					utilisateurModifie.setVille(ville);
+					utilisateurModifie.setMotDePasse(motDePasse);
+
+					manager.modifierUtilisateur(utilisateurModifie);
+
+					model.setUtilisateur(utilisateurModifie);
+
+					WEBINF = "EssaiServlet";
 				}
 
 			} catch (BLLException e) {
@@ -73,14 +90,19 @@ public class PageModifierMonProfil extends HttpServlet {
 				model.setMessage(e.getMessage());
 
 			}
-
-			if (request.getParameter("supprimer") != null) {
-				WEBINF = "/PageAccueilNonConnecteServlet";
-			}
-
-			request.setAttribute("model", model);
-			request.getRequestDispatcher("WEB-INF/PageModifierMonProfil.jsp").forward(request, response);
 		}
+		if (request.getParameter("supprimer") != null) {
+			try {
+				manager.supprimerUtilisateur(model.getUtilisateur().getNoUtilisateur());
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+			
+			WEBINF = "/PageAccueilNonConnecteServlet";
+		}
+
+		request.setAttribute("model", model);
+		request.getRequestDispatcher(WEBINF).forward(request, response);
 	}
 
 	/**

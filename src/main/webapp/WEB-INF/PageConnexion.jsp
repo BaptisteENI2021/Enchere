@@ -10,7 +10,7 @@
 <h2>ENI-Enchere</h2>
 <form action="PageConnexionServlet" method="POST">
 Identifiant : <input type="text" name="identifiant"/>
-Mot de passe: <input type="text" name="MotDePasse"/>
+Mot de passe: <input type="text" name="motDePasse"/>
 
 <input type="submit" name="Connexion" value="Connexion"/>
 <input type="checkbox" name="SeSouvenir" /> Se souvenir de moi

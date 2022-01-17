@@ -118,7 +118,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 
 		BLLException be = new BLLException();
 
-		validationNoUtilisateur(utilisateurAModifier.getNoUtilisateur(), be);
+		//validationNoUtilisateur(utilisateurAModifier.getNoUtilisateur(), be);
 		validationPseudo(utilisateurAModifier.getPseudo(), be);
 		validationNom(utilisateurAModifier.getNom(), be);
 		validationPrenom(utilisateurAModifier.getPrenom(), be);

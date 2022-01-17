@@ -30,7 +30,7 @@ public class EssaiServlet extends HttpServlet {
 		System.out.println("Je suis arrivé dans la nouvelle servlet");
 		
 		
-		
+		request.getRequestDispatcher("WEB-INF/EssaiJSP.jsp").forward(request, response);
 	}
 
 	/**
