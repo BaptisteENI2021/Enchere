@@ -82,7 +82,7 @@ public class PageModifierMonProfilServlet extends HttpServlet {
 
 					model.setUtilisateur(utilisateurModifie);
 
-					WEBINF = "EssaiServlet";
+					WEBINF = "PageListeEnchereMesVentesServlet";
 				}
 
 			} catch (BLLException e) {
