@@ -37,7 +37,7 @@
 </form>
 
 <c:forEach items="${modelArticle.listeArticles}" var="article">
-	<p>${article.nomArticle} : ${article.categorie.libelle}</p>
+	<p><a href="http://localhost:8080/Enchere/PageConnexionServlet">${article.nomArticle}</a> : ${article.categorie.libelle}</p>
 	
 	
 	

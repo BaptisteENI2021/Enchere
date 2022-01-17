@@ -173,28 +173,8 @@ public class Article {
 	
 
 
-	@Override
-	public String toString() {
-		return String.format(
-				"Article [noArticle=%s, nomArticle=%s, description=%s, dateDebutEncheres=%s, dateFinEncheres=%s, prixInitial=%s,prixDeVente=%s,listeEncheres=%s, utilisateur=%s, categorie=%s, retrait=%s]",
-				noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,prixDeVente,listeEncheres, utilisateur, categorie, retrait);
-	}
 
 
-
-	/**
-	 * Constructeur.
-	 * @param noArticle
-	 * @param nomArticle
-	 * @param description
-	 * @param dateDebutEncheres
-	 * @param dateFinEncheres
-	 * @param prixInitial
-	 * @param prixDeVente
-	 * @param listeEncheres
-	 * @param utilisateur
-	 * @param categorie
-	 */
 	public Article(Integer noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, Integer prixInitial, Integer prixDeVente, 
 			Utilisateur utilisateur, Categorie categorie) {
@@ -242,18 +222,6 @@ public class Article {
 	}
 
 
-
-	/**
-	 * Constructeur.
-	 * @param nomArticle
-	 * @param description
-	 * @param dateDebutEncheres
-	 * @param dateFinEncheres
-	 * @param prixInitial
-	 * @param prixDeVente
-	 * @param utilisateur
-	 * @param categorie
-	 */
 	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Integer prixDeVente, Utilisateur utilisateur, Categorie categorie) {
 		super();
@@ -270,17 +238,7 @@ public class Article {
 	}
 
 
-	/**
-	 * Constructeur.
-	 * @param nomArticle
-	 * @param description
-	 * @param dateDebutEncheres
-	 * @param dateFinEncheres
-	 * @param prixInitial
-	 * @param prixDeVente
-	 * @param utilisateur
-	 * @param categorie
-	 */
+	 
 	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Utilisateur utilisateur, Categorie categorie) {
 		super();
@@ -319,6 +277,39 @@ public class Article {
 
 	public void setNoRetrait(int noRetrait) {
 		this.noRetrait = noRetrait;
+	}
+
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Article [noArticle=");
+		builder.append(noArticle);
+		builder.append(", nomArticle=");
+		builder.append(nomArticle);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", dateDebutEncheres=");
+		builder.append(dateDebutEncheres);
+		builder.append(", dateFinEncheres=");
+		builder.append(dateFinEncheres);
+		builder.append(", prixInitial=");
+		builder.append(prixInitial);
+		builder.append(", prixDeVente=");
+		builder.append(prixDeVente);
+		builder.append(", utilisateur=");
+		builder.append(utilisateur);
+		builder.append(", categorie=");
+		builder.append(categorie);
+		builder.append(", retrait=");
+		builder.append(retrait);
+		builder.append(", etatVente=");
+		builder.append(etatVente);
+		builder.append(", noRetrait=");
+		builder.append(noRetrait);
+		builder.append("]");
+		return builder.toString();
 	}
 
 

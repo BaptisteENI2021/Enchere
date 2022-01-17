@@ -48,6 +48,21 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 		UtilisateurModel model = new UtilisateurModel();
 		ArticleModel modelArticle = new ArticleModel();
 		String WEBINF = "WEB-INF/PageAccueilNonConnecte.jsp";
+		List<Article> listeArticles = new ArrayList<Article>();
+
+		// Mise à jour de l'état des articles vendus en fonction de la date du jour
+		try {
+			listeArticles = managerArticle.getAllArticle();
+			for (Article article : listeArticles) {
+				//managerArticle.miseAJourEtatVente(article);
+				article.setEtatVente("essai");
+				managerArticle.modifierArticle(article);
+				modelArticle.setArticle(article);
+			}
+		}
+		catch (BLLException e) {
+			e.printStackTrace();
+		}
 
 		if (request.getParameter("InscrireConnecte") != null) {
 		}
@@ -61,8 +76,8 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 
 			try {
 				categorie = managerCategorie.categorieById(noCategorie);
-				//System.out.println(categorie);
-				//System.out.println("article saisie "+rechercheArticle);
+				// System.out.println(categorie);
+				// System.out.println("article saisie "+rechercheArticle);
 				if (rechercheArticle == "") {
 					if (noCategorie == 0) {
 						modelArticle.setListeArticles(managerArticle.getAllArticle());
@@ -77,18 +92,18 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 						List<Article> listeArticlesNom = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
 						List<Article> listeArticlebyNomByCategorie = new ArrayList<Article>();
 						for (Article article : listeArticlesNom) {
-							if (noCategorie==(article.getCategorie().getNoCategorie())) {
+							if (noCategorie == (article.getCategorie().getNoCategorie())) {
 								listeArticlebyNomByCategorie.add(article);
 							}
 						}
-						//System.out.println("Ma liste par article: "+listeArticlesNom);
-						//System.out.println("Ma liste par article/categorie: "+listeArticlebyNomByCategorie);
+						// System.out.println("Ma liste par article: "+listeArticlesNom);
+						// System.out.println("Ma liste par article/categorie:
+						// "+listeArticlebyNomByCategorie);
 						modelArticle.setListeArticles(listeArticlebyNomByCategorie);
 
 					}
 
 				}
-
 
 			} catch (BLLException e1) {
 				e1.printStackTrace();

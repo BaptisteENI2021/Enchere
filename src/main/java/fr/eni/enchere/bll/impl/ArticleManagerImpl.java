@@ -31,6 +31,36 @@ public class ArticleManagerImpl implements ArticleManager {
 
 	private static ArticleDAO dao = DAOFactory.getInstanceArticle();
 
+	public void miseAJourEtatVente(Article article) {
+
+		if ((article.getDateFinEncheres().isAfter(LocalDate.now()))) {
+			article.setEtatVente("termnine");
+			try {
+				dao.update(article);
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+
+		} else if ((article.getDateDebutEncheres().isAfter(LocalDate.now())
+				|| (article.getDateDebutEncheres().isEqual(LocalDate.now())))) {
+			article.setEtatVente("commence");
+			try {
+				dao.update(article);
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+		}
+		
+//		article.setEtatVente("essai");
+//		try {
+//			dao.update(article);
+//		} catch (DALException e) {
+//			e.printStackTrace();
+//		}
+		
+		System.out.println("j'ai mise à jour les états");
+	}
+
 	@Override
 	public void vendreArticle(Article article) throws BLLException {
 
@@ -39,20 +69,28 @@ public class ArticleManagerImpl implements ArticleManager {
 		validationNomArticle(article.getNomArticle(), be);
 		validationDescription(article.getDescription(), be);
 		validationDateDebutEnchere(article.getDateDebutEncheres(), be);
+		validationDateDebutEnchere(article.getDateFinEncheres(), be);
 		validationPrixInitial(article.getPrixInitial(), be);
+		
 
 		if (be.hasErreur()) {
 
 			throw be;
 		}
 
+		Article nouvelArticle = null;
+		nouvelArticle = new Article ();
+		
 		try {
 			dao.insert(article);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e);
 		}
-	}
+	
+
+}
+	
 
 	@Override
 	public void supprimerUnArticle(Integer noArticle) throws BLLException {
@@ -126,19 +164,16 @@ public class ArticleManagerImpl implements ArticleManager {
 
 	@Override
 	public List<Article> getAllArticleByNomMotCle(String libelle) throws BLLException {
-		
+
 		try {
 			return dao.selectByNomArticle(libelle);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e);
 		}
-		
-		
+
 	}
-	
-	
-	
+
 	private void validationNoArticle(Integer noArticle, BLLException be) {
 		if (noArticle == null || noArticle < 0) {
 			be.ajouterErreur(new ParameterException("Le numéro Article est inférieur à 0"));
@@ -182,7 +217,5 @@ public class ArticleManagerImpl implements ArticleManager {
 		}
 
 	}
-
-	
 
 }

@@ -50,10 +50,6 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		
 		Utilisateur utilisateurTeste = new Utilisateur();
 
-//		String pseuso = utilisateurTeste.getPseudo();
-//		String email = utilisateurTeste.getEmail();
-//		String motDePasse = utilisateurTeste.getMotDePasse();
-
 		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
 
 		try {

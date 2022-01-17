@@ -48,7 +48,7 @@ public class PageConnexionServlet extends HttpServlet {
 
 		if (request.getParameter("Connexion") != null) {
 
-			System.out.println("J'ai appuyé sur connection");
+			//System.out.println("J'ai appuyé sur connection");
 			String identifiant = request.getParameter("identifiant");
 			String motDePasse = request.getParameter("motDePasse");
 			String message = null;
