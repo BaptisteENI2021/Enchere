@@ -98,7 +98,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 
 		}
 		if (request.getParameter("annuler") != null) {
-			WEBINF = "/EssaiServlet";
+			WEBINF = "/PageListeEnchereMesVentesServlet";
 
 		}
 		request.setAttribute("articleModel", articleModel);

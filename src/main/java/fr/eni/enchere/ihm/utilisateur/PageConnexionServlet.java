@@ -70,7 +70,7 @@ public class PageConnexionServlet extends HttpServlet {
 				/* Mise en session du modelUtilisateur */
 				request.getSession().setAttribute("model", model);
 
-				WEBINF = "/PageMonProfilServlet";
+				WEBINF = "/PageListeEnchereMesVentesServlet";
 
 				System.out.println("Connection réussie");
 

@@ -33,7 +33,6 @@ public class ArticleManagerImpl implements ArticleManager {
 
 	public void miseAJourEtatVente(Article article) {
 
-		
 		if ((LocalDate.now().isAfter(article.getDateFinEncheres()))) {
 			article.setEtatVente("termine");
 			try {
@@ -43,8 +42,8 @@ public class ArticleManagerImpl implements ArticleManager {
 				e.printStackTrace();
 			}
 
-		} else if ((article.getDateDebutEncheres().isAfter(LocalDate.now())
-				|| (article.getDateDebutEncheres().isEqual(LocalDate.now())))) {
+		} else if (article.getDateDebutEncheres().isBefore(LocalDate.now()) ||
+				article.getDateDebutEncheres().equals(LocalDate.now())) {
 			article.setEtatVente("commence");
 			try {
 				modifierArticle(article);
@@ -53,16 +52,10 @@ public class ArticleManagerImpl implements ArticleManager {
 				e.printStackTrace();
 			}
 
+			System.out.println("je suis dans les articles états commencés");
 
 		}
 
-//		article.setEtatVente("essaitruc");
-//		try {
-//			modifierArticle(article);
-//		} catch (BLLException e) {
-//
-//			e.printStackTrace();
-//		}
 
 		System.out.println("j'ai mise à jour les états");
 	}
@@ -177,20 +170,18 @@ public class ArticleManagerImpl implements ArticleManager {
 
 	}
 
-	
 	@Override
 	public Article afficherArticleById(Integer noArticle) throws BLLException {
-		
+
 		try {
 			return dao.selectById(noArticle);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e);
 		}
-	
+
 	}
-	
-	
+
 	private void validationNoArticle(Integer noArticle, BLLException be) {
 		if (noArticle == null || noArticle < 0) {
 			be.ajouterErreur(new ParameterException("Le numéro Article est inférieur à 0"));
@@ -234,7 +225,5 @@ public class ArticleManagerImpl implements ArticleManager {
 		}
 
 	}
-
-	
 
 }
