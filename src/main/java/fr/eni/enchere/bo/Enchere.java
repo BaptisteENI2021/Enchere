@@ -7,7 +7,7 @@ public class Enchere {
 	private Integer noEnchere;
 	private LocalDate dateEnchere;
 	private Integer montantEnchere;
-	private boolean remporte = false;
+	private boolean remporte = true;
 
 	private Utilisateur utilisateur;
 	private Article article;

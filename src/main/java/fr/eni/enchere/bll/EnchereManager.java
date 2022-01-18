@@ -3,6 +3,7 @@ package fr.eni.enchere.bll;
 import java.time.LocalDate;
 import java.util.List;
 
+import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -19,5 +20,7 @@ public interface EnchereManager {
 	public void modifierEnchere (Enchere EnchereAModifier) throws BLLException;
 	
 	public List<Enchere> selectionnerEnchereByNomMotCle (String libelle) throws BLLException;
+
+	void Encherir(Utilisateur utilisateur, Article aricle, Integer maProposition) throws BLLException;
 	
 }

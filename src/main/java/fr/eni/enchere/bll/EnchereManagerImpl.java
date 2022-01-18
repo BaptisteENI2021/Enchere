@@ -1,11 +1,19 @@
 package fr.eni.enchere.bll;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.EnchereDAO;
+import fr.eni.enchere.dal.UtilisateurDAO;
+import fr.eni.enchere.dal.jdbc.ArticleDAOJdbcImpl;
 import fr.eni.enchere.dal.jdbc.EnchereDAOImpl;
+import fr.eni.enchere.dal.jdbc.UtilisateurDAOImpl;
 
 public class EnchereManagerImpl implements EnchereManager {
 
@@ -24,6 +32,8 @@ public class EnchereManagerImpl implements EnchereManager {
 	/** FIN SINGLETON **/
 
 	private static EnchereDAO enchereDAO = new EnchereDAOImpl();
+	private static ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
+	private static UtilisateurDAO utilisateurDAO = new UtilisateurDAOImpl();
 	private static BLLException BLLException = new BLLException();
 
 	@Override
@@ -98,11 +108,55 @@ public class EnchereManagerImpl implements EnchereManager {
 			e.printStackTrace();
 			throw new BLLException(e);
 		}
-		
-		
-		
-		
-		
+	}
+
+	@Override
+	public void Encherir(Utilisateur encherisseur, Article articleAEncherir, Integer maProposition)
+			throws BLLException {
+
+		// Article article = aricleAEncherir ;
+
+		try {
+			if (articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence")
+					&& articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente() < maProposition
+					&& utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit() > maProposition) {
+
+				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), maProposition, encherisseur, articleAEncherir);
+
+				encherisseur.setCredit(encherisseur.getCredit() - maProposition);
+
+				List<Enchere> lstEncheres = new ArrayList<Enchere>();
+
+				lstEncheres = enchereDAO.getAllByArticle(articleAEncherir.getNoArticle());
+
+				Enchere ancienneMeilleureEnchere = new Enchere();
+				Utilisateur ancienMeilleurEncherisseur = new Utilisateur();
+
+				if (lstEncheres != null) {
+
+					for (Enchere enchere : lstEncheres) {
+
+						if (enchere.isRemporte() == true) {
+
+							ancienneMeilleureEnchere = enchere;
+
+							ancienMeilleurEncherisseur = ancienneMeilleureEnchere.getUtilisateur();
+
+							ancienMeilleurEncherisseur.setCredit(
+									ancienMeilleurEncherisseur.getCredit() - articleAEncherir.getPrixDeVente());
+
+							ancienneMeilleureEnchere.setRemporte(false);
+						}
+					}
+
+				}
+				articleAEncherir.setPrixDeVente(maProposition);
+				ajoutEnchere(nouvelleEnchere);
+			}
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
