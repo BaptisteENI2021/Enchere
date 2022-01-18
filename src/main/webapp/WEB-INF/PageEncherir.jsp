@@ -11,7 +11,7 @@
 <form action= "PageEncherirServlet" method="POST">
  ${modelArticle.article.nomArticle}
 <br>
-Description : ${modelArticle.article.description}}
+Description : ${modelArticle.article.description}
 <br>
 Categorie :  ${modelArticle.article.categorie}
 <br>

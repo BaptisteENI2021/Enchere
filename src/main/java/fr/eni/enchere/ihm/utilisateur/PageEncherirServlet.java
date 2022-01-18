@@ -79,6 +79,8 @@ public class PageEncherirServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		request.getRequestDispatcher(WEBINF).forward(request, response);
 	}
 
 	/**
