@@ -78,7 +78,6 @@ public class PageConnexionServlet extends HttpServlet {
 				System.out.println("Connection échouée");
 			}
 			
-
 		}
 
 		if (request.getParameter("CreerUnCompte") != null) {

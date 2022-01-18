@@ -29,7 +29,6 @@ public class Article {
 	}
 	
 	
-	
 
 	public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Categorie categorie, Retrait retrait) {
@@ -42,8 +41,21 @@ public class Article {
 		this.categorie = categorie;
 		this.retrait = retrait;
 	}
+	
 
-
+	public Article( Utilisateur utilisateur,String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Integer prixInitial, Categorie categorie, Retrait retrait) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.retrait = retrait;
+		prixDeVente = prixInitial;
+	}
 
 	public Article(Utilisateur utilisateur, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Integer prixInitial, Categorie categorie) {

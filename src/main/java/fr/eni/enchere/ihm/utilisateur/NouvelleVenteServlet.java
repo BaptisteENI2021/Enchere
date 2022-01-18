@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.enchere.bll.ArticleManager;
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.RetraitManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bll.impl.ArticleManagerImpl;
 import fr.eni.enchere.bll.impl.CategorieManagerImpl;
+import fr.eni.enchere.bll.impl.RetraitManagerImpl;
 import fr.eni.enchere.bll.impl.UtilisateurManagerImpl;
 import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Categorie;
@@ -30,6 +32,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 
 	private ArticleManager manager = ArticleManagerImpl.getInstance();
 	private CategorieManager managerCat = CategorieManagerImpl.getInstance();
+	private RetraitManager managerRetrait = RetraitManagerImpl.getInstance();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -64,6 +67,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 			Integer miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 			LocalDate debutEnchere = LocalDate.parse(request.getParameter("debutEnchere"));
 			LocalDate finEnchere = LocalDate.parse(request.getParameter("finEnchere"));
+
 			String rueRetrait = request.getParameter("rueRetrait");
 			String codePostal = request.getParameter("codePostal");
 			String ville = request.getParameter("ville");
@@ -75,23 +79,28 @@ public class NouvelleVenteServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			Utilisateur utilisateur = model.getUtilisateur();
-			
-			Article article = new Article(utilisateur, nomArticle, description, debutEnchere, finEnchere, miseAPrix, categorie);
 
-			System.out.println(article);
-
-			articleModel.setArticle(article);
+			Article article = new Article(utilisateur, nomArticle, description, debutEnchere, finEnchere, miseAPrix,
+					categorie);
 
 			try {
 				manager.vendreArticle(article);
-				System.out.println("Article enregistré");
+
+				Retrait retrait = new Retrait(rueRetrait, codePostal, ville, article);
+
+				managerRetrait.ajouterRetrait(retrait);
+				article.setRetrait(retrait);
+
+				System.out.println("Article enregistré , Nouveau Lieu de retrait créé");
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			articleModel.setArticle(article);
 
+			System.out.println("ceci est l'article model après création d'article " + articleModel);
 			// (String nomArticle, String description, LocalDate dateDebutEncheres,
 			// LocalDate dateFinEncheres,
 			// Integer prixInitial, Categorie categorie, Retrait retrait) {
