@@ -100,18 +100,9 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 			} catch (BLLException e1) {
 				e1.printStackTrace();
 			}
+			
 		}
-		System.out.println(request.getParameter("noArticle"));
-		//Integer noAticleClic = Integer.valueOf(request.getParameter("noArticle"));
-//		Article articleClique;
-//		try {
-//			articleClique = managerArticle.afficherArticleById(noAticleClic);
-//			System.out.println(articleClique.getNoArticle());
-//			modelArticle.setArticle(articleClique);
-//		} catch (BLLException e) {
-//			e.printStackTrace();
-//		}
-//		
+		System.out.println("Recupération du no avant de cliquer sur un lien: " +request.getParameter("id"));
 		
 		
 		request.setAttribute("model", model);

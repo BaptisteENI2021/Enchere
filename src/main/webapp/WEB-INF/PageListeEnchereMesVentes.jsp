@@ -40,15 +40,83 @@
 <input type="submit" name="Rechercher" value="Rechercher"/>
 </form>
 
-<c:forEach items="${modelArticle.listeArticles}" var="article">
-	<p><a href = "<c:url value = "EssaiServlet?noArticle=${article.noArticle}"/>"> ${article.nomArticle}</a> : ${article.categorie.libelle}</p>
-	
+<br/>
 
-	
+<div>
+	Achats : <input type="radio" name="transaction" value="Achats" id="achats" onclick="onClickAchats()">
+    Mes ventes : <input type="radio" name="transaction" value="Mes Ventes" id="mesVentes" onclick="onClickVentes()">
+</div>
+<hr/>
+<div>
+enchères ouvertes : <input type="checkbox" value="enchères ouvertes" id="encheresOuvertes" >
+mes ventes en cours : <input type="checkbox" value="mes ventes en cours" id="mesVentesEnCours"><br/>
+mes enchères: <input type="checkbox" value="mes enchères" id="mesEncheres">
+ventes non débutées : <input type="checkbox" value="ventes non débutées" id="ventesNonDebutees"><br/>
+enchères remportées : <input type="checkbox" value="enchères remportées" id="encheresRemportees">
+ventes terminées : <input type="checkbox" value="ventes terminées" id="ventesTerminees"><br/>
+
+</div>
+
+
+<br/>
+
+<c:forEach items="${modelArticle.listeArticles}" var="article">
+	<p><a href = "<c:url value = "EssaiServlet?id=${article.noArticle}"/>">${article.noArticle}</a> : ${article.nomArticle} : ${article.categorie.libelle}</p>
 	
 </c:forEach>
 
-
-
 </body>
 </html>
+
+
+<script type="application/javascript">
+
+function onClickAchats()
+{
+    var mesVentesEnCours = document.getElementById("mesVentesEnCours");
+    mesVentesEnCours.checked = false;
+    mesVentesEnCours.disabled = true;
+    var ventesNonDebutees = document.getElementById("ventesNonDebutees");
+    ventesNonDebutees.checked = false;
+    ventesNonDebutees.disabled = true;
+    var ventesTerminees = document.getElementById("ventesTerminees");
+    ventesTerminees.checked = false;
+    ventesTerminees.disabled = true;
+    var encheresOuvertes = document.getElementById("encheresOuvertes");
+    encheresOuvertes.checked = false;
+    encheresOuvertes.disabled = false;
+    var mesEncheres = document.getElementById("mesEncheres");
+    mesEncheres.checked = false;
+    mesEncheres.disabled = false;
+    var encheresRemportees = document.getElementById("encheresRemportees");
+    encheresRemportees.checked = false;
+    encheresRemportees.disabled = false;
+}
+function onClickVentes()
+{
+    var encheresOuvertes = document.getElementById("encheresOuvertes");
+    encheresOuvertes.checked = false;
+    encheresOuvertes.disabled = true;
+    var mesEncheres = document.getElementById("mesEncheres");
+    mesEncheres.checked = false;
+    mesEncheres.disabled = true;
+    var encheresRemportees = document.getElementById("encheresRemportees");
+    encheresRemportees.checked = false;
+    encheresRemportees.disabled = true;
+    var mesVentesEnCours = document.getElementById("mesVentesEnCours");
+    mesVentesEnCours.checked = false;
+    mesVentesEnCours.disabled = false;
+    var ventesNonDebutees = document.getElementById("ventesNonDebutees");
+    ventesNonDebutees.checked = false;
+    ventesNonDebutees.disabled = false;
+    var ventesTerminees = document.getElementById("ventesTerminees");
+    ventesTerminees.checked = false;
+    ventesTerminees.disabled = false;
+}
+
+
+
+
+
+
+</script>
