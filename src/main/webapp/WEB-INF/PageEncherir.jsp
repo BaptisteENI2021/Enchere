@@ -27,9 +27,9 @@ Retrait : ${articleModel.article.retrait.rue} ${articleModel.article.retrait.cod
 Vendeur : ${articleModel.article.utilisateur.pseudo} 
 
 <br>
-Ma proposition:<input type = "number" name= "prixDeVente" value = "${articleModel.article.prixDeVente}"/>
+Ma proposition:<input type = "number" name= "maProposition" value = "${articleModel.article.prixDeVente}"/>
 
-<input type="submit" name="encherir" value="Encherir"/>
+<input type="submit" name="encherir" value="encherir"/>
 
 </form> 
 </body>

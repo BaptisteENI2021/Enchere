@@ -36,6 +36,8 @@ public class EnchereManagerImpl implements EnchereManager {
 	private static UtilisateurDAO utilisateurDAO = new UtilisateurDAOImpl();
 	private static BLLException BLLException = new BLLException();
 
+	
+	
 	@Override
 	public Enchere ajoutEnchere(Enchere enchere) throws BLLException {
 
@@ -117,40 +119,56 @@ public class EnchereManagerImpl implements EnchereManager {
 		// Article article = aricleAEncherir ;
 
 		try {
-			if (articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence")
-					&& articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente() < maProposition
-					&& utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit() > maProposition) {
-
+//			if (articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence")
+//					&& articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente() < maProposition
+//					&& utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit() > maProposition) {
+				if(1<2) {
+					
+					System.out.println("je suis rentré dans le IF de la méthode enchérir");
+					
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), maProposition, encherisseur, articleAEncherir);
 
+				System.out.println("ma nouvelle enchère en détail: "+nouvelleEnchere);
+				
+				//Décréditer l'encherisseur
 				encherisseur.setCredit(encherisseur.getCredit() - maProposition);
+				utilisateurDAO.update(encherisseur);
+			
 
+				System.out.println("encherisseur après la baisse du crédit: " +encherisseur);
+				
+				//Gestion de l'ancienne meilleur enchère et de l'ancier meilleur encherisseur
 				List<Enchere> lstEncheres = new ArrayList<Enchere>();
-
-				lstEncheres = enchereDAO.getAllByArticle(articleAEncherir.getNoArticle());
-
 				Enchere ancienneMeilleureEnchere = new Enchere();
 				Utilisateur ancienMeilleurEncherisseur = new Utilisateur();
-
+				
+				lstEncheres = enchereDAO.getAllByArticle(articleAEncherir.getNoArticle());
+				
 				if (lstEncheres != null) {
-
 					for (Enchere enchere : lstEncheres) {
-
 						if (enchere.isRemporte() == true) {
-
 							ancienneMeilleureEnchere = enchere;
-
+							
+							System.out.println("l'ancienne meilleure enchère est: " + ancienneMeilleureEnchere);
+							
+							//on récupère l'acheteur de l'ancienne meilleure enchère
 							ancienMeilleurEncherisseur = ancienneMeilleureEnchere.getUtilisateur();
-
+							
+							System.out.println("l'ancien meilleur encherisseur est: " +ancienMeilleurEncherisseur);
+							//on recrédite l'ancien meilleur 
 							ancienMeilleurEncherisseur.setCredit(
-									ancienMeilleurEncherisseur.getCredit() - articleAEncherir.getPrixDeVente());
-
+									ancienMeilleurEncherisseur.getCredit() + articleAEncherir.getPrixDeVente());
+							utilisateurDAO.update(ancienMeilleurEncherisseur);
 							ancienneMeilleureEnchere.setRemporte(false);
+							enchereDAO.update(ancienneMeilleureEnchere);
 						}
 					}
 
 				}
+				//on modifie le prix de vente de l'article en lui mettant le montant de la nouvelle enchère
 				articleAEncherir.setPrixDeVente(maProposition);
+				articleDAO.update(articleAEncherir);
+				
 				ajoutEnchere(nouvelleEnchere);
 			}
 		} catch (DALException e) {

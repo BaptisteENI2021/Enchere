@@ -18,7 +18,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private final static String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String SELECT_BY_NO_UTILISATEUR = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
 	private final static String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
-	private final static String UPDATE = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
+	private final static String UPDATE = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?"
+			+ ", credit=? WHERE no_utilisateur=?";
 	private final static String SELECT_ALL= "SELECT * FROM UTILISATEURS" ; 
 
 	@Override
@@ -68,7 +69,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			stmt.setString(7, utilisateurAModifier.getCodePostal());
 			stmt.setString(8, utilisateurAModifier.getVille());
 			stmt.setString(9, utilisateurAModifier.getMotDePasse());
-			stmt.setInt(10, utilisateurAModifier.getNoUtilisateur());
+			stmt.setInt(10, utilisateurAModifier.getCredit());
+			stmt.setInt(11, utilisateurAModifier.getNoUtilisateur());
 			
 			stmt.executeUpdate();
 	} catch (SQLException e) {

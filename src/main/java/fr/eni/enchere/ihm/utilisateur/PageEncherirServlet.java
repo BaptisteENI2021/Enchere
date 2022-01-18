@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jdt.internal.compiler.apt.model.ArrayTypeImpl;
+
 import fr.eni.enchere.bll.ArticleManager;
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
@@ -55,6 +57,8 @@ public class PageEncherirServlet extends HttpServlet {
 		}
 		
 		
+		
+		
 		if(articleRecupere.getNoArticle()== null) {
 		Integer noAticleClic = Integer.valueOf(request.getParameter("id"));
 		
@@ -65,33 +69,37 @@ public class PageEncherirServlet extends HttpServlet {
 			e2.printStackTrace();
 		}
 		
-		System.out.println(articleModel.getArticle());
-		System.out.println(articleModel.getArticle().getNomArticle());
+		System.out.println("dans le IF avant encherir" + articleModel.getArticle());
+		System.out.println("dans le IF avant encherir" + articleModel.getArticle().getNomArticle());
 		
 		}
 		
+		//System.out.println("avant encherir après le IF" + articleModel.getArticle());
+		
 		if (request.getParameter("encherir") != null) {
 
-			Integer prixDeVente = Integer.parseInt(request.getParameter("prixDeVente"));
+			Integer maProposition = Integer.parseInt(request.getParameter("maProposition"));
 
-			Utilisateur utilisateur = model.getUtilisateur();
+			Utilisateur encherisseur = model.getUtilisateur();
+			
+			Article articleAEncherir = articleRecupere;
 
 		
+			System.out.println("après encherir" + maProposition);
+			System.out.println("après encherir" + encherisseur);
+			System.out.println("après encherir" + articleAEncherir);
 			
-			articleRecupere.setPrixDeVente(prixDeVente);
-
-			articleModel.setArticle(articleRecupere);
-
 			try {
-				manager.modifierArticle(articleRecupere);
-				System.out.println("Article enregistré");
+				managerEnchere.Encherir(encherisseur, articleAEncherir, maProposition);
 			} catch (BLLException e) {
 				e.printStackTrace();
 			}
 			
+			
 			WEBINF = "/PageListeEnchereMesVentesServlet";
 		}
 		
+		//request.setAttribute("model", model);
 		request.setAttribute("articleModel", articleModel);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
 	}
