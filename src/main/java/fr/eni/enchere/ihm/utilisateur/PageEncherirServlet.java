@@ -23,7 +23,7 @@ public class PageEncherirServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArticleManager manager = ArticleManagerImpl.getInstance();
 	private EnchereManager managerEnchere = EnchereManagerImpl.getInstance();
-
+	Article articleRecupere = new Article();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -41,15 +41,34 @@ public class PageEncherirServlet extends HttpServlet {
 
 		/* recupération de ModelUtilisateur depuis la session */
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
+		ArticleModel articleModel = (ArticleModel) request.getSession().getAttribute("articleModel");
+		
+		
 		String WEBINF = "WEB-INF/PageEncherir.jsp";
-
+		
+		
 		if (model == null) {
 			model = new UtilisateurModel();
 		}
-
-		ArticleModel articleModel = new ArticleModel();
-
+		if (articleModel == null) {
+			articleModel = new ArticleModel();
+		}
+		
+		
+		if(articleRecupere.getNoArticle()== null) {
+		Integer noAticleClic = Integer.valueOf(request.getParameter("id"));
+		
+		try {
+			articleRecupere = manager.afficherArticleById(noAticleClic);
+			articleModel.setArticle(articleRecupere);
+		} catch (BLLException e2) {
+			e2.printStackTrace();
+		}
+		
 		System.out.println(articleModel.getArticle());
+		System.out.println(articleModel.getArticle().getNomArticle());
+		
+		}
 		
 		if (request.getParameter("encherir") != null) {
 
@@ -57,29 +76,23 @@ public class PageEncherirServlet extends HttpServlet {
 
 			Utilisateur utilisateur = model.getUtilisateur();
 
-			Article article = null;
+		
 			
-			
-			try {
-				article = manager.afficherArticleById(articleModel.getArticle().getNoArticle());
-			} catch (BLLException e1) {
-				e1.printStackTrace();
-			}
+			articleRecupere.setPrixDeVente(prixDeVente);
 
-			System.out.println(article);
-			
-			article.setPrixDeVente(prixDeVente);
-
-			articleModel.setArticle(article);
+			articleModel.setArticle(articleRecupere);
 
 			try {
-				manager.modifierArticle(article);
+				manager.modifierArticle(articleRecupere);
 				System.out.println("Article enregistré");
 			} catch (BLLException e) {
 				e.printStackTrace();
 			}
+			
+			WEBINF = "/PageListeEnchereMesVentesServlet";
 		}
 		
+		request.setAttribute("articleModel", articleModel);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
 	}
 

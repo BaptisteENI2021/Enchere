@@ -67,6 +67,7 @@ public class UtilisateurCreerServlet extends HttpServlet {
 					System.out.println("contact créé");
 
 					WEBINF = "PageListeEnchereMesVentesServlet";
+					
 
 					/* Création d'un objet session ou récupération d'une session */
 					HttpSession session = request.getSession();

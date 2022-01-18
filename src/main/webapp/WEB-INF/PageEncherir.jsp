@@ -9,27 +9,49 @@
 <body>
 
 <form action= "PageEncherirServlet" method="POST">
- ${modelArticle.article.nomArticle}
+
+ ${articleModel.article.nomArticle}
 <br>
-Description : ${modelArticle.article.description}
+Description : ${articleModel.article.description}
 <br>
-Categorie :  ${modelArticle.article.categorie}
+Categorie :  ${articleModel.article.categorie.libelle}
 <br>
-Meilleure offre :${modelArticle.article.prixDeVente}
+Meilleure offre :${articleModel.article.prixDeVente}
 <br>
-Mise à prix : ${modelArticle.article.prixInitial}
+Mise à prix : ${articleModel.article.prixInitial}
 <br>
 Fin de l'enchère : ${articleModel.article.dateFinEncheres}
 <br>
-Retrait : ${articleModel.retrait.rue} ${articleModel.retrait.codePostal} ${articleModel.retrait.ville}
+Retrait : ${model.utilisateur.rue} ${model.utilisateur.codePostal} ${model.utilisateur.ville}
 <br> 
-Vendeur : ${articleModel.utilisateur.pseudo} 
-// doit afficher le pseudo du vendeur
+Vendeur : ${articleModel.article.utilisateur.pseudo} 
+
 <br>
-<input type = "number" name= "prixDeVente" value = "${articleModel.article.prixDeVente}"/>
+Ma proposition:<input type = "number" name= "prixDeVente" value = "${articleModel.article.prixDeVente}"/>
 
 <input type="submit" name="encherir" value="Encherir"/>
 
 </form> 
 </body>
 </html>
+
+<!-- <form action="PageMonProfilServlet" method="POST"> -->
+<%-- Pseudo : ${model.utilisateur.pseudo} --%>
+<!-- <br> -->
+<%-- Nom : ${model.utilisateur.nom} --%>
+<!-- <br> -->
+<%-- Prenom : ${model.utilisateur.prenom} --%>
+<!-- <br> -->
+<%-- Email : ${model.utilisateur.email} --%>
+<!-- <br> -->
+<%-- Teléphone : ${model.utilisateur.telephone} --%>
+<!-- <br> -->
+<%-- Rue : ${model.utilisateur.rue} --%>
+<!-- <br> -->
+<%-- Code postal : ${model.utilisateur.codePostal} --%>
+<!-- <br> -->
+<%-- Ville : ${model.utilisateur.ville} --%>
+<!-- <br> -->
+<!-- <input type="submit" name="Modifier" value="Modifier"/> -->
+
+<!-- </form> -->

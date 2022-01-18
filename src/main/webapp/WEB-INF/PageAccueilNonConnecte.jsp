@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>PageAccueilNonConnecte</title>
+<link href = "style\stylePageAccueilNonConnecte.css" rel="stylesheet">
 </head>
 
 <body>

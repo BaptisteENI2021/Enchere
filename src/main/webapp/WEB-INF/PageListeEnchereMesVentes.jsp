@@ -61,7 +61,7 @@ ventes terminées : <input type="checkbox" value="ventes terminées" id="ventesT
 <br/>
 
 <c:forEach items="${modelArticle.listeArticles}" var="article">
-	<p><a href = "<c:url value = "EssaiServlet?id=${article.noArticle}"/>">${article.noArticle}</a> : ${article.nomArticle} : ${article.categorie.libelle}</p>
+	<p><a href = "<c:url value = "PageEncherirServlet?id=${article.noArticle}"/>">${article.nomArticle}</a> : ${article.categorie.libelle}</p>
 	
 </c:forEach>
 
