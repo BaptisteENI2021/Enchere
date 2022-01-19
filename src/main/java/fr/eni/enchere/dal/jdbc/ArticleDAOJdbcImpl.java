@@ -20,7 +20,6 @@ import fr.eni.enchere.dal.DALException;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 
-
 /**
  * Classe en charge de
  * 
@@ -47,15 +46,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private final static String SELECT_BY_CATEGORIE = "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie=?";
 
 	private final static String SELECT_BY_NOM_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ?";
-	
+
 	private final static String SELECT_BY_ETATCOMMENCE = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente ='commence'";
-	
-	
-	
-	
-	Dans DAOArticles JDBCimp:
-		select * FROM articles WHERE etatvente= commence
-	
+
+	private final static String SELECT_BY_ETAT = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente=? AND no_utilisateur=?";
+
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
 
@@ -71,7 +66,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pStmt.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
 			pStmt.setInt(8, nouvelArticle.getCategorie().getNoCategorie());
 			pStmt.setInt(9, nouvelArticle.getNoRetrait());
-			
+
 			pStmt.executeUpdate();
 			ResultSet rs = pStmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -209,14 +204,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public List<Article> selectByNomArticle(String libelle) throws DALException {
-		
+
 		List<Article> articles = new ArrayList<Article>();
-		
-		try(Connection cnx = JdbcTools.getConnection()) {
+
+		try (Connection cnx = JdbcTools.getConnection()) {
 			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_NOM_ARTICLE);
-			pStmt.setString(1, '%'+libelle+'%');
+			pStmt.setString(1, '%' + libelle + '%');
 			ResultSet rs = pStmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				Article article = map(rs);
 				articles.add(article);
 			}
@@ -224,34 +219,52 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 			throw new DALException(e.getMessage());
 		}
-		
+
 		return articles;
 	}
-		
-		
-	
 
-	private Article map(ResultSet rs) throws SQLException {
-		Integer noArticle = rs.getInt("no_article");
-		String nomArticle = rs.getString("nom_article");
-		String description = rs.getString("description");
-		LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
-		LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
-		Integer prixInitial = rs.getInt("prix_initial");
-		Integer prixDeVente = rs.getInt("prix_vente");
-		Utilisateur utilisateur = this.getUtilisateurArticle(rs.getInt("no_utilisateur"));
-		Categorie categorie = this.getCategorieArticle(rs.getInt("no_categorie"));
-		String etatVente = rs.getString("etat_vente");
+	public List<Article> selectByEtatCommence() throws DALException {
 
-//		Integer noUtilisateur = rs.getInt("no_utilisateur");
-//		Integer noCategorie = rs.getInt("no_categorie");
+		List<Article> ListeArticlesEtatCommence = new ArrayList<Article>();
 
-		Article article = null;
+		try (Connection cnx = JdbcTools.getConnection()) {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_BY_ETATCOMMENCE);
 
-		article = new Article(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
-				prixDeVente, utilisateur, categorie,etatVente);
+			while (rs.next()) {
+				Article articleEtatCommence = map(rs);
+				ListeArticlesEtatCommence.add(articleEtatCommence);
+			}
 
-		return article;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException(e.getMessage());
+		}
+
+		return ListeArticlesEtatCommence;
+	}
+
+	public List<Article> selectByEtat(Article article) throws DALException {
+		List<Article> listeArticles = new ArrayList<Article>();
+
+		try (Connection cnx = JdbcTools.getConnection()) {
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_ETAT);
+			Integer noUtilisateur = article.getUtilisateur().getNoUtilisateur();
+			String etatVente = article.getEtatVente();
+			
+			pStmt.setString(1, etatVente);
+			pStmt.setInt(2,noUtilisateur);
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				Article articleEtatSouhaite = map(rs);
+				listeArticles.add(articleEtatSouhaite);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return listeArticles;
 	}
 
 	private Utilisateur getUtilisateurArticle(Integer noUtilisateur) {
@@ -281,7 +294,28 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return categorie;
 
 	}
-	
-	
-	
+
+	private Article map(ResultSet rs) throws SQLException {
+		Integer noArticle = rs.getInt("no_article");
+		String nomArticle = rs.getString("nom_article");
+		String description = rs.getString("description");
+		LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
+		LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+		Integer prixInitial = rs.getInt("prix_initial");
+		Integer prixDeVente = rs.getInt("prix_vente");
+		Utilisateur utilisateur = this.getUtilisateurArticle(rs.getInt("no_utilisateur"));
+		Categorie categorie = this.getCategorieArticle(rs.getInt("no_categorie"));
+		String etatVente = rs.getString("etat_vente");
+
+//		Integer noUtilisateur = rs.getInt("no_utilisateur");
+//		Integer noCategorie = rs.getInt("no_categorie");
+
+		Article article = null;
+
+		article = new Article(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
+				prixDeVente, utilisateur, categorie, etatVente);
+
+		return article;
+	}
+
 }

@@ -269,7 +269,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 	}
 	
 	@Override
-	public List<Enchere> getAllEnchereTermines(Integer noArticle) throws DALException {
+	public List<Enchere> getAllEnchereTermines(Integer noUtilisateur) throws DALException {
 		
 		List<Enchere> listeEncheresTermines = new ArrayList<Enchere>();
 		
@@ -278,7 +278,18 @@ public class EnchereDAOImpl implements EnchereDAO {
 			PreparedStatement pStmt = con.prepareStatement(SELECT_BY_ENCHERE_REMPORTE);
 			ResultSet rs = pStmt.executeQuery();
 			
-			pStmt.setInt(1, noArticle);
+			pStmt.setInt(1, noUtilisateur);
+			
+			while (rs.next()) {
+				Enchere enchere = new Enchere();
+				enchere.setNoEnchere(rs.getInt("no_enchere"));
+				enchere.setDateEnchere(rs.getDate("date_enchere").toLocalDate());
+				enchere.setMontantEnchere(rs.getInt("montant_enchere"));
+				enchere.setArticle(article.selectById(rs.getInt("no_article")));
+				enchere.setUtilisateur(utilisateur.selectById(rs.getInt("no_utilisateur")));
+					
+				listeEncheresTermines.add(enchere);
+			}
 		
 			} catch (SQLException e) {
 
