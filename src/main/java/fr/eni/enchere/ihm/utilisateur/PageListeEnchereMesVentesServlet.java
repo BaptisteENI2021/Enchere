@@ -63,10 +63,12 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 
 		// Lister les articles en fonction des filtres NomArticle et Categorie
 		if (request.getParameter("Rechercher") != null) {
-
+			
+			
 			String rechercheArticle = request.getParameter("rechercheArticle");
 			Integer noCategorie = Integer.parseInt(request.getParameter("categorie"));
 			Categorie categorie = null;
+			String etatVente = "commence"; 
 
 			try {
 				categorie = managerCategorie.categorieById(noCategorie);
@@ -74,23 +76,58 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 				// System.out.println("article saisie "+rechercheArticle);
 				if (rechercheArticle == "") {
 					if (noCategorie == 0) {
-						modelArticle.setListeArticles(managerArticle.getAllArticle());
+						modelArticle.setListeArticles(managerArticle.getAllVenteCommence());
+								
 					} else {
-						modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+						
+						//modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+						List<Article>lstArticlesCommence = managerArticle.getAllVenteCommence();
+						List<Article> lstCommenceParCategories = new ArrayList<Article>();
+						
+						for (Article article : lstArticlesCommence) {
+							
+							if (noCategorie == (article.getCategorie().getNoCategorie())) {
+								lstCommenceParCategories.add(article);
+							}
+						}
+							modelArticle.setListeArticles(lstCommenceParCategories);
 					}
-
+						
 				} else {
 					if (noCategorie == 0) {
-						modelArticle.setListeArticles(managerArticle.getAllArticleByNomMotCle(rechercheArticle));
+						List<Article>lstParMotCle = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
+						List<Article>lstArticlesCommencesParMotCle = new ArrayList<Article>();
+						for (Article article : lstParMotCle) {
+							
+							if (etatVente.equals(article.getEtatVente())) {
+								
+								lstArticlesCommencesParMotCle.add(article);
+							}
+							modelArticle.setListeArticles(lstArticlesCommencesParMotCle);
+						}
+						
 					} else {
 						List<Article> listeArticlesNom = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
 						List<Article> listeArticlebyNomByCategorie = new ArrayList<Article>();
+						List<Article>lstArticlesCommenceParNomParCategorie = new ArrayList<Article>();
 						for (Article article : listeArticlesNom) {
 							if (noCategorie == (article.getCategorie().getNoCategorie())) {
 								listeArticlebyNomByCategorie.add(article);
 							}
+							
+							for (Article article2 : listeArticlebyNomByCategorie) {
+								
+								if (etatVente.equals(article2.getEtatVente())) {
+									
+									lstArticlesCommenceParNomParCategorie.add(article);
+								}
+								
+							}
 						}
-						modelArticle.setListeArticles(listeArticlebyNomByCategorie);
+						// System.out.println("Ma liste par article: "+listeArticlesNom);
+						// System.out.println("Ma liste par article/categorie:
+						// "+listeArticlebyNomByCategorie);
+						modelArticle.setListeArticles(lstArticlesCommenceParNomParCategorie);
 
 					}
 
@@ -99,6 +136,43 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 			} catch (BLLException e1) {
 				e1.printStackTrace();
 			}
+			
+
+//			String rechercheArticle = request.getParameter("rechercheArticle");
+//			Integer noCategorie = Integer.parseInt(request.getParameter("categorie"));
+//			Categorie categorie = null;
+//
+//			try {
+//				categorie = managerCategorie.categorieById(noCategorie);
+//				// System.out.println(categorie);
+//				// System.out.println("article saisie "+rechercheArticle);
+//				if (rechercheArticle == "") {
+//					if (noCategorie == 0) {
+//						modelArticle.setListeArticles(managerArticle.getAllArticle());
+//					} else {
+//						modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+//					}
+//
+//				} else {
+//					if (noCategorie == 0) {
+//						modelArticle.setListeArticles(managerArticle.getAllArticleByNomMotCle(rechercheArticle));
+//					} else {
+//						List<Article> listeArticlesNom = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
+//						List<Article> listeArticlebyNomByCategorie = new ArrayList<Article>();
+//						for (Article article : listeArticlesNom) {
+//							if (noCategorie == (article.getCategorie().getNoCategorie())) {
+//								listeArticlebyNomByCategorie.add(article);
+//							}
+//						}
+//						modelArticle.setListeArticles(listeArticlebyNomByCategorie);
+//
+//					}
+//
+//				}
+//
+//			} catch (BLLException e1) {
+//				e1.printStackTrace();
+//			}
 			
 		}
 		//System.out.println("Recupération du no avant de cliquer sur un lien: " +request.getParameter("id"));

@@ -56,8 +56,6 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 		List<Article> listeArticles = new ArrayList<Article>();
 
 		
-		
-		
 		// Mise à jour de l'état des articles vendus en fonction de la date du jour
 		try {
 			listeArticles = managerArticle.getAllArticle();
@@ -80,6 +78,7 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 			String rechercheArticle = request.getParameter("rechercheArticle");
 			Integer noCategorie = Integer.parseInt(request.getParameter("categorie"));
 			Categorie categorie = null;
+			String etatVente = "commence"; 
 
 			try {
 				categorie = managerCategorie.categorieById(noCategorie);
@@ -87,26 +86,58 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 				// System.out.println("article saisie "+rechercheArticle);
 				if (rechercheArticle == "") {
 					if (noCategorie == 0) {
-						modelArticle.setListeArticles(managerArticle.getAllArticle());
+						modelArticle.setListeArticles(managerArticle.getAllVenteCommence());
+								
 					} else {
-						modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+						
+						//modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+						List<Article>lstArticlesCommence = managerArticle.getAllVenteCommence();
+						List<Article> lstCommenceParCategories = new ArrayList<Article>();
+						
+						for (Article article : lstArticlesCommence) {
+							
+							if (noCategorie == (article.getCategorie().getNoCategorie())) {
+								lstCommenceParCategories.add(article);
+							}
+						}
+							modelArticle.setListeArticles(lstCommenceParCategories);
 					}
-
+						
 				} else {
 					if (noCategorie == 0) {
-						modelArticle.setListeArticles(managerArticle.getAllArticleByNomMotCle(rechercheArticle));
+						List<Article>lstParMotCle = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
+						List<Article>lstArticlesCommencesParMotCle = new ArrayList<Article>();
+						for (Article article : lstParMotCle) {
+							
+							if (etatVente.equals(article.getEtatVente())) {
+								
+								lstArticlesCommencesParMotCle.add(article);
+							}
+							modelArticle.setListeArticles(lstArticlesCommencesParMotCle);
+						}
+						
 					} else {
 						List<Article> listeArticlesNom = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
 						List<Article> listeArticlebyNomByCategorie = new ArrayList<Article>();
+						List<Article>lstArticlesCommenceParNomParCategorie = new ArrayList<Article>();
 						for (Article article : listeArticlesNom) {
 							if (noCategorie == (article.getCategorie().getNoCategorie())) {
 								listeArticlebyNomByCategorie.add(article);
+							}
+							
+							for (Article article2 : listeArticlebyNomByCategorie) {
+								
+								if (etatVente.equals(article2.getEtatVente())) {
+									
+									lstArticlesCommenceParNomParCategorie.add(article);
+								}
+								
 							}
 						}
 						// System.out.println("Ma liste par article: "+listeArticlesNom);
 						// System.out.println("Ma liste par article/categorie:
 						// "+listeArticlebyNomByCategorie);
-						modelArticle.setListeArticles(listeArticlebyNomByCategorie);
+						modelArticle.setListeArticles(lstArticlesCommenceParNomParCategorie);
 
 					}
 

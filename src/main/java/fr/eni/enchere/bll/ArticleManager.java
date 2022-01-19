@@ -29,7 +29,9 @@ public interface ArticleManager {
 
 	
 	public void miseAJourEtatVente(Article article) throws BLLException;
+	
+	public List<Article> getAllVenteCommence () throws BLLException;
+	
+	public List<Article> getAllVenteByEtatByUtilisateur (Article article) throws BLLException;
 		
-		
-
 }

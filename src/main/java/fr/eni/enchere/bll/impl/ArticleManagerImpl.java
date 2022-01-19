@@ -183,6 +183,26 @@ public class ArticleManagerImpl implements ArticleManager {
 		}
 
 	}
+	
+	@Override
+	public List<Article> getAllVenteCommence() throws BLLException {
+		try {
+			return dao.selectByEtatCommence();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
+
+	@Override
+	public List<Article> getAllVenteByEtatByUtilisateur(Article article) throws BLLException {
+		try {
+			return dao.selectByEtat(article);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
 
 	private void validationNoArticle(Integer noArticle, BLLException be) {
 		if (noArticle == null || noArticle < 0) {

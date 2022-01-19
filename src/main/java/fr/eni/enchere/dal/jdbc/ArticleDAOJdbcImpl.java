@@ -49,7 +49,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private final static String SELECT_BY_ETATCOMMENCE = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente ='commence'";
 
-	private final static String SELECT_BY_ETAT = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente=? AND no_utilisateur=?";
+	private final static String SELECT_BY_ETAT_BY_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente=? AND no_utilisateur=?";
 
 
 	@Override
@@ -249,7 +249,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		List<Article> listeArticles = new ArrayList<Article>();
 
 		try (Connection cnx = JdbcTools.getConnection()) {
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_ETAT);
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_ETAT_BY_UTILISATEUR);
 			Integer noUtilisateur = article.getUtilisateur().getNoUtilisateur();
 			String etatVente = article.getEtatVente();
 			
