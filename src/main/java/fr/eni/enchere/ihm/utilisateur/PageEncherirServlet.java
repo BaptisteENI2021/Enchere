@@ -13,8 +13,11 @@ import fr.eni.enchere.bll.ArticleManager;
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerImpl;
+import fr.eni.enchere.bll.RetraitManager;
 import fr.eni.enchere.bll.impl.ArticleManagerImpl;
+import fr.eni.enchere.bll.impl.RetraitManagerImpl;
 import fr.eni.enchere.bo.Article;
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 /**
@@ -25,6 +28,7 @@ public class PageEncherirServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArticleManager manager = ArticleManagerImpl.getInstance();
 	private EnchereManager managerEnchere = EnchereManagerImpl.getInstance();
+	private RetraitManager managerRetrait = RetraitManagerImpl.getInstance();
 	Article articleRecupere = new Article();
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -44,7 +48,7 @@ public class PageEncherirServlet extends HttpServlet {
 		/* recupération de ModelUtilisateur depuis la session */
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		ArticleModel articleModel = (ArticleModel) request.getSession().getAttribute("articleModel");
-		
+		RetraitModel retraitModel = (RetraitModel)request.getSession().getAttribute("retraitModel");
 		
 		String WEBINF = "WEB-INF/PageEncherir.jsp";
 		
@@ -56,6 +60,10 @@ public class PageEncherirServlet extends HttpServlet {
 			articleModel = new ArticleModel();
 		}
 		
+		if(retraitModel == null) {
+			retraitModel = new RetraitModel();
+		}
+		
 		
 		
 		
@@ -64,13 +72,22 @@ public class PageEncherirServlet extends HttpServlet {
 		
 		try {
 			articleRecupere = manager.afficherArticleById(noAticleClic);
+			
+			Retrait retrait = managerRetrait.getretraitByNoArticle(noAticleClic);
+			retraitModel.setRetrait(retrait);
+			
 			articleModel.setArticle(articleRecupere);
+			
+		
 		} catch (BLLException e2) {
 			e2.printStackTrace();
 		}
 		
-		System.out.println("dans le IF avant encherir" + articleModel.getArticle());
-		System.out.println("dans le IF avant encherir" + articleModel.getArticle().getNomArticle());
+		
+		System.out.println("voici le retrait model " + retraitModel);
+		//System.out.println("voici l'article récupéré" + articleRecupere);
+		//System.out.println("dans le IF avant encherir" + articleModel.getArticle());
+		//System.out.println("dans le IF avant encherir" + articleModel.getArticle().getNomArticle());
 		
 		}
 		
@@ -85,9 +102,9 @@ public class PageEncherirServlet extends HttpServlet {
 			Article articleAEncherir = articleRecupere;
 
 		
-			System.out.println("après encherir" + maProposition);
-			System.out.println("après encherir" + encherisseur);
-			System.out.println("après encherir" + articleAEncherir);
+			//System.out.println("après encherir" + maProposition);
+			//System.out.println("après encherir" + encherisseur);
+			//System.out.println("après encherir" + articleAEncherir);
 			
 			try {
 				managerEnchere.Encherir(encherisseur, articleAEncherir, maProposition);
@@ -101,6 +118,7 @@ public class PageEncherirServlet extends HttpServlet {
 		
 		//request.setAttribute("model", model);
 		request.setAttribute("articleModel", articleModel);
+		request.setAttribute("retraitModel", retraitModel);
 		request.getRequestDispatcher(WEBINF).forward(request, response);
 	}
 

@@ -22,7 +22,7 @@ Mise à prix : ${articleModel.article.prixInitial}
 <br>
 Fin de l'enchère : ${articleModel.article.dateFinEncheres}
 <br>
-Retrait : ${articleModel.article.retrait.rue} ${articleModel.article.retrait.codePostal} ${articleModel.article.retrait.ville}
+Retrait : ${retraitModel.retrait.rue} ${retraitModel.retrait.codePostal} ${retraitModel.retrait.ville}
 <br> 
 Vendeur : ${articleModel.article.utilisateur.pseudo} 
 
