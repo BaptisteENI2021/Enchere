@@ -77,14 +77,15 @@ public class PageEncherirServlet extends HttpServlet {
 			retraitModel.setRetrait(retrait);
 			
 			articleModel.setArticle(articleRecupere);
-			
-		
+//			System.out.println("Dans page enchérir, etat de articleModel :"+articleModel.getArticle().getEtatVente()+
+//					"et nom etat de articleRecupere: "+articleRecupere.getNomArticle()+articleRecupere.getEtatVente());
+//			System.out.println("Dans page enchérir, nom et etat d'article 2 PC Gamer :"+manager.afficherArticleById(1).getNomArticle()+manager.afficherArticleById(1).getEtatVente());
 		} catch (BLLException e2) {
 			e2.printStackTrace();
 		}
 		
 		
-		System.out.println("voici le retrait model " + retraitModel);
+		//System.out.println("voici le retrait model " + retraitModel);
 		//System.out.println("voici l'article récupéré" + articleRecupere);
 		//System.out.println("dans le IF avant encherir" + articleModel.getArticle());
 		//System.out.println("dans le IF avant encherir" + articleModel.getArticle().getNomArticle());

@@ -53,8 +53,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	
 	
-	Dans DAOArticles JDBCimp:
-		select * FROM articles WHERE etatvente= commence
+//	Dans DAOArticles JDBCimp:
+//		select * FROM articles WHERE etatvente= commence
 	
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
