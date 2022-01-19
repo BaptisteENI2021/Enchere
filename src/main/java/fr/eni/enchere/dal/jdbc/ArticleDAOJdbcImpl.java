@@ -48,6 +48,13 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private final static String SELECT_BY_NOM_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ?";
 	
+	private final static String SELECT_BY_ETATCOMMENCE = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente ='commence'";
+	
+	
+	
+	
+	Dans DAOArticles JDBCimp:
+		select * FROM articles WHERE etatvente= commence
 	
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
@@ -232,9 +239,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
 		Integer prixInitial = rs.getInt("prix_initial");
 		Integer prixDeVente = rs.getInt("prix_vente");
-
 		Utilisateur utilisateur = this.getUtilisateurArticle(rs.getInt("no_utilisateur"));
 		Categorie categorie = this.getCategorieArticle(rs.getInt("no_categorie"));
+		String etatVente = rs.getString("etat_vente");
 
 //		Integer noUtilisateur = rs.getInt("no_utilisateur");
 //		Integer noCategorie = rs.getInt("no_categorie");
@@ -242,7 +249,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		Article article = null;
 
 		article = new Article(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial,
-				prixDeVente, utilisateur, categorie);
+				prixDeVente, utilisateur, categorie,etatVente);
 
 		return article;
 	}

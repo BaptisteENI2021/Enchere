@@ -26,6 +26,11 @@ public class EnchereDAOImpl implements EnchereDAO {
 	private final static String SELECT_BY_NOM_ARTICLE = "SELECT * FROM ENCHERES AS e INNER JOIN ARTICLES_VENDUS AS a "
 												+ "ON a.no_article = e.no_article WHERE nom_article LIKE ?";
 	
+	private final static String SELECT_BY_ENCHERE_REMPORTE = "SELECT * FROM ENCHERES AS e INNER JOIN ARTICLES_VENDUS AS a "
+			+ "ON a.no_article=e.no_article WHERE  a.etat_vente='termine' AND e.remporte =1 "
+			+ "AND e.no_utilisateur=?";
+	
+	
 	private static ArticleDAO article = new ArticleDAOJdbcImpl();
 	private static UtilisateurDAO utilisateur = new UtilisateurDAOImpl();
 
@@ -262,5 +267,24 @@ public class EnchereDAOImpl implements EnchereDAO {
 
 		return encheres;
 	}
+	
+	@Override
+	public List<Enchere> getAllEnchereTermines(Integer noArticle) throws DALException {
+		
+		List<Enchere> listeEncheresTermines = new ArrayList<Enchere>();
+		
+		try (Connection con = JdbcTools.getConnection()) {
 
+			PreparedStatement pStmt = con.prepareStatement(SELECT_BY_ENCHERE_REMPORTE);
+			ResultSet rs = pStmt.executeQuery();
+			
+			pStmt.setInt(1, noArticle);
+		
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		return listeEncheresTermines;
+
+}
 }

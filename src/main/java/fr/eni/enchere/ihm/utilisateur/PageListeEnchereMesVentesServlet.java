@@ -35,7 +35,6 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 	 */
 	public PageListeEnchereMesVentesServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 			}
 			
 		}
-		System.out.println("Recupération du no avant de cliquer sur un lien: " +request.getParameter("id"));
+		//System.out.println("Recupération du no avant de cliquer sur un lien: " +request.getParameter("id"));
 		
 		
 		request.setAttribute("model", model);
