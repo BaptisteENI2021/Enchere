@@ -52,12 +52,12 @@ public class ArticleManagerImpl implements ArticleManager {
 				e.printStackTrace();
 			}
 
-			System.out.println("je suis dans les articles états commencés");
+			//System.out.println("je suis dans les articles états commencés");
 
 		}
 
 
-		System.out.println("j'ai mise à jour les états");
+		//System.out.println("j'ai mise à jour les états");
 	}
 
 	@Override
@@ -99,6 +99,8 @@ public class ArticleManagerImpl implements ArticleManager {
 			throw be;
 		}
 
+	
+		
 		try {
 			dao.delete(noArticle);
 		} catch (DALException e) {
