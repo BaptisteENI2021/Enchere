@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bll.impl.ArticleManagerImpl;
+import fr.eni.enchere.bll.impl.CategorieManagerImpl;
 import fr.eni.enchere.bo.Article;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
@@ -36,7 +38,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	private static UtilisateurDAO utilisateurDAO = new UtilisateurDAOImpl();
 	private static BLLException BLLException = new BLLException();
 
-	
+	private ArticleManager managerArticle = ArticleManagerImpl.getInstance();
 	
 	@Override
 	public Enchere ajoutEnchere(Enchere enchere) throws BLLException {
@@ -116,14 +118,42 @@ public class EnchereManagerImpl implements EnchereManager {
 	public void Encherir(Utilisateur encherisseur, Article articleAEncherir, Integer maProposition)
 			throws BLLException {
 
-		// Article article = aricleAEncherir ;
+		// Mise à jour de l'état des articles vendus en fonction de la date du jour
+	
+		List<Article> listeArticles = new ArrayList<Article>();
+				
+			try {
+				listeArticles = articleDAO.selectAll();
+			} catch (DALException e1) {
+				e1.printStackTrace();
+			}
+			for (Article article : listeArticles) {
+			managerArticle.miseAJourEtatVente(article);
+			}
+				
+			System.out.println("Dans la méthode Encherir, j'ai mis à jour les états ventes et je suis avant le IF");
+			
+			try {
+				System.out.println("L'état vente: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente());
+				System.out.println("Le prix de vente article actuel: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente());
+				System.out.println("Mon crédit: " +utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit());
+				System.out.println("Ma proposition " +maProposition);
+				System.out.println("La p....date de debut: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres());
+			} catch (DALException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+					
 
 		try {
-//			if (articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence")
-//					&& articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente() < maProposition
-//					&& utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit() > maProposition) {
-				if(1<2) {
-					
+			if (//articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence") &&
+					articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres().isBefore(LocalDate.now())
+					//|| articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres().equals(LocalDate.now())
+					&& articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente() < maProposition
+					&& utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit() > maProposition) {
+				
+			//if(1<2) {	
 					System.out.println("je suis rentré dans le IF de la méthode enchérir");
 					
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), maProposition, encherisseur, articleAEncherir);
@@ -171,6 +201,10 @@ public class EnchereManagerImpl implements EnchereManager {
 				
 				ajoutEnchere(nouvelleEnchere);
 			}
+			else {
+				System.out.println("Les conditions pour enchérir ne sont pas réunies");
+			}
+			
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
