@@ -51,6 +51,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private final static String SELECT_BY_ETAT = "SELECT * FROM ARTICLES_VENDUS WHERE etat_vente=? AND no_utilisateur=?";
 
+
 	@Override
 	public void insert(Article nouvelArticle) throws DALException {
 

@@ -124,6 +124,7 @@ public class EnchereManagerImpl implements EnchereManager {
 				
 			try {
 				listeArticles = articleDAO.selectAll();
+				//System.out.println("mon article avant la MAJ de l'état et avant le If: "+articleAEncherir.getNomArticle()+articleAEncherir.getEtatVente());
 			} catch (DALException e1) {
 				e1.printStackTrace();
 			}
@@ -131,41 +132,42 @@ public class EnchereManagerImpl implements EnchereManager {
 			managerArticle.miseAJourEtatVente(article);
 			}
 				
-			System.out.println("Dans la méthode Encherir, j'ai mis à jour les états ventes et je suis avant le IF");
+			//System.out.println("Dans la méthode Encherir, j'ai mis à jour les états ventes et je suis avant le IF");
 			
-			try {
-				System.out.println("L'état vente: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente());
-				System.out.println("Le prix de vente article actuel: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente());
-				System.out.println("Mon crédit: " +utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit());
-				System.out.println("Ma proposition " +maProposition);
-				System.out.println("La p....date de debut: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres());
-			} catch (DALException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				System.out.println("L'état vente avant le IF de la methode encherir: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente());
+//				System.out.println("Le prix de vente article actuel avant le IF de la methode encherir: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente());
+//				System.out.println("Mon crédit avant le IF de la methode encherir: " +utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit());
+//				System.out.println("Ma proposition avant le IF de la methode encherir: " +maProposition);
+//				System.out.println("La date de debut avant le IF de la methode encherir: "+articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres());
+				
+//			} catch (DALException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			
 					
 
 		try {
-			if (//articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence") &&
-					articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres().isBefore(LocalDate.now())
+			if (articleDAO.selectById(articleAEncherir.getNoArticle()).getEtatVente().equals("commence") 
+					//articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres().isBefore(LocalDate.now())
 					//|| articleDAO.selectById(articleAEncherir.getNoArticle()).getDateDebutEncheres().equals(LocalDate.now())
 					&& articleDAO.selectById(articleAEncherir.getNoArticle()).getPrixDeVente() < maProposition
 					&& utilisateurDAO.selectById(encherisseur.getNoUtilisateur()).getCredit() > maProposition) {
 				
 			//if(1<2) {	
-					System.out.println("je suis rentré dans le IF de la méthode enchérir");
+				//	System.out.println("je suis rentré dans le IF de la méthode enchérir");
 					
 				Enchere nouvelleEnchere = new Enchere(LocalDate.now(), maProposition, encherisseur, articleAEncherir);
 
-				System.out.println("ma nouvelle enchère en détail: "+nouvelleEnchere);
+				//System.out.println("ma nouvelle enchère en détail: "+nouvelleEnchere);
 				
 				//Décréditer l'encherisseur
 				encherisseur.setCredit(encherisseur.getCredit() - maProposition);
 				utilisateurDAO.update(encherisseur);
 			
 
-				System.out.println("encherisseur après la baisse du crédit: " +encherisseur);
+				//System.out.println("encherisseur après la baisse du crédit: " +encherisseur);
 				
 				//Gestion de l'ancienne meilleur enchère et de l'ancier meilleur encherisseur
 				List<Enchere> lstEncheres = new ArrayList<Enchere>();
