@@ -11,7 +11,7 @@
   <header>
     <div class="navbar">
       <div class="containerTitre">
-        <a href="PageAccueilNonConnecte.jsp" aria-current="page" class="brand">
+        <a href="http://localhost:8080/Enchere/PageAccueilNonConnecteServlet" aria-current="page" class="brand">
           <strong class="bold-text">ENI ENCHERES</strong>
         </a>
       </div>

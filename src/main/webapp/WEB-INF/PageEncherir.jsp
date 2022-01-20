@@ -8,6 +8,16 @@
 </head>
 <body>
 
+<header>
+    <div class="navbar">
+      <div class="containerTitre">
+        <a href="http://localhost:8080/Enchere/PageListeEnchereMesVentesServlet" aria-current="page" class="brand">
+          <strong class="bold-text">ENI ENCHERES</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
 <form action= "PageEncherirServlet" method="POST">
 
  ${articleModel.article.nomArticle}

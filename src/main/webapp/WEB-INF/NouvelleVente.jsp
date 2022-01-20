@@ -9,6 +9,16 @@
 <body>
 <form action="NouvelleVenteServlet" method="POST">
 
+<header>
+    <div class="navbar">
+      <div class="containerTitre">
+        <a href="http://localhost:8080/Enchere/PageListeEnchereMesVentesServlet" aria-current="page" class="brand">
+          <strong class="bold-text">ENI ENCHERES</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
 Article: <input type="text" name="nomArticle" value="${articleModel.article.nomArticle}"/><br>
 Description: <input type="text" name="description" value="${articleModel.article.description}"/> <br>
 

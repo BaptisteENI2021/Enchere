@@ -8,7 +8,15 @@
 </head>
 <body>
 
-<h2>ENI-Encheres</h2>
+<header>
+    <div class="navbar">
+      <div class="containerTitre">
+        <a href="http://localhost:8080/Enchere/PageListeEnchereMesVentesServlet" aria-current="page" class="brand">
+          <strong class="bold-text">ENI ENCHERES</strong>
+        </a>
+      </div>
+    </div>
+  </header>
 
 <form action="PageMonProfilServlet" method="POST">
 Pseudo : ${model.utilisateur.pseudo}

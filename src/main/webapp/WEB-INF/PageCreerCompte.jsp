@@ -9,6 +9,17 @@
 <body>
 
 <form action="UtilisateurCreerServlet" method="POST">
+
+<header>
+    <div class="navbar">
+      <div class="containerTitre">
+        <a href="http://localhost:8080/Enchere/PageConnexionServlet" aria-current="page" class="brand">
+          <strong class="bold-text">ENI ENCHERES</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
 Pseudo: <input type="text" name="pseudo" value="${model.utilisateur.pseudo}"/>
 Nom: <input type="text" name="nom" value="${model.utilisateur.nom}"/> <br>
 Prénom: <input type="text" name="prenom" value="${model.utilisateur.prenom}"/> 

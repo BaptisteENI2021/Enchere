@@ -42,8 +42,6 @@ public class PageModifierMonProfilServlet extends HttpServlet {
 			model = new UtilisateurModel();
 		}
 
-		System.out.println("Je suis dans la Servlet PageModifierMonProfilServlet");
-
 		if (request.getParameter("enregistrer") != null) {
 
 			String pseudo = request.getParameter("pseudo");
@@ -98,7 +96,7 @@ public class PageModifierMonProfilServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			WEBINF = "/PageAccueilNonConnecteServlet";
+		//	WEBINF = "/PageAccueilNonConnecteServlet";
 		}
 
 		request.setAttribute("model", model);
