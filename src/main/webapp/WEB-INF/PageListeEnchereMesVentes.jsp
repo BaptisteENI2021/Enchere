@@ -23,7 +23,7 @@
 <h4>Filtres :</h4>
 <form action="PageListeEnchereMesVentesServlet" method="POST">
 <input type="search" name="rechercheArticle"/>
-
+<input type="submit" name="Rechercher" value="Rechercher"/>
 
 <h5>Catégorie :</h5>
 
@@ -35,35 +35,36 @@
 <option value="4">Sport et Loisirs</option>
 </select>
 
+<div>
+	Achats : <input type="radio" name="transaction" value="achats" id="achats" onclick="onClickAchats()">
+    Mes ventes : <input type="radio" name="transaction" value="mesVentes" id="mesVentes" onclick="onClickVentes()">
+</div>
+<hr/>
+
+enchères ouvertes : <input type="checkbox" value="encheresOuvertes" id="encheresOuvertes" name="encheresOuvertes">
+mes ventes en cours : <input type="checkbox" value="mesVentesEnCours" id="mesVentesEnCours" name="mesVentesEnCours"><br/>
+mes enchères: <input type="checkbox" value="mesEnchères" id="mesEncheres" name="mesEncheres">
+ventes non débutées : <input type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees" name="ventesNonDebutees"><br/>
+enchères remportées : <input type="checkbox" value="encheresRemportees" id="encheresRemportees" name="encheresRemportees">
+ventes terminées : <input type="checkbox" value="ventesTerminees" id="ventesTerminees" name="ventesTerminees"><br/>
 
 
-<input type="submit" name="Rechercher" value="Rechercher"/>
+
+
+
+
 </form>
 
 <br/>
 
-<div>
-	Achats : <input type="radio" name="transaction" value="Achats" id="achats" onclick="onClickAchats()">
-    Mes ventes : <input type="radio" name="transaction" value="Mes Ventes" id="mesVentes" onclick="onClickVentes()">
-</div>
-<hr/>
-<div>
-enchères ouvertes : <input type="checkbox" value="enchères ouvertes" id="encheresOuvertes" >
-mes ventes en cours : <input type="checkbox" value="mes ventes en cours" id="mesVentesEnCours"><br/>
-mes enchères: <input type="checkbox" value="mes enchères" id="mesEncheres">
-ventes non débutées : <input type="checkbox" value="ventes non débutées" id="ventesNonDebutees"><br/>
-enchères remportées : <input type="checkbox" value="enchères remportées" id="encheresRemportees">
-ventes terminées : <input type="checkbox" value="ventes terminées" id="ventesTerminees"><br/>
 
-</div>
-
-
-<br/>
 
 <c:forEach items="${modelArticle.listeArticles}" var="article">
-	<p><a href = "<c:url value = "PageEncherirServlet?id=${article.noArticle}"/>">${article.nomArticle}</a> : ${article.categorie.libelle}</p>
+	<p><a href = "<c:url value = "PageEncherirServlet?id=${article.noArticle}"/>">${article.nomArticle}</a> - ${article.categorie.libelle} - Etat Vente: ${article.etatVente}
+	- N° utilisteur: ${article.utilisateur.noUtilisateur}</p>
 	
 </c:forEach>
+
 
 </body>
 </html>

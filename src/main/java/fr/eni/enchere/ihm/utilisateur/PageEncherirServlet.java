@@ -45,7 +45,7 @@ public class PageEncherirServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		/* recupération de ModelUtilisateur depuis la session */
+		
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		ArticleModel articleModel = (ArticleModel) request.getSession().getAttribute("articleModel");
 		RetraitModel retraitModel = (RetraitModel)request.getSession().getAttribute("retraitModel");
@@ -67,7 +67,7 @@ public class PageEncherirServlet extends HttpServlet {
 		
 		
 		
-		if(articleRecupere.getNoArticle()== null) {
+		//if(articleRecupere.getNoArticle()== null) {
 		Integer noAticleClic = Integer.valueOf(request.getParameter("id"));
 		
 		try {
@@ -77,8 +77,8 @@ public class PageEncherirServlet extends HttpServlet {
 			retraitModel.setRetrait(retrait);
 			
 			articleModel.setArticle(articleRecupere);
-//			System.out.println("Dans page enchérir, etat de articleModel :"+articleModel.getArticle().getEtatVente()+
-//					"et nom etat de articleRecupere: "+articleRecupere.getNomArticle()+articleRecupere.getEtatVente());
+			System.out.println("Dans page enchérir, etat de articleModel :"+articleModel.getArticle().getEtatVente()+
+				"et nom etat de articleRecupere: "+articleRecupere.getNomArticle()+articleRecupere.getEtatVente());
 //			System.out.println("Dans page enchérir, nom et etat d'article 2 PC Gamer :"+manager.afficherArticleById(1).getNomArticle()+manager.afficherArticleById(1).getEtatVente());
 		} catch (BLLException e2) {
 			e2.printStackTrace();
@@ -90,7 +90,7 @@ public class PageEncherirServlet extends HttpServlet {
 		//System.out.println("dans le IF avant encherir" + articleModel.getArticle());
 		//System.out.println("dans le IF avant encherir" + articleModel.getArticle().getNomArticle());
 		
-		}
+	//	}
 		
 		//System.out.println("avant encherir après le IF" + articleModel.getArticle());
 		

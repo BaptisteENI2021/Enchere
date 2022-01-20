@@ -82,8 +82,7 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 
 			try {
 				categorie = managerCategorie.categorieById(noCategorie);
-				// System.out.println(categorie);
-				// System.out.println("article saisie "+rechercheArticle);
+				
 				if (rechercheArticle == "") {
 					if (noCategorie == 0) {
 						modelArticle.setListeArticles(managerArticle.getAllVenteCommence());
@@ -134,9 +133,7 @@ public class PageAccueilNonConnecteServlet extends HttpServlet {
 								
 							}
 						}
-						// System.out.println("Ma liste par article: "+listeArticlesNom);
-						// System.out.println("Ma liste par article/categorie:
-						// "+listeArticlebyNomByCategorie);
+					
 						modelArticle.setListeArticles(lstArticlesCommenceParNomParCategorie);
 
 					}
