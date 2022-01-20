@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PageAccueilNonConnecte</title>
+<title>ENI Enchères</title>
 <link href = "style\stylePageAccueilNonConnecte.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="body">
 
 <h2>ENI-Enchères</h2>
 <a href="http://localhost:8080/Enchere/PageConnexionServlet" id="InscrireConnecte">S'inscrire - Se connecter</a>
