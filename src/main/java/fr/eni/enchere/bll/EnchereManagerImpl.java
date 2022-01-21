@@ -226,4 +226,16 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 	}
 
+	@Override
+	public List<Enchere> selectionnerMesEnchereByUtilisateur(Utilisateur utilisateur)
+			throws fr.eni.enchere.bll.BLLException {
+		
+		try {
+			return enchereDAO.getByEncherisseur(utilisateur.getNoUtilisateur());
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e);
+		}
+	}
+
 }

@@ -40,7 +40,7 @@ public class PageMonProfilServlet extends HttpServlet {
 			model = new UtilisateurModel();
 		}
 		
-		System.out.println("je suis dans la servlet PageMonProfil");
+		//System.out.println("je suis dans la servlet PageMonProfil");
 		
 		
 		if (request.getParameter("Modifier") != null) {

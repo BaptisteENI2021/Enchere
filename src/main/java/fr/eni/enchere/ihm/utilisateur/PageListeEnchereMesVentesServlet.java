@@ -59,83 +59,11 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 		}
 
 		ArticleModel modelArticle = new ArticleModel();
-	
 
-		List<Article> listeArticles = new ArrayList<Article>();
+		List<Article> listeArticlesNonConnecte = new ArrayList<Article>();
 
 		if (request.getParameter("Rechercher") != null) {
 
-//			String rechercheArticle = request.getParameter("rechercheArticle");
-//			Integer noCategorie = Integer.parseInt(request.getParameter("categorie"));
-//			Categorie categorie = null;
-//			String etatVente = "commence"; 
-//
-//			try {
-//				categorie = managerCategorie.categorieById(noCategorie);
-//				// System.out.println(categorie);
-//				// System.out.println("article saisie "+rechercheArticle);
-//				if (rechercheArticle == "") {
-//					if (noCategorie == 0) {
-//						modelArticle.setListeArticles(managerArticle.getAllVenteCommence());
-//								
-//					} else {
-//						
-//						//modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
-//						List<Article>lstArticlesCommence = managerArticle.getAllVenteCommence();
-//						List<Article> lstCommenceParCategories = new ArrayList<Article>();
-//						
-//						for (Article article : lstArticlesCommence) {
-//							
-//							if (noCategorie == (article.getCategorie().getNoCategorie())) {
-//								lstCommenceParCategories.add(article);
-//							}
-//						}
-//							modelArticle.setListeArticles(lstCommenceParCategories);
-//					}
-//						
-//				} else {
-//					if (noCategorie == 0) {
-//						List<Article>lstParMotCle = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
-//						List<Article>lstArticlesCommencesParMotCle = new ArrayList<Article>();
-//						for (Article article : lstParMotCle) {
-//							
-//							if (etatVente.equals(article.getEtatVente())) {
-//								
-//								lstArticlesCommencesParMotCle.add(article);
-//							}
-//							modelArticle.setListeArticles(lstArticlesCommencesParMotCle);
-//						}
-//						
-//					} else {
-//						List<Article> listeArticlesNom = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
-//						List<Article> listeArticlebyNomByCategorie = new ArrayList<Article>();
-//						List<Article>lstArticlesCommenceParNomParCategorie = new ArrayList<Article>();
-//						for (Article article : listeArticlesNom) {
-//							if (noCategorie == (article.getCategorie().getNoCategorie())) {
-//								listeArticlebyNomByCategorie.add(article);
-//							}
-//							
-//							for (Article article2 : listeArticlebyNomByCategorie) {
-//								
-//								if (etatVente.equals(article2.getEtatVente())) {
-//									
-//									lstArticlesCommenceParNomParCategorie.add(article);
-//								}
-//								
-//							}
-//						}
-//						// System.out.println("Ma liste par article: "+listeArticlesNom);
-//						// System.out.println("Ma liste par article/categorie:
-//						// "+listeArticlebyNomByCategorie);
-//						modelArticle.setListeArticles(lstArticlesCommenceParNomParCategorie);
-//
-//					}
-//
-//				}
-//
-//			} catch (BLLException e1) {
-//				e1.printStackTrace();
-//			}
 
 			// Toutes les ventes existantes: cela sert à avoir une première liste sans les
 			// filtres des checks boxs
@@ -149,14 +77,17 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 
 				if (rechercheArticle == "") {
 					if (noCategorie == 0) {
-						modelArticle.setListeArticles(managerArticle.getAllArticle());
+						//modelArticle.setListeArticles(managerArticle.getAllArticle());
+						listeArticlesNonConnecte=managerArticle.getAllArticle();
 					} else {
-						modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+						//modelArticle.setListeArticles(managerArticle.getAllArticlesByCategories(categorie));
+						listeArticlesNonConnecte=managerArticle.getAllArticlesByCategories(categorie);
 					}
 
 				} else {
 					if (noCategorie == 0) {
-						modelArticle.setListeArticles(managerArticle.getAllArticleByNomMotCle(rechercheArticle));
+						//modelArticle.setListeArticles(managerArticle.getAllArticleByNomMotCle(rechercheArticle));
+						listeArticlesNonConnecte=managerArticle.getAllArticleByNomMotCle(rechercheArticle);
 					} else {
 						List<Article> listeArticlesNom = managerArticle.getAllArticleByNomMotCle(rechercheArticle);
 						List<Article> listeArticlebyNomByCategorie = new ArrayList<Article>();
@@ -165,8 +96,8 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 								listeArticlebyNomByCategorie.add(article);
 							}
 						}
-						modelArticle.setListeArticles(listeArticlebyNomByCategorie);
-
+						//modelArticle.setListeArticles(listeArticlebyNomByCategorie);
+						listeArticlesNonConnecte=listeArticlebyNomByCategorie;	
 					}
 
 				}
@@ -181,9 +112,9 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 			List<Article> listeArticlesConnecte = new ArrayList<Article>();
 			Utilisateur utilisateurConnecte = model.getUtilisateur();
 
-
-			//mes ventes en cours
-			for (Article article : modelArticle.getListeArticles()) {
+			// mes ventes en cours
+			//for (Article article : modelArticle.getListeArticles()) {
+				for (Article article : listeArticlesNonConnecte) {	
 				if (("commence").equals(article.getEtatVente())
 						&& article.getUtilisateur().getNoUtilisateur() == utilisateurConnecte.getNoUtilisateur()
 						&& request.getParameter("mesVentesEnCours") != null) {
@@ -192,7 +123,7 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 					modelArticle.setListeArticles(listeArticlesConnecte);
 
 				}
-			//mes ventes non debutées
+				// mes ventes non debutées
 				else if ((("cree").equals(article.getEtatVente())
 						&& article.getUtilisateur().getNoUtilisateur() == utilisateurConnecte.getNoUtilisateur()
 						&& request.getParameter("ventesNonDebutees") != null)) {
@@ -200,53 +131,73 @@ public class PageListeEnchereMesVentesServlet extends HttpServlet {
 					listeArticlesConnecte.add(article);
 					modelArticle.setListeArticles(listeArticlesConnecte);
 				}
-			//mes ventes terminées
+				// mes ventes terminées
 				else if ((("termine").equals(article.getEtatVente())
 						&& article.getUtilisateur().getNoUtilisateur() == utilisateurConnecte.getNoUtilisateur()
 						&& request.getParameter("ventesTerminees") != null)) {
 
 					listeArticlesConnecte.add(article);
 					modelArticle.setListeArticles(listeArticlesConnecte);
+				//System.out.println("je suis dans ventes terminées"+modelArticle.getListeArticles());
 				}
+				
 
 			}
-			
-			
-			// Filtres des 3 checks boxs des Achats: c'est la 1ère liste des ventes récupérée au
-				//dessus (nom+categorie) qui ont une enchère qui appartient au connecté, puis on filtre avec les checks boxs
-			
-			
-			//enchères ouvertes
-			
-			for (Article article : modelArticle.getListeArticles()) {
-				if (("commence").equals(article.getEtatVente())
-						&& request.getParameter("encheresOuvertes") != null) {
+
+			// Filtres des 3 checks boxs des Achats: c'est la 1ère liste des ventes
+			// récupérée au
+			// dessus (nom+categorie) qui ont une enchère qui appartient au connecté, puis
+			// on filtre avec les checks boxs
+
+			// enchères ouvertes
+
+			//for (Article article : modelArticle.getListeArticles()) {
+				for (Article article :listeArticlesNonConnecte) {	
+				if (("commence").equals(article.getEtatVente()) && request.getParameter("encheresOuvertes") != null) {
 
 					listeArticlesConnecte.add(article);
 					modelArticle.setListeArticles(listeArticlesConnecte);
-			// mes enchères
+
 				}
-				else if(request.getParameter("mesEncheres") != null) {
+				// mes enchères
+				else if (request.getParameter("mesEncheres") != null) {
+					List<Enchere> listeMesEnchères = new ArrayList<Enchere>();
+					try {
+						listeMesEnchères = managerEnchere.selectionnerMesEnchereByUtilisateur(utilisateurConnecte);
+
+					} catch (BLLException e) {
+						e.printStackTrace();
+					}
+					for (Enchere enchere : listeMesEnchères) {
+						if (enchere.getArticle().getNoArticle() == article.getNoArticle()) {
+							listeArticlesConnecte.add(article);
+							modelArticle.setListeArticles(listeArticlesConnecte);
+						}
+
+					}
+
+				}
+				// mes enchères remportées
+				else if (request.getParameter("encheresRemportees") != null
+						&& ("termine").equals(article.getEtatVente())){
 					
-					//List<Enchere> listeMesEnchères = managerEnchere.selectionnerEnchereById(noCategorie)
+					List<Enchere> listeMesEnchères = new ArrayList<Enchere>();
+					try {
+						listeMesEnchères = managerEnchere
+								.selectionnerMesEnchereRemporteByUtilisateur(utilisateurConnecte.getNoUtilisateur());
+					} catch (BLLException e) {
+						e.printStackTrace();
+					}
+					for (Enchere enchere : listeMesEnchères) {
+						if (enchere.getArticle().getNoArticle() == article.getNoArticle()) {
+							listeArticlesConnecte.add(article);
+							modelArticle.setListeArticles(listeArticlesConnecte);
+						}
 
-					listeArticlesConnecte.add(article);
-					modelArticle.setListeArticles(listeArticlesConnecte);
-				}
-			// mes enchères remportées
-				else if(article.getUtilisateur().getNoUtilisateur() == utilisateurConnecte.getNoUtilisateur()
-						
-						&& request.getParameter("mesEncheres") != null) {
+					}
 
-					listeArticlesConnecte.add(article);
-					modelArticle.setListeArticles(listeArticlesConnecte);
 				}
-				
-				
-				
-				
-				
-				
+
 			}
 
 		}

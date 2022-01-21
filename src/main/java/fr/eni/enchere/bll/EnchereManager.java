@@ -25,4 +25,6 @@ public interface EnchereManager {
 	
 	public List<Enchere>  selectionnerMesEnchereRemporteByUtilisateur(Integer noUtilisateur) throws BLLException;
 	
+	public List<Enchere>  selectionnerMesEnchereByUtilisateur(Utilisateur utilisateur) throws BLLException;
+	
 }

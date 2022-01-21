@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ENI Enchères</title>
-<link href = "style\stylePageAccueilNonConnecte.css" rel="stylesheet">
+<!-- <link href = "style\stylePageAccueilNonConnecte.css" rel="stylesheet"> -->
 </head>
 
 <body class="body">

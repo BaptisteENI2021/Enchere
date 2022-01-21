@@ -43,7 +43,7 @@
 
 enchères ouvertes : <input type="checkbox" value="encheresOuvertes" id="encheresOuvertes" name="encheresOuvertes">
 mes ventes en cours : <input type="checkbox" value="mesVentesEnCours" id="mesVentesEnCours" name="mesVentesEnCours"><br/>
-mes enchères: <input type="checkbox" value="mesEnchères" id="mesEncheres" name="mesEncheres">
+mes enchères: <input type="checkbox" value="mesEncheres" id="mesEncheres" name="mesEncheres">
 ventes non débutées : <input type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees" name="ventesNonDebutees"><br/>
 enchères remportées : <input type="checkbox" value="encheresRemportees" id="encheresRemportees" name="encheresRemportees">
 ventes terminées : <input type="checkbox" value="ventesTerminees" id="ventesTerminees" name="ventesTerminees"><br/>
